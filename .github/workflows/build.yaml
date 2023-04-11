@@ -1,0 +1,42 @@
+name: build trunk
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v3
+
+      - name: setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: setup java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: run formatter
+        run: dart format --set-exit-if-changed .
+
+      - name: run linter
+        run: flutter analyze
+
+      - name: build apk
+        run: |
+          flutter pub get
+          flutter build apk
+
+      - name: upload artifacts
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: build/app/outputs/flutter-apk/app-release.apk
