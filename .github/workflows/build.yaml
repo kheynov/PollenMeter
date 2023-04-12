@@ -27,15 +27,3 @@ jobs:
 
       - name: run linter
         run: flutter analyze
-
-      - name: build apk
-        run: |
-          flutter pub get
-          flutter build apk
-
-      - name: upload artifacts
-        if: ${{ success() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: app
-          path: build/app/outputs/flutter-apk/app-release.apk
