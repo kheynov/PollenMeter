@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '374533370010',
     projectId: 'pollenmeter-4e79c',
     storageBucket: 'pollenmeter-4e79c.appspot.com',
-    iosClientId: '374533370010-tlvl05s6fp0rg5vh340ijr9p7ftl77p4.apps.googleusercontent.com',
+    iosClientId:
+        '374533370010-tlvl05s6fp0rg5vh340ijr9p7ftl77p4.apps.googleusercontent.com',
     iosBundleId: 'com.example.pollenMeter',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '374533370010',
     projectId: 'pollenmeter-4e79c',
     storageBucket: 'pollenmeter-4e79c.appspot.com',
-    iosClientId: '374533370010-tlvl05s6fp0rg5vh340ijr9p7ftl77p4.apps.googleusercontent.com',
+    iosClientId:
+        '374533370010-tlvl05s6fp0rg5vh340ijr9p7ftl77p4.apps.googleusercontent.com',
     iosBundleId: 'com.example.pollenMeter',
   );
 }

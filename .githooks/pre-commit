@@ -4,9 +4,9 @@ git stash -q --keep-index
 
 echo "Running git pre-commit hook"
 
-dart format
+dart format .
 
-flutter analyze
+flutter analyze .
 
 RESULT=$?
 
