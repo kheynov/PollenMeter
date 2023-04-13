@@ -2,7 +2,6 @@ name: build trunk
 
 on:
   pull_request:
-    types: [opened, reopened]
 
 jobs:
   check:
