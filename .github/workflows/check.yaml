@@ -21,6 +21,10 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
 
+
+      - name: run formatter
+        run: dart format --set-exit-if-changed .
+
       - name: Create gson_services.json
         run: touch ./android/app/google-services.json | base64
 
@@ -33,9 +37,6 @@ jobs:
         env:
           DATA: ${{ secrets.API_KEY }}
         run: echo $DATA > ./lib/core/data/api_token.dart
-
-      - name: run formatter
-        run: dart format --set-exit-if-changed .
 
       - name: run linter
         run: flutter analyze
