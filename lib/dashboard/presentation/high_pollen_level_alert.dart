@@ -11,12 +11,13 @@ class HighPollenLevelAlert extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.red),
         borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            const Icon(Icons.warning),
+            const Icon(Icons.warning, color: Colors.red),
             const SizedBox(width: 10),
             Text(
               msg,
