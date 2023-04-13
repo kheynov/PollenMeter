@@ -4,27 +4,22 @@ class HighPollenLevelAlert extends StatelessWidget {
   final String msg;
 
   const HighPollenLevelAlert({super.key, required this.msg});
-//TODO: proper theming instead of constants
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.red),
         borderRadius: BorderRadius.circular(15),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.secondary,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            const Icon(Icons.warning, color: Colors.red),
+            Icon(Icons.warning, color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 10),
             Text(
               msg,
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 20,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ],
