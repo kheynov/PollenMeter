@@ -104,16 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             PollenConcentrationGauge(
-                concentration: 10,
-                icon: Icons.forest,
-                gaugeColor: Colors.red,
-                progressBarColor: Colors.blue,
-                thickness: 50,
-                min: 0,
-                max: 20,
-                fontSize: 20,
-                textColor: Colors.black,
-                text: "OK"),
+                concentration: 10, progressBarColor: Colors.blue, text: "OK"),
           ],
         ),
       ),

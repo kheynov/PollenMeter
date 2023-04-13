@@ -5,26 +5,16 @@ class PollenConcentrationGauge extends StatelessWidget {
   const PollenConcentrationGauge(
       {super.key,
       required this.concentration,
-      required this.icon,
-      required this.gaugeColor,
       required this.progressBarColor,
-      required this.thickness,
-      required this.min,
-      required this.max,
-      required this.textColor,
-      required this.fontSize,
       required this.text});
 
   final double concentration;
-  final IconData icon;
-  final Color gaugeColor;
   final Color progressBarColor;
-  final double thickness;
-  final double min;
-  final double max;
-  final Color textColor;
-  final double fontSize;
   final String text;
+
+  //TODO: replace hardcoded constants with theme data and/or calculate in runtime
+  //TODO: find out what the max concentration from the API is
+  //(The gauge would just clip if the value exceeds the max; it is only for information purposes)
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -37,24 +27,24 @@ class PollenConcentrationGauge extends StatelessWidget {
                 2,
             value: concentration,
             progressBar: GaugeRoundedProgressBar(color: progressBarColor),
-            axis: GaugeAxis(
-              min: min,
-              max: max,
+            axis: const GaugeAxis(
+              min: 0,
+              max: 500,
               degrees: 270,
               style: GaugeAxisStyle(
-                thickness: thickness,
-                background: gaugeColor,
+                thickness: 20,
+                background: Colors.blue,
               ),
             ),
-            child: FittedBox(fit: BoxFit.fill, child: Icon(icon)),
+            child: const FittedBox(fit: BoxFit.fill, child: Icon(Icons.forest)),
           ),
           FittedBox(
               fit: BoxFit.cover,
               child: Text(
                 text,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: fontSize,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
                 ),
                 textAlign: TextAlign.center,
               ))
