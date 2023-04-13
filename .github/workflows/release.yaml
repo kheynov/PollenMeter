@@ -42,7 +42,7 @@ jobs:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $DATA > ./android/app/google-services.json
 
-      - name: Putting data to google_services.json
+      - name: Putting data to api_token
         env:
           DATA: ${{ secrets.API_KEY }}
         run: echo $DATA > ./lib/core/data/api_token.dart
