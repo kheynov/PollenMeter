@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'core_ui/pollen_concentration_gauge.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -102,10 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            PollenConcentrationGauge(
-                concentration: 10, progressBarColor: Colors.blue, text: "OK"),
-          ],
+          children: const [Text("Text")],
         ),
       ),
       floatingActionButton: FloatingActionButton(
