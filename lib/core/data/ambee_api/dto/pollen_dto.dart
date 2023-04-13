@@ -1,14 +1,22 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'pollen_data.g.dart';
+part 'pollen_dto.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class PollenDTO {
+  @JsonKey(name: 'Count')
   final PollenCount count;
+
+  @JsonKey(name: 'Risk')
   final PollenRisk risk;
+
+  @JsonKey(name: 'Species')
   final PollenSpecies species;
 
-  PollenDTO(this.count, this.risk, this.species);
+  @JsonKey(name: 'updatedAt')
+  final String updatedAt;
+
+  PollenDTO(this.count, this.risk, this.species, this.updatedAt);
 
   factory PollenDTO.fromJson(Map<String, dynamic> json) {
     return _$PollenDTOFromJson(json);
@@ -20,13 +28,13 @@ class PollenDTO {
 @JsonSerializable(ignoreUnannotated: true)
 class PollenCount {
   @JsonKey(name: 'grass_pollen')
-  final String grassPollen;
+  final int grassPollen;
 
   @JsonKey(name: 'tree_pollen')
-  final String treePollen;
+  final int treePollen;
 
   @JsonKey(name: 'weed_pollen')
-  final String weedPollen;
+  final int weedPollen;
 
   PollenCount(this.grassPollen, this.treePollen, this.weedPollen);
 

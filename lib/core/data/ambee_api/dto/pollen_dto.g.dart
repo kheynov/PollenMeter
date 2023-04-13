@@ -1,27 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pollen_data.dart';
+part of 'pollen_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
 PollenDTO _$PollenDTOFromJson(Map<String, dynamic> json) => PollenDTO(
-      PollenCount.fromJson(json['count'] as Map<String, dynamic>),
-      PollenRisk.fromJson(json['risk'] as Map<String, dynamic>),
-      PollenSpecies.fromJson(json['species'] as Map<String, dynamic>),
+      PollenCount.fromJson(json['Count'] as Map<String, dynamic>),
+      PollenRisk.fromJson(json['Risk'] as Map<String, dynamic>),
+      PollenSpecies.fromJson(json['Species'] as Map<String, dynamic>),
+      json['updatedAt'] as String,
     );
 
 Map<String, dynamic> _$PollenDTOToJson(PollenDTO instance) => <String, dynamic>{
-      'count': instance.count.toJson(),
-      'risk': instance.risk.toJson(),
-      'species': instance.species.toJson(),
+      'Count': instance.count.toJson(),
+      'Risk': instance.risk.toJson(),
+      'Species': instance.species.toJson(),
+      'updatedAt': instance.updatedAt,
     };
 
 PollenCount _$PollenCountFromJson(Map<String, dynamic> json) => PollenCount(
-      json['grass_pollen'] as String,
-      json['tree_pollen'] as String,
-      json['weed_pollen'] as String,
+      json['grass_pollen'] as int,
+      json['tree_pollen'] as int,
+      json['weed_pollen'] as int,
     );
 
 Map<String, dynamic> _$PollenCountToJson(PollenCount instance) =>
