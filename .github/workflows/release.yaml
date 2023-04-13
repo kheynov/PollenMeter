@@ -24,7 +24,7 @@ jobs:
           java-version: '11'
 
       - name: run formatter
-          run: dart format --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
 
       - name: run linter
         run: flutter analyze
