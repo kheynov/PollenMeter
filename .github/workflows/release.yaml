@@ -23,6 +23,11 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
 
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
       - name: run formatter
         run: dart format --set-exit-if-changed .
 
@@ -30,12 +35,12 @@ jobs:
         run: flutter analyze
 
       - name: Create gson_services.json
-        run: cat /home/runner/work/PollenMeter/PollenMeter/app/google-services.json | base64
+        run: touch ./android/app/google-services.json | base64
 
-      - name: Putting data
+      - name: Putting data to google_services.json
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA > /home/runner/work/PollenMeter/PollenMeter/app/google-services.json
+        run: echo $DATA > ./android/app/google-services.json
 
 
       - name: build apk
@@ -44,7 +49,8 @@ jobs:
           flutter build apk
 
       - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
+
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
