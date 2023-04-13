@@ -29,6 +29,15 @@ jobs:
       - name: run linter
         run: flutter analyze
 
+      - name: Create gson_services.json
+        run: cat /home/runner/work/PollenMeter/PollenMeter/app/google-services.json | base64
+
+      - name: Putting data
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/PollenMeter/PollenMeter/app/google-services.json
+
+
       - name: build apk
         run: |
           flutter pub get
