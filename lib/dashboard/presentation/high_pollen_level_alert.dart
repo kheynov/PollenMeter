@@ -4,6 +4,8 @@ class HighPollenLevelAlert extends StatelessWidget {
   final String msg;
 
   const HighPollenLevelAlert({super.key, required this.msg});
+//TODO: proper theming instead of constants
+
   @override
   Widget build(BuildContext context) {
     return Container(
