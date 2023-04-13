@@ -22,7 +22,7 @@ jobs:
           java-version: '11'
 
       - name: Create gson_services.json
-          run: touch ./android/app/google-services.json | base64
+        run: touch ./android/app/google-services.json | base64
 
       - name: Putting data to google_services.json
         env:
