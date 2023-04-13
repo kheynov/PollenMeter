@@ -36,7 +36,7 @@ jobs:
       - name: Putting data to api_token
         env:
           DATA: ${{ secrets.API_KEY }}
-        run: echo $DATA > ./lib/core/data/api_token.dart
+        run: echo $DATA > ./lib/core/data/ambee_api/api_token.dart
 
       - name: run linter
         run: flutter analyze
