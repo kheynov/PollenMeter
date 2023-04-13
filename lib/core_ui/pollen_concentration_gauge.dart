@@ -36,9 +36,7 @@ class PollenConcentrationGauge extends StatelessWidget {
                     : constraints.maxHeight) /
                 2,
             value: concentration,
-            progressBar: GaugeRoundedProgressBar(
-              color: progressBarColor
-            ),
+            progressBar: GaugeRoundedProgressBar(color: progressBarColor),
             axis: GaugeAxis(
               min: min,
               max: max,
