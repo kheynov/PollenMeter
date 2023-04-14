@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../core_ui/bottom_nav_bar.dart';
-
 class MyHomePageTest1 extends StatelessWidget {
   const MyHomePageTest1({Key? key}) : super(key: key);
 

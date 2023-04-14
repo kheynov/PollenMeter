@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+  const BottomNavBar({super.key, required this.tabController});
+  final TabController tabController;
   @override
   State createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar>
-    with TickerProviderStateMixin {
-  late TabController _tabController;
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
+class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return ConvexAppBar(
@@ -28,7 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar>
         TabItem(icon: Icons.edit),
         TabItem(icon: Icons.assignment)
       ],
-      controller: _tabController,
+      controller: widget.tabController,
     );
   }
 }
