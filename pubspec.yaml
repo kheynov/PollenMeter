@@ -48,8 +48,6 @@ dependencies:
   go_router: ^6.5.0
   convex_bottom_bar: ^3.2.0
   shared_preferences: ^2.1.0
-  intl_translation: ^0.18.0
-  intl: ^0.17.0
 
 
 
