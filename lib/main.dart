@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pollen_meter/theme.dart';
 
 import 'firebase_options.dart';
-
 
 void main() async {
   runApp(const MyApp());
@@ -28,7 +25,6 @@ class MyApp extends StatelessWidget {
       title: 'Pollen meter',
       theme: brightTheme,
       home: const MyHomePage(title: 'Pollen meter demo page'),
-
     );
   }
 }
