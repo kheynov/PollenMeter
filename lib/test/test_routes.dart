@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHomePageTest1 extends StatefulWidget {
   const MyHomePageTest1({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class MyHomePageTest2 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Test 2'),
+            Text(AppLocalizations.of(context)?.appTitle ?? '.null'),
             FloatingActionButton(
               onPressed: () => context.go('/dashboard'),
             ),
