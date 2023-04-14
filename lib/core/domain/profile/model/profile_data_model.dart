@@ -1,18 +1,23 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:pollen_meter/core/domain/profile/enums/allergen_types.dart';
 
-class ProfileDataModel {
-  final bool theme;
-  final List<AllergenTypes> allergens;
+part 'profile_data_model.g.dart';
 
-  ProfileDataModel(this.theme, this.allergens);
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+class ProfileDataModel {
+  bool isDarkTheme;
+  List<Allergens> allergens;
+
+  ProfileDataModel(this.isDarkTheme, this.allergens);
 
   factory ProfileDataModel.fromJson(Map<String, dynamic> json) {
-    // TODO: add parsing
-    throw UnimplementedError();
+    return _$ProfileDataModelFromJson(json);
   }
 
-  Map<String, dynamic> toJson() {
-    //TODO: add serialization
-    throw UnimplementedError();
+  Map<String, dynamic> toJson() => _$ProfileDataModelToJson(this);
+
+  @override
+  String toString() {
+    return 'ProfileDataModel{isDarkTheme: $isDarkTheme, allergens: $allergens}';
   }
 }
