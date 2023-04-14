@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
 
 import 'firebase_options.dart';
@@ -21,10 +22,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Pollen meter',
       theme: brightTheme,
-      home: const MyHomePage(),
+      routerConfig: RouteGenerator().router,
     );
   }
 }
