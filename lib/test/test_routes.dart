@@ -9,9 +9,9 @@ class MyHomePageTest1 extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text('Test 1'),
-            FloatingActionButton(onPressed: () => context.go('/calendar'))
-          ])),
+        const Text('Test 1'),
+        FloatingActionButton(onPressed: () => context.go('/calendar'))
+      ])),
     );
   }
 }
@@ -24,9 +24,9 @@ class MyHomePageTest2 extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text('Test 2'),
-            FloatingActionButton(onPressed: () => context.go('/dashboard'))
-          ])),
+        const Text('Test 2'),
+        FloatingActionButton(onPressed: () => context.go('/dashboard'))
+      ])),
     );
   }
 }
@@ -39,9 +39,9 @@ class MyHomePageTest3 extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text('Test 3'),
-            FloatingActionButton(onPressed: () => context.go('/record'))
-          ])),
+        const Text('Test 3'),
+        FloatingActionButton(onPressed: () => context.go('/record'))
+      ])),
     );
   }
 }
