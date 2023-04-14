@@ -9,10 +9,6 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar>
     with TickerProviderStateMixin {
-  final List<Tab> myTabs = <Tab>[
-    const Tab(text: 'LEFT'),
-    const Tab(text: 'RIGHT'),
-  ];
   late TabController _tabController;
   @override
   void initState() {
@@ -23,6 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar>
   @override
   Widget build(BuildContext context) {
     return ConvexAppBar(
+      style: TabStyle.fixed,
       backgroundColor: Theme.of(context).colorScheme.secondary,
       activeColor: Theme.of(context).colorScheme.secondaryContainer,
       color: Theme.of(context).colorScheme.surface,
