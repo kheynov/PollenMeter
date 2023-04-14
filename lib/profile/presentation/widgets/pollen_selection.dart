@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:pollen_meter/profile/model/pollen_tile_model.dart';
+import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
 import 'package:pollen_meter/profile/presentation/widgets/square_tile.dart';
 
 class PollenSelectionWidget extends StatefulWidget {
