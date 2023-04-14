@@ -6,10 +6,10 @@ enum TreeAllergens implements AllergenTypes {
   alder(enName: 'Alder', ruName: 'Ольха'),
   cottonWood(enName: 'Poplar / Cottonwood', ruName: 'Тополь'),
   oak(enName: 'Oak', ruName: 'Дуб'),
-  plane(enName: 'Plane', ruName: 'Сосна'),
+  plane(enName: 'Plane', ruName: 'Платан'),
   birch(enName: 'Birch', ruName: 'Береза'),
   cypress(enName: 'Cypress', ruName: 'Кипарис'),
-  mulberry(enName: 'Mulberry', ruName: 'Тамарис'),
+  mulberry(enName: 'Mulberry', ruName: 'Шелковица'),
   ash(enName: 'Ash', ruName: 'Ясень'),
   maple(enName: 'Maple', ruName: 'Клен'),
   casuarina(enName: 'Casuarina', ruName: 'Касуарина'),
@@ -17,7 +17,7 @@ enum TreeAllergens implements AllergenTypes {
   myrtaceae(enName: 'Myrtaceae', ruName: 'Миртовые'),
   willow(enName: 'Willow', ruName: 'Ива'),
   olive(enName: 'Olive', ruName: 'Оливка'),
-  pine(enName: 'Pine', ruName: 'Ель');
+  pine(enName: 'Pine', ruName: 'Сосна');
 
   final String enName, ruName;
 
@@ -28,14 +28,14 @@ enum TreeAllergens implements AllergenTypes {
 }
 
 enum WeedAllergens {
-  mugwort(enName: 'Mugwort', ruName: 'Колокольчик'),
-  chenopod(enName: 'Chenopod', ruName: 'Картофельник'),
-  ragweed(enName: 'Ragweed', ruName: 'Тысячелистник'),
+  mugwort(enName: 'Mugwort', ruName: 'Полынь'),
+  chenopod(enName: 'Chenopod', ruName: 'Маревые'),
+  ragweed(enName: 'Ragweed', ruName: 'Амброзия'),
   nettle(enName: 'Nettle', ruName: 'Крапива'),
-  sedges(enName: 'Sedges', ruName: 'Сосновые'),
+  sedges(enName: 'Sedges', ruName: 'Осока'),
   aster(enName: 'Aster', ruName: 'Астровые'),
-  plantago(enName: 'Plantago', ruName: 'Плантангия'),
-  rumex(enName: 'Rumex', ruName: 'Ромашка');
+  plantago(enName: 'Plantago', ruName: 'Подорожник'),
+  rumex(enName: 'Rumex', ruName: 'Щавель');
 
   final String enName, ruName;
 
