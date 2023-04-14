@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:pollen_meter/test.dart';
+import 'package:pollen_meter/test/test_routes.dart';
 
 class RouteGenerator {
   GoRouter get router => _goRouter;
