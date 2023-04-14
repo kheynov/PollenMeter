@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 final ThemeData theme = ThemeData();
 final brightTheme = ThemeData(
   colorScheme: theme.colorScheme.copyWith(
-      primary: const Color(0xff6750A4), secondary: const Color(0xffe6e0e9)),
+    primary: const Color(0xff6750A4),
+    secondary: const Color(0xffF3EDF7),
+    surface: const Color(0xff49454F),
+    onSurface: const Color(0xff1D1B20),
+    secondaryContainer: const Color(0xffE8DEF8),
+  ),
   shadowColor: Colors.grey,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: 'Montserrat',
