@@ -1,5 +1,6 @@
 import 'package:pollen_meter/core/data/ambee_api/dto/pollen_dto.dart';
-import 'package:pollen_meter/core/domain/models/pollen_model.dart';
+
+import '../../../domain/ambee_api/models/pollen_model.dart';
 
 extension PollenDtoMapper on PollenDTO {
   PollenModel toPollenModel() {

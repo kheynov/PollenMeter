@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pollen_meter/core/data/ambee_api/api_token.dart';
 import 'package:pollen_meter/core/data/ambee_api/dto/pollen_dto.dart';
-import 'package:pollen_meter/core/data/api_constants.dart';
+import 'package:pollen_meter/core/data/ambee_api/api_constants.dart';
 
 class DioClient {
   final Dio _dio = Dio();
