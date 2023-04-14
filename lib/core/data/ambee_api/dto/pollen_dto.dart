@@ -42,6 +42,11 @@ class PollenCount {
       _$PollenCountFromJson(json);
 
   Map<String, dynamic> toJson() => _$PollenCountToJson(this);
+
+  @override
+  String toString() {
+    return 'PollenCount{grassPollen: $grassPollen, treePollen: $treePollen, weedPollen: $weedPollen}';
+  }
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
@@ -62,6 +67,11 @@ class PollenRisk {
   }
 
   Map<String, dynamic> toJson() => _$PollenRiskToJson(this);
+
+  @override
+  String toString() {
+    return 'PollenRisk{grassPollen: $grassPollen, treePollen: $treePollen, weedPollen: $weedPollen}';
+  }
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
@@ -85,4 +95,9 @@ class PollenSpecies {
   }
 
   Map<String, dynamic> toJson() => _$PollenSpeciesToJson(this);
+
+  @override
+  String toString() {
+    return 'PollenSpecies{grass: $grass, tree: $tree, weed: $weed, other: $other}';
+  }
 }
