@@ -13,9 +13,16 @@ class PollenSelectionWidget extends StatefulWidget {
     this.crossAxisCount = 3,
   }) : super(key: key);
 
+  /// Кол-во элементов в строке
   final int crossAxisCount;
+
+  /// Расстояние между элементами
   final double spacing;
+
+  /// Список моделек
   final List<PollenModel> listPollens;
+
+  /// Функция, реагирующая на изменение состояния элементов
   final Function(PollenModel pollenModel) onChoiceOfTile;
 
   @override
@@ -46,7 +53,9 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
                     ),
               selected: widget.listPollens[index].selected,
               onTap: (bool selected) {
-                log(widget.listPollens[index].toString(), name: 'SquareTileWidget - ${widget.listPollens[index].name}');
+                log(widget.listPollens[index].toString(),
+                    name:
+                        'SquareTileWidget - ${widget.listPollens[index].name}');
                 widget.listPollens[index].selected = selected;
                 widget.onChoiceOfTile.call(widget.listPollens[index]);
                 setState(() {});

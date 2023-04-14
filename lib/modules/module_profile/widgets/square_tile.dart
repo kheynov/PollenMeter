@@ -7,13 +7,13 @@ class SquareTileWidget extends StatefulWidget {
     Key? key,
     this.selected = false,
     required this.text,
-    required this.icon,
+    required this.image,
     required this.onTap,
   }) : super(key: key);
 
   final bool selected;
   final String text;
-  final Widget icon;
+  final Widget image;
   final Function(bool selected) onTap;
 
   @override
@@ -42,12 +42,14 @@ class _SquareTileWidgetState extends State<SquareTileWidget> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
-          color: widget.selected ? const Color(0xffE8DEF8) : const Color(0xffFEF7FF),
+          color: widget.selected
+              ? const Color(0xffE8DEF8)
+              : const Color(0xffFEF7FF),
         ),
         duration: const Duration(milliseconds: 300),
         child: Column(
           children: [
-            widget.icon,
+            widget.image,
             const Spacer(),
             Expanded(
               child: Text(
