@@ -1,7 +1,8 @@
 import 'package:pollen_meter/core/data/ambee_api/ambee_api.dart';
 import 'package:pollen_meter/core/data/ambee_api/mappers/api_to_model_mapper.dart';
-import 'package:pollen_meter/core/domain/models/pollen_model.dart';
-import 'package:pollen_meter/core/domain/repository/pollen_repository.dart';
+import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.dart';
+
+import '../../../domain/ambee_api/models/pollen_model.dart';
 
 class PollenRepositoryApiImpl implements PollenRepository {
   final DioClient _service;

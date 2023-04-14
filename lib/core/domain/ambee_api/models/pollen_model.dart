@@ -1,4 +1,4 @@
-import '../../data/ambee_api/dto/pollen_dto.dart';
+import '../../../data/ambee_api/dto/pollen_dto.dart';
 
 class PollenModel {
   final PollenCount count;
