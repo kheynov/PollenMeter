@@ -19,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       items: const [
         TabItem(icon: Icons.explore),
         TabItem(icon: Icons.edit),
-        TabItem(icon: Icons.assignment)
+        TabItem(icon: Icons.assignment),
       ],
       controller: widget.tabController,
     );
