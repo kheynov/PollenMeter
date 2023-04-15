@@ -5,7 +5,9 @@ import 'package:pollen_meter/core/data/ambee_api/dto/pollen_dto.dart';
 import 'package:pollen_meter/core/data/ambee_api/api_constants.dart';
 
 class AmbeeClient {
-  final Dio _dio = Dio();
+  final Dio _dio;
+
+  AmbeeClient(this._dio);
 
   Future<PollenDTO> getPollenData(
       {required int latitude, required int longitude}) async {
