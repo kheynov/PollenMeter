@@ -1,16 +1,15 @@
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
 
-class PollenConcentrationGauge extends StatelessWidget {
-  const PollenConcentrationGauge(
-      {super.key,
-      required this.concentration,
-      required this.progressBarColor,
-      required this.text});
+import 'models/gauge_model.dart';
 
-  final double concentration;
-  final Color progressBarColor;
-  final String text;
+class PollenConcentrationGauge extends StatelessWidget {
+  const PollenConcentrationGauge({
+    super.key,
+    required this.data,
+  });
+
+  final GaugeModel data;
 
   //TODO: replace hardcoded constants with theme data and/or calculate in runtime
   //TODO: find out what the max concentration from the API is
@@ -22,8 +21,8 @@ class PollenConcentrationGauge extends StatelessWidget {
         children: [
           RadialGauge(
             radius: constraints.biggest.shortestSide * 3 / 7,
-            value: concentration,
-            progressBar: GaugeRoundedProgressBar(color: progressBarColor),
+            value: data.value,
+            progressBar: GaugeRoundedProgressBar(color: data.color),
             axis: GaugeAxis(
               min: 0,
               max: 500,
@@ -39,7 +38,7 @@ class PollenConcentrationGauge extends StatelessWidget {
           FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                text,
+                data.title,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: constraints.biggest.shortestSide / 7,
