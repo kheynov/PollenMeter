@@ -4,7 +4,7 @@ import 'package:pollen_meter/core/data/ambee_api/api_token.dart';
 import 'package:pollen_meter/core/data/ambee_api/dto/pollen_dto.dart';
 import 'package:pollen_meter/core/data/ambee_api/api_constants.dart';
 
-class DioClient {
+class AmbeeClient {
   final Dio _dio = Dio();
 
   Future<PollenDTO> getPollenData(
