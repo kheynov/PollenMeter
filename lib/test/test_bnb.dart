@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pollen_meter/dashboard/dashboard.dart';
 import 'package:pollen_meter/test/test_routes.dart';
 
 import '../core_ui/bottom_nav_bar.dart';
@@ -30,7 +31,7 @@ class _MyHomePageTestBNBState extends State<MyHomePageTestBNB>
       body: TabBarView(
         controller: tabController,
         children: const [
-          MyHomePageTest1(),
+          DashboardPage(),
           MyHomePageTest2(),
           MyHomePageTest3(),
         ],
