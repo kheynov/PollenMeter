@@ -6,7 +6,7 @@ import '../../../domain/profile/repository/profile_data_repository.dart';
 class ProfileDataRepositoryLocalImpl implements ProfileDataRepository {
   final ProfileLocalDataStore dataStore;
 
-  ProfileDataRepositoryLocalImpl(this.dataStore);
+  ProfileDataRepositoryLocalImpl({required this.dataStore});
 
   @override
   Future<ProfileDataModel> getProfile() async {

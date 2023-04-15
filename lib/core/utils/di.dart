@@ -21,19 +21,21 @@ class ServiceLocator {
     _locator.registerFactoryAsync<SharedPreferences>(
         () async => await SharedPreferences.getInstance());
 
-    _locator.registerLazySingleton<ProfileLocalDataStore>(
-        () => ProfileLocalDataStore(_locator<SharedPreferences>()));
+    _locator.registerLazySingleton<ProfileLocalDataStore>(() =>
+        ProfileLocalDataStore(
+            sharedPreferences: _locator<SharedPreferences>()));
 
     _locator.registerLazySingleton<Dio>(() => Dio());
 
-    _locator
-        .registerLazySingleton<AmbeeClient>(() => AmbeeClient(_locator<Dio>()));
+    _locator.registerLazySingleton<AmbeeClient>(
+        () => AmbeeClient(dio: _locator<Dio>()));
 
     _locator.registerLazySingleton<ProfileDataRepository>(() =>
-        ProfileDataRepositoryLocalImpl(_locator<ProfileLocalDataStore>()));
+        ProfileDataRepositoryLocalImpl(
+            dataStore: _locator<ProfileLocalDataStore>()));
 
     _locator.registerLazySingleton<PollenRepository>(
-        () => PollenRepositoryApiImpl(_locator<AmbeeClient>()));
+        () => PollenRepositoryApiImpl(ambeeClient: _locator<AmbeeClient>()));
 
     Logger.log('Dependencies initialized!');
   }

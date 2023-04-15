@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProfileLocalDataStore {
   final SharedPreferences sharedPreferences;
 
-  ProfileLocalDataStore(this.sharedPreferences);
+  ProfileLocalDataStore({required this.sharedPreferences});
 
   Future<ProfileDataModel> getProfile() async {
     final String? profileJson = sharedPreferences.getString('profile');
