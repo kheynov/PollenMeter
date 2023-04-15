@@ -1,14 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pollen_meter/core/utils/coordinates.dart';
+import 'package:pollen_meter/core/utils/di.dart';
 import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'core/domain/ambee_api/models/pollen_model.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
   initializeFirebase();
+  await ServiceLocator.initApp();
 }
 
 void initializeFirebase() async {
@@ -16,6 +21,12 @@ void initializeFirebase() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
+
+final pollenDataProvider =
+    FutureProvider.family<PollenModel, Coordinates>((ref, coords) async {
+  return ServiceLocator.pollenRepository
+      .fetchData(latitude: coords.latitude, longitude: coords.longitude);
+});
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

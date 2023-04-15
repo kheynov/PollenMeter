@@ -19,6 +19,12 @@ class _MyHomePageTestBNBState extends State<MyHomePageTestBNB>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(

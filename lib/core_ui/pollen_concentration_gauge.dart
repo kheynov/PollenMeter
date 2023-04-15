@@ -21,11 +21,11 @@ class PollenConcentrationGauge extends StatelessWidget {
       builder: (context, constraints) => Column(
         children: [
           RadialGauge(
-            radius: (constraints.maxWidth < constraints.maxHeight
-                    ? constraints.maxWidth
-                    : constraints.maxHeight) /
-                2,
-            value: concentration,
+            //radius: constraints.
+            radius: constraints.maxWidth < constraints.maxHeight
+                ? constraints.maxWidth / 2
+                : constraints.maxHeight / 2,
+            value: 250,
             progressBar: GaugeRoundedProgressBar(color: progressBarColor),
             axis: const GaugeAxis(
               min: 0,
@@ -33,7 +33,7 @@ class PollenConcentrationGauge extends StatelessWidget {
               degrees: 270,
               style: GaugeAxisStyle(
                 thickness: 20,
-                background: Colors.blue,
+                background: Colors.red,
               ),
             ),
             child: const FittedBox(fit: BoxFit.fill, child: Icon(Icons.forest)),
