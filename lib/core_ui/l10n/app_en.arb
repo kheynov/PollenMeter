@@ -1,5 +1,9 @@
 {
     "@@locale": "en",
     "appTitle": ".pollenmeter",
-    "alert": "Don't leave your room, this is better left undone"
+    "alert": "Don't leave your room, this is better left undone",
+    "lowRisk": "Low",
+    "moderateRisk": "Moderate",
+    "highRisk": "High",
+    "veryHighRisk": "Very High"
 }

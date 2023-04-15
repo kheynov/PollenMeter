@@ -5,12 +5,14 @@ class GaugeModel {
   final IconData icon;
   final Color color;
   final String title;
+  final String? bottomTitle;
 
   GaugeModel({
     required this.value,
     required this.title,
     required this.icon,
     required this.color,
+    this.bottomTitle,
   });
   @override
   String toString() =>

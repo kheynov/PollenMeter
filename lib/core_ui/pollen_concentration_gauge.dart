@@ -16,11 +16,18 @@ class PollenConcentrationGauge extends StatelessWidget {
   //(The gauge would just clip if the value exceeds the max; it is only for information purposes)
   @override
   Widget build(BuildContext context) {
+    double textShare = 0.1;
+    late double largerOfTextsShare;
+    if (data.bottomTitle?.isNotEmpty ?? false) {
+      largerOfTextsShare = 7.0 / 12;
+    } else {
+      largerOfTextsShare = 1;
+    }
     return LayoutBuilder(
       builder: (context, constraints) => Column(
         children: [
           RadialGauge(
-            radius: constraints.biggest.shortestSide * 9 / 20,
+            radius: constraints.biggest.shortestSide * (1 - textShare) / 2,
             value: data.value,
             progressBar: GaugeRoundedProgressBar(color: data.color),
             axis: GaugeAxis(
@@ -35,15 +42,34 @@ class PollenConcentrationGauge extends StatelessWidget {
             child: FittedBox(fit: BoxFit.contain, child: Icon(data.icon)),
           ),
           FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                data.title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: constraints.biggest.shortestSide / 10,
+            fit: BoxFit.scaleDown,
+            child: Column(
+              children: [
+                Text(
+                  data.title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: constraints.biggest.shortestSide *
+                        textShare *
+                        largerOfTextsShare,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ))
+                data.bottomTitle != null
+                    ? Text(
+                        data.bottomTitle!,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: constraints.biggest.shortestSide *
+                              textShare *
+                              (1 - largerOfTextsShare),
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
+          ),
         ],
       ),
     );

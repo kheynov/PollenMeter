@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
 import 'package:pollen_meter/core_ui/pollen_concentration_gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
-import 'package:pollen_meter/core/utils/pollen_functions.dart';
+
+import '../core_ui/models/gauge_model.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -17,6 +19,15 @@ class DashboardPage extends ConsumerWidget {
         Coordinates(45, 47),
       ),
     ); //TODO: get coordinates from location
+    late final GaugeModel gaugeModelMain;
+    List<GaugeModel>? gaugeModelAuxiliary;
+
+    pollenLogic.whenData(
+      (value) async {
+        gaugeModelMain = value.toGaugeModelMain(context);
+        gaugeModelAuxiliary = await value.toGaugeModelsAuxiliary(context, ref);
+      },
+    );
     return Scaffold(
       body: Center(
         child: ListView(
@@ -24,7 +35,7 @@ class DashboardPage extends ConsumerWidget {
             const SizedBox(height: 70),
             pollenLogic.when(
               data: (data) => PollenConcentrationGauge(
-                data: getMainGaugeState(data),
+                data: gaugeModelMain,
               ),
               error: (error, stackTrace) => Text(
                 error.toString(),
@@ -35,8 +46,8 @@ class DashboardPage extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             pollenLogic.when(
-              data: (data) => (getMainGaugeState(data).title == 'High' ||
-                      getMainGaugeState(data).title == 'Very High')
+              data: (data) => (gaugeModelMain.title == 'High' ||
+                      gaugeModelMain.title == 'Very High')
                   ? HighPollenLevelAlert(
                       msg: AppLocalizations.of(context)?.alert ?? 'Error')
                   : const SizedBox.shrink(),
@@ -48,13 +59,17 @@ class DashboardPage extends ConsumerWidget {
             SizedBox(
               height: 125,
               child: ListView.separated(
-                itemCount: 10,
+                itemCount: gaugeModelAuxiliary?.length ?? 0,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) =>
                     pollenLogic.when(
-                  data: (data) => PollenConcentrationGauge(
-                    data: getMainGaugeState(data),
-                  ),
+                  data: (data) => gaugeModelAuxiliary
+                      ?.map(
+                        (e) => PollenConcentrationGauge(
+                          data: e,
+                        ),
+                      )
+                      .toList()[index],
                   error: (error, stackTrace) => Text(
                     error.toString(),
                   ),
