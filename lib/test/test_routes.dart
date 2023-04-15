@@ -1,37 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyHomePageTest1 extends StatefulWidget {
+import '../main.dart';
+
+class MyHomePageTest1 extends ConsumerWidget {
   const MyHomePageTest1({Key? key}) : super(key: key);
-  @override
-  State createState() => _MyHomePageTest1State();
-}
 
-class _MyHomePageTest1State extends State<MyHomePageTest1>
-    with AutomaticKeepAliveClientMixin {
-  int number = 0;
   @override
-  bool get wantKeepAlive => true;
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pollenLogic = ref.watch(pollenDataProvider(47));
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              number.toString(),
+            pollenLogic.when(
+              data: (data) => Text(data.toString()),
+              error: (Object error, StackTrace stackTrace) {
+                return Text(error.toString());
+              },
+              loading: () => const Text('loading...'),
             ),
             FloatingActionButton(
-              onPressed: () {
-                setState(
-                  () {
-                    ++number;
-                  },
-                );
-              },
+              onPressed: () => context.go('/dashboard'),
             ),
           ],
         ),
@@ -50,7 +43,7 @@ class MyHomePageTest2 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context)?.appTitle ?? '.null'),
+            Text(AppLocalizations.of(context)?.appTitle ?? ''),
             FloatingActionButton(
               onPressed: () => context.go('/dashboard'),
             ),
