@@ -1,4 +1,5 @@
 {
     "@@locale": "en",
-    "appTitle": ".pollenmeter"
+    "appTitle": ".pollenmeter",
+    "alert": "Don't leave your room, this is better left undone"
 }
