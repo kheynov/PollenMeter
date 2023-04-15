@@ -22,11 +22,11 @@ void initializeFirebase() async {
   );
 }
 
-final dioService = DioClient();
+final ambeeService = AmbeeClient();
 
 final pollenDataProvider =
     FutureProvider.family<PollenModel, int>((ref, coords) async {
-  return PollenRepositoryApiImpl(dioService)
+  return PollenRepositoryApiImpl(ambeeService)
       .fetchData(latitude: coords, longitude: coords);
 });
 
