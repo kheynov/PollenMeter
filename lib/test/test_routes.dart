@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pollen_meter/core/utils/coordinates.dart';
 
 import '../main.dart';
 
@@ -10,7 +11,7 @@ class MyHomePageTest1 extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pollenLogic = ref.watch(pollenDataProvider(47));
+    final pollenLogic = ref.watch(pollenDataProvider(Coordinates(45, 47)));
     return Scaffold(
       body: Center(
         child: Column(

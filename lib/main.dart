@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core/utils/di.dart';
 import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
@@ -22,9 +23,9 @@ void initializeFirebase() async {
 }
 
 final pollenDataProvider =
-    FutureProvider.family<PollenModel, int>((ref, coords) async {
+    FutureProvider.family<PollenModel, Coordinates>((ref, coords) async {
   return ServiceLocator.pollenRepository
-      .fetchData(latitude: coords, longitude: coords);
+      .fetchData(latitude: coords.latitude, longitude: coords.longitude);
 });
 
 class MyApp extends StatelessWidget {
