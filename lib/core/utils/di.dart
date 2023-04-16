@@ -19,7 +19,7 @@ class ServiceLocator {
     /// Register dependencies
     Logger.log('Dependencies initializing...');
 
-    _locator.registerFactoryAsync<SharedPreferences>(
+    _locator.registerSingletonAsync<SharedPreferences>(
         () async => await SharedPreferences.getInstance());
 
     _locator.registerLazySingleton<ProfileLocalDataStore>(() =>

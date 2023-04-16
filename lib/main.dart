@@ -38,22 +38,22 @@ void initializeFirebase() async {
 
 final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
   (ref, coords) async {
-    return await ServiceLocator.pollenRepository
+    return ServiceLocator.pollenRepository
         .fetchData(latitude: coords.latitude, longitude: coords.longitude);
   },
 );
 
 final profileDataProvider = FutureProvider(
   (ref) async {
-    return await ServiceLocator.profileDataRepository.getProfile();
+    return ServiceLocator.profileDataRepository.getProfile();
   },
 );
 
 final auxiliaryGaugeLogicProvider =
     FutureProvider.family<AuxiliaryGaugeLogic, Coordinates>(
   (ref, coords) async {
-    final profileData = ref.watch(profileDataProvider);
-    final pollenData = ref.watch(pollenDataProvider(coords));
+    final pollenData = await ref.watch(pollenDataProvider(coords).future);
+    final profileData = await ref.watch(profileDataProvider.future);
     return AuxiliaryGaugeLogic(
         profileData: profileData, pollenData: pollenData);
   },

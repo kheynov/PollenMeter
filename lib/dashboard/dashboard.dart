@@ -7,7 +7,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 
+import '../core/domain/profile/enums/allergen_types.dart';
 import '../core/domain/profile/model/profile_data_model.dart';
+import '../core/utils/di.dart';
+import '../core/utils/logger.dart';
 import '../core_ui/models/gauge/gauge_model.dart';
 
 class DashboardPage extends ConsumerWidget {
@@ -20,14 +23,39 @@ class DashboardPage extends ConsumerWidget {
         Coordinates(45, 47),
       ),
     ); //TODO: get coordinates from location
+    final auxiliaryGaugeLogic = ref.watch(
+      auxiliaryGaugeLogicProvider(
+        Coordinates(45, 47),
+      ),
+    );
+    ServiceLocator.profileDataRepository.saveProfile(
+      ProfileDataModel(
+        false,
+        [
+          Allergens.alder,
+          Allergens.ash,
+          Allergens.birch,
+          Allergens.chenopod,
+          Allergens.cypress,
+          Allergens.elm,
+        ],
+      ),
+    );
+    late final List<GaugeModel>? gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
+      data: (data) => data.pollenData
+          .toGaugeModelsAuxiliary(context, ref, data.profileData),
+      error: (error, stackTrace) {
+        Logger.log(error.toString());
+        return List<GaugeModel>.empty();
+      },
+      loading: () => List<GaugeModel>.empty(),
+    );
+
     late final GaugeModel gaugeModelMain;
-    List<GaugeModel>? gaugeModelAuxiliary;
 
     pollenLogic.whenData(
       (value) {
         gaugeModelMain = value.toGaugeModelMain(context);
-        gaugeModelAuxiliary = value.toGaugeModelsAuxiliary(
-            context, ref, ProfileDataModel(true, []));
       },
     );
     return Scaffold(
@@ -61,21 +89,30 @@ class DashboardPage extends ConsumerWidget {
             SizedBox(
               height: 125,
               child: ListView.separated(
-                itemCount: gaugeModelAuxiliary?.length ?? 0,
+                itemCount: gaugeModelAuxiliary?.length ?? 1,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) =>
-                    pollenLogic.when(
-                  data: (data) => gaugeModelAuxiliary
-                      ?.map(
-                        (e) => PollenConcentrationGauge(
-                          data: e,
-                        ),
-                      )
-                      .toList()[index],
-                  error: (error, stackTrace) => Text(
-                    error.toString(),
-                  ),
-                  loading: () => const SizedBox.shrink(),
+                    auxiliaryGaugeLogic.when(
+                  data: (data) {
+                    Logger.log(data.toString());
+                    return gaugeModelAuxiliary
+                        ?.map(
+                          (e) => PollenConcentrationGauge(
+                            data: e,
+                          ),
+                        )
+                        .toList()[index];
+                  },
+                  error: (error, stackTrace) {
+                    Logger.log(error.toString());
+                    return Text(
+                      error.toString(),
+                    );
+                  },
+                  loading: () {
+                    Logger.log("loading...");
+                    return const SizedBox.shrink();
+                  },
                 ),
                 separatorBuilder: (BuildContext context, int index) =>
                     const SizedBox(width: 10),
