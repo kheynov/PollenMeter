@@ -7,9 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 
-import '../core/domain/profile/enums/allergen_types.dart';
-import '../core/domain/profile/model/profile_data_model.dart';
-import '../core/utils/di.dart';
 import '../core/utils/logger.dart';
 import '../core_ui/models/gauge/gauge_model.dart';
 
@@ -26,19 +23,6 @@ class DashboardPage extends ConsumerWidget {
     final auxiliaryGaugeLogic = ref.watch(
       auxiliaryGaugeLogicProvider(
         Coordinates(43.414192, 39.950547),
-      ),
-    );
-    ServiceLocator.profileDataRepository.saveProfile(
-      ProfileDataModel(
-        false,
-        [
-          Allergens.alder,
-          Allergens.ash,
-          Allergens.birch,
-          Allergens.chenopod,
-          Allergens.cypress,
-          Allergens.elm,
-        ],
       ),
     );
     late final List<GaugeModel>? gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
