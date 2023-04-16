@@ -11,6 +11,7 @@ import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
 
 import 'core/domain/ambee_api/models/pollen_model.dart';
+import 'core/domain/gauge/auxiliary_gauge_logic.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -35,11 +36,28 @@ void initializeFirebase() async {
   };
 }
 
-final pollenDataProvider =
-    FutureProvider.family<PollenModel, Coordinates>((ref, coords) {
-  return ServiceLocator.pollenRepository
-      .fetchData(latitude: coords.latitude, longitude: coords.longitude);
-});
+final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
+  (ref, coords) async {
+    return await ServiceLocator.pollenRepository
+        .fetchData(latitude: coords.latitude, longitude: coords.longitude);
+  },
+);
+
+final profileDataProvider = FutureProvider(
+  (ref) async {
+    return await ServiceLocator.profileDataRepository.getProfile();
+  },
+);
+
+final auxiliaryGaugeLogicProvider =
+    FutureProvider.family<AuxiliaryGaugeLogic, Coordinates>(
+  (ref, coords) async {
+    final profileData = ref.watch(profileDataProvider);
+    final pollenData = ref.watch(pollenDataProvider(coords));
+    return AuxiliaryGaugeLogic(
+        profileData: profileData, pollenData: pollenData);
+  },
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core_ui/models/gauge_model.dart';
+import '../../../../core_ui/models/gauge/gauge_model.dart';
+import '../../profile/model/profile_data_model.dart';
 import '../models/pollen_model.dart';
 
 extension PollenToGaugeMapper on PollenModel {
@@ -43,17 +44,17 @@ extension PollenToGaugeMapper on PollenModel {
     return result[0];
   }
 
-  Future<List<GaugeModel>> toGaugeModelsAuxiliary(
-      BuildContext context, WidgetRef ref) async {
-    // ProfileDataModel profile =
-    //     await ServiceLocator.profileDataRepository.getProfile();
+  List<GaugeModel> toGaugeModelsAuxiliary(
+      BuildContext context, WidgetRef ref, ProfileDataModel profile) {
     // List<PollenLevel> result = (grassPollenLevels.where(
     //   (element) => profile.allergens.any(
     //     (innerElement) => element.name == innerElement.enName,
     //   ),
     // ))
-    //     .followedBy(weedPollenLevels.where((element) => false) as Iterable<GrassPollenLevel>)
-    //     .followedBy(treePollenLevels.where((element) => false) as Iterable<GrassPollenLevel>)
+    //     .followedBy(weedPollenLevels.where((element) => false)
+    //         as Iterable<GrassPollenLevel>)
+    //     .followedBy(treePollenLevels.where((element) => false)
+    //         as Iterable<GrassPollenLevel>)
     //     .toList();
     throw UnimplementedError();
   }

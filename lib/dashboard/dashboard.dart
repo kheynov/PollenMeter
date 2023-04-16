@@ -7,7 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 
-import '../core_ui/models/gauge_model.dart';
+import '../core/domain/profile/model/profile_data_model.dart';
+import '../core_ui/models/gauge/gauge_model.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -23,9 +24,10 @@ class DashboardPage extends ConsumerWidget {
     List<GaugeModel>? gaugeModelAuxiliary;
 
     pollenLogic.whenData(
-      (value) async {
+      (value) {
         gaugeModelMain = value.toGaugeModelMain(context);
-        gaugeModelAuxiliary = await value.toGaugeModelsAuxiliary(context, ref);
+        gaugeModelAuxiliary = value.toGaugeModelsAuxiliary(
+            context, ref, ProfileDataModel(true, []));
       },
     );
     return Scaffold(
