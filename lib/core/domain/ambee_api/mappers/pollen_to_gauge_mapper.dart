@@ -2,25 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core_ui/models/gauge/gauge_model.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/l10n.dart';
 import '../../profile/model/profile_data_model.dart';
 import '../models/pollen_model.dart';
 
 extension PollenToGaugeMapper on PollenModel {
-  Color getColorForLevel(double level) {
-    if (level < 100) {
-      //Тут на глазок - для маленьких кругляшков по видам, так как там не дается risk в явном виде
-      return Colors.green;
-    } else if (level < 200) {
-      return Colors.yellow;
-    } else if (level < 300) {
-      return Colors.orange;
-    } else if (level < 400) {
-      return Colors.red;
-    } else {
-      return Colors.purple;
-    }
-  }
-
   GaugeModel toGaugeModelMain(BuildContext context) {
     Map<String, Color> riskColors = {
       'Low': Colors.green,
@@ -64,33 +51,6 @@ extension PollenToGaugeMapper on PollenModel {
 
   List<GaugeModel> toGaugeModelsAuxiliary(
       BuildContext context, WidgetRef ref, ProfileDataModel profile) {
-    Map<String, String?> plantNames = {
-      'Hazel': AppLocalizations.of(context)?.hazel,
-      'Elm': AppLocalizations.of(context)?.elm,
-      'Alder': AppLocalizations.of(context)?.alder,
-      'Poplar / Cottonwood': AppLocalizations.of(context)?.poplar,
-      'Oak': AppLocalizations.of(context)?.oak,
-      'Plane': AppLocalizations.of(context)?.plane,
-      'Birch': AppLocalizations.of(context)?.birch,
-      'Cypress': AppLocalizations.of(context)?.cypress,
-      'Mulberry': AppLocalizations.of(context)?.mulberry,
-      'Ash': AppLocalizations.of(context)?.ash,
-      'Maple': AppLocalizations.of(context)?.maple,
-      'Casuarina': AppLocalizations.of(context)?.casuarina,
-      'Acacia': AppLocalizations.of(context)?.acacia,
-      'Myrtaceae': AppLocalizations.of(context)?.myrtaceae,
-      'Willow': AppLocalizations.of(context)?.willow,
-      'Olive': AppLocalizations.of(context)?.olive,
-      'Pine': AppLocalizations.of(context)?.pine,
-      'Mugwort': AppLocalizations.of(context)?.mugwort,
-      'Chenopod': AppLocalizations.of(context)?.chenopod,
-      'Ragweed': AppLocalizations.of(context)?.ragweed,
-      'Nettle': AppLocalizations.of(context)?.nettle,
-      'Sedges': AppLocalizations.of(context)?.sedges,
-      'Aster': AppLocalizations.of(context)?.aster,
-      'Plantago': AppLocalizations.of(context)?.plantago,
-      'Rumex': AppLocalizations.of(context)?.rumex,
-    };
     List<PollenLevel> grassList = (grassPollenLevels.where(
       (element) => profile.allergens.any(
         (innerElement) => element.name == innerElement.enName,
@@ -110,7 +70,7 @@ extension PollenToGaugeMapper on PollenModel {
         .map(
           (e) => GaugeModel(
             value: e.level.toDouble(),
-            title: plantNames[e.name] ?? e.name,
+            title: getLocalizedName(context, e.name),
             icon: Icons.grass,
             color: getColorForLevel(
               e.level.toDouble(),
@@ -121,7 +81,7 @@ extension PollenToGaugeMapper on PollenModel {
           weedList.map(
             (e) => GaugeModel(
                 value: e.level.toDouble(),
-                title: plantNames[e.name] ?? e.name,
+                title: getLocalizedName(context, e.name),
                 icon: Icons.nature,
                 color: getColorForLevel(
                   e.level.toDouble(),
@@ -132,7 +92,7 @@ extension PollenToGaugeMapper on PollenModel {
           treeList.map(
             (e) => GaugeModel(
               value: e.level.toDouble(),
-              title: plantNames[e.name] ?? e.name,
+              title: getLocalizedName(context, e.name),
               icon: Icons.park,
               color: getColorForLevel(
                 e.level.toDouble(),
