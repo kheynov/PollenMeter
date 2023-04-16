@@ -10,7 +10,7 @@ class AmbeeClient {
   AmbeeClient({required this.dio});
 
   Future<PollenDTO> getPollenData(
-      {required int latitude, required int longitude}) async {
+      {required double latitude, required double longitude}) async {
     try {
       var res = await dio.get(
           '${ApiConstants.baseURL}${ApiConstants.pollenEndpoint}?lat=$latitude&lng=$longitude',

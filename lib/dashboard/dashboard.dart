@@ -20,12 +20,12 @@ class DashboardPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pollenLogic = ref.watch(
       pollenDataProvider(
-        Coordinates(45, 47),
+        Coordinates(43.414192, 39.950547),
       ),
     ); //TODO: get coordinates from location
     final auxiliaryGaugeLogic = ref.watch(
       auxiliaryGaugeLogicProvider(
-        Coordinates(45, 47),
+        Coordinates(43.414192, 39.950547),
       ),
     );
     ServiceLocator.profileDataRepository.saveProfile(
@@ -42,8 +42,11 @@ class DashboardPage extends ConsumerWidget {
       ),
     );
     late final List<GaugeModel>? gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
-      data: (data) => data.pollenData
-          .toGaugeModelsAuxiliary(context, ref, data.profileData),
+      data: (data) {
+        Logger.log(data.toString());
+        return data.pollenData
+            .toGaugeModelsAuxiliary(context, ref, data.profileData);
+      },
       error: (error, stackTrace) {
         Logger.log(error.toString());
         return List<GaugeModel>.empty();
@@ -58,6 +61,7 @@ class DashboardPage extends ConsumerWidget {
         gaugeModelMain = value.toGaugeModelMain(context);
       },
     );
+
     return Scaffold(
       body: Center(
         child: ListView(
@@ -94,7 +98,7 @@ class DashboardPage extends ConsumerWidget {
                 itemBuilder: (BuildContext context, int index) =>
                     auxiliaryGaugeLogic.when(
                   data: (data) {
-                    Logger.log(data.toString());
+                    Logger.log(gaugeModelAuxiliary.toString());
                     return gaugeModelAuxiliary
                         ?.map(
                           (e) => PollenConcentrationGauge(

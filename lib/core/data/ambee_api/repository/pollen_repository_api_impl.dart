@@ -11,7 +11,7 @@ class PollenRepositoryApiImpl implements PollenRepository {
 
   @override
   Future<PollenModel> fetchData(
-      {required int latitude, required int longitude}) async {
+      {required double latitude, required double longitude}) async {
     final res = await ambeeClient.getPollenData(
       latitude: latitude,
       longitude: longitude,

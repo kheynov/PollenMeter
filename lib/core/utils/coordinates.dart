@@ -1,5 +1,5 @@
 class Coordinates {
-  final int latitude, longitude;
+  final double latitude, longitude;
 
   Coordinates(this.latitude, this.longitude);
   @override
