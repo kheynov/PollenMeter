@@ -49,6 +49,3 @@ Map<String, Allergens> _mapAllergens = {
   "Rumex": Allergens.rumex,
   "Grass / Poaceae": Allergens.grass,
 };
-
-
-
