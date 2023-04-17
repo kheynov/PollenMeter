@@ -1,4 +1,4 @@
-import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergen.dart';
 
 class PollenModel {
   final PollenCount count;
@@ -28,13 +28,13 @@ class PollenCount {
 }
 
 class PollenLevel {
-  final Allergens allergens;
+  final Allergen allergen;
   final int level;
 
-  PollenLevel(this.allergens, this.level);
+  PollenLevel(this.allergen, this.level);
 
   @override
   String toString() {
-    return 'PollenLevel($runtimeType){name: $allergens, level: $level}';
+    return 'PollenLevel($runtimeType){name: $allergen, level: $level}';
   }
 }

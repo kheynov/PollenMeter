@@ -1,5 +1,6 @@
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 
 import 'gauge/models/gauge_model.dart';
 
@@ -32,7 +33,7 @@ class Gauge extends StatelessWidget {
             progressBar: GaugeRoundedProgressBar(color: data.color),
             axis: GaugeAxis(
               min: 0,
-              max: 500,
+              max: context.reasonableTypeLimit(allergenType: data.allergenType),
               degrees: 270,
               style: GaugeAxisStyle(
                 thickness: (constraints.biggest.shortestSide / 20),

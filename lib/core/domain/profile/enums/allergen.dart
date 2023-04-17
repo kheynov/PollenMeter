@@ -1,6 +1,6 @@
-import 'package:pollen_meter/core/domain/profile/enums/allergen_types.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergen_type.dart';
 
-enum Allergens {
+enum Allergen {
   hazel(type: AllergenType.tree),
   elm(type: AllergenType.tree),
   alder(type: AllergenType.tree),
@@ -32,12 +32,12 @@ enum Allergens {
 
   final AllergenType type;
 
-  const Allergens({
+  const Allergen({
     required this.type,
   });
 }
 
-extension AllergensExtension on Allergens {
+extension AllergensExtension on Allergen {
   String get pathImage {
     switch (this) {
       default:

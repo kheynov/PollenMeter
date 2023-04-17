@@ -1,5 +1,5 @@
 import 'package:pollen_meter/core/data/ambee_api/dto/pollen_dto.dart';
-import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergen.dart';
 
 import '../../../domain/ambee_api/models/pollen_model.dart';
 
@@ -20,31 +20,31 @@ extension PollenDtoMapper on PollenDTO {
   }
 }
 
-Map<String, Allergens> _mapAllergens = {
-  "Hazel": Allergens.hazel,
-  "Elm": Allergens.elm,
-  "Alder": Allergens.alder,
-  "Poplar / Cottonwood": Allergens.poplar,
-  "Oak": Allergens.oak,
-  "Plane": Allergens.plane,
-  "Birch": Allergens.birch,
-  "Cypress": Allergens.cypress,
-  "Mulberry": Allergens.myrtaceae,
-  "Ash": Allergens.ash,
-  "Maple": Allergens.maple,
-  "Casuarina": Allergens.casuarina,
-  "Acacia": Allergens.acacia,
-  "Myrtaceae": Allergens.myrtaceae,
-  "Willow": Allergens.willow,
-  "Olive": Allergens.olive,
-  "Pine": Allergens.pine,
-  "Mugwort": Allergens.mugwort,
-  "Chenopod": Allergens.chenopod,
-  "Ragweed": Allergens.ragweed,
-  "Nettle": Allergens.nettle,
-  "Sedges": Allergens.sedges,
-  "Aster": Allergens.aster,
-  "Plantago": Allergens.plantago,
-  "Rumex": Allergens.rumex,
-  "Grass / Poaceae": Allergens.grass,
+Map<String, Allergen> _mapAllergens = {
+  "Hazel": Allergen.hazel,
+  "Elm": Allergen.elm,
+  "Alder": Allergen.alder,
+  "Poplar / Cottonwood": Allergen.poplar,
+  "Oak": Allergen.oak,
+  "Plane": Allergen.plane,
+  "Birch": Allergen.birch,
+  "Cypress": Allergen.cypress,
+  "Mulberry": Allergen.myrtaceae,
+  "Ash": Allergen.ash,
+  "Maple": Allergen.maple,
+  "Casuarina": Allergen.casuarina,
+  "Acacia": Allergen.acacia,
+  "Myrtaceae": Allergen.myrtaceae,
+  "Willow": Allergen.willow,
+  "Olive": Allergen.olive,
+  "Pine": Allergen.pine,
+  "Mugwort": Allergen.mugwort,
+  "Chenopod": Allergen.chenopod,
+  "Ragweed": Allergen.ragweed,
+  "Nettle": Allergen.nettle,
+  "Sedges": Allergen.sedges,
+  "Aster": Allergen.aster,
+  "Plantago": Allergen.plantago,
+  "Rumex": Allergen.rumex,
+  "Grass / Poaceae": Allergen.grass,
 };

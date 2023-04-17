@@ -20,7 +20,8 @@ Map<String, dynamic> _$PollenDTOToJson(PollenDTO instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt,
     };
 
-PollenCountDTO _$PollenCountFromJson(Map<String, dynamic> json) => PollenCountDTO(
+PollenCountDTO _$PollenCountFromJson(Map<String, dynamic> json) =>
+    PollenCountDTO(
       json['grass_pollen'] as int,
       json['tree_pollen'] as int,
       json['weed_pollen'] as int,

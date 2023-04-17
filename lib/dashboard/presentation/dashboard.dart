@@ -3,12 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_statistic_mapper.dart';
+import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
 
+import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/gauge/models/gauge_model.dart';
 import '../../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
@@ -20,22 +22,25 @@ class DashboardPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pollenLogic = ref.watch(
       pollenDataProvider(
-        Coordinates(43.414212, 39.950548),
+        Coordinates(40.506036, -3.740210),
       ),
     ); //TODO: get coordinates from location
     final auxiliaryGaugeLogic = ref.watch(
       auxiliaryGaugeLogicProvider(
-        Coordinates(43.414212, 39.950548),
+        Coordinates(40.506036, -3.740210),
       ),
     );
     final List<GaugeModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
       data: (data) {
         //TODO: исправить, когда будет исправлен PollenToGaugeMapper
-        // return data.pollenData
-        //     .toGaugeModelsAuxiliary(context, ref, data.profileData);
-        return List<GaugeModel>.empty();
+        final ultraData = data.pollenData
+            .toGaugeModelsAuxiliary(context, ref, data.profileData);
+        Logger.log(ultraData.toString());
+        return ultraData;
       },
       error: (error, stackTrace) {
+        Logger.log("Error: $error");
+        Logger.log("StackTrace: ${stackTrace.toString()}");
         return List<GaugeModel>.empty();
       },
       loading: () => List<GaugeModel>.empty(),
@@ -83,8 +88,14 @@ class DashboardPage extends ConsumerWidget {
                 return const SizedBox(height: 20);
               case 3:
                 return pollenLogic.when(
-                  data: (data) => (gaugeModelMain.title == 'High' ||
-                          gaugeModelMain.title == 'Very High')
+                  data: (data) => (context.fromPollenLevelUnlocalized(
+                                  allergenType: gaugeModelMain.allergenType,
+                                  count: gaugeModelMain.value.toInt()) ==
+                              RiskLevel.high ||
+                          context.fromPollenLevelUnlocalized(
+                                  allergenType: gaugeModelMain.allergenType,
+                                  count: gaugeModelMain.value.toInt()) ==
+                              RiskLevel.veryHigh)
                       ? HighPollenLevelAlert(
                           msg: AppLocalizations.of(context)?.alert ?? 'Error')
                       : const SizedBox.shrink(),
