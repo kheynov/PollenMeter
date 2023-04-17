@@ -8,7 +8,7 @@ part of 'profile_data_model.dart';
 
 ProfileDataModel _$ProfileDataModelFromJson(Map<String, dynamic> json) =>
     ProfileDataModel(
-      json['is_dark_theme'] as bool,
+      $enumDecode(_$ThemeTypesEnumMap, json['theme']),
       (json['allergens'] as List<dynamic>)
           .map((e) => $enumDecode(_$AllergensEnumMap, e))
           .toList(),
@@ -16,10 +16,16 @@ ProfileDataModel _$ProfileDataModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ProfileDataModelToJson(ProfileDataModel instance) =>
     <String, dynamic>{
-      'is_dark_theme': instance.isDarkTheme,
+      'theme': _$ThemeTypesEnumMap[instance.theme]!,
       'allergens':
           instance.allergens.map((e) => _$AllergensEnumMap[e]!).toList(),
     };
+
+const _$ThemeTypesEnumMap = {
+  ThemeTypes.dark: 'dart',
+  ThemeTypes.light: 'light',
+  ThemeTypes.system: 'system',
+};
 
 const _$AllergensEnumMap = {
   Allergens.hazel: 'hazel',
@@ -47,4 +53,5 @@ const _$AllergensEnumMap = {
   Allergens.aster: 'aster',
   Allergens.plantago: 'plantago',
   Allergens.rumex: 'rumex',
+  Allergens.grass: 'grass',
 };

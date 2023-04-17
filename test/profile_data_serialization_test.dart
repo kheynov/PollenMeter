@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pollen_meter/core/data/profile/local/profile_local_data_source.dart';
 import 'package:pollen_meter/core/data/profile/repository/profile_data_repository_local_impl.dart';
-import 'package:pollen_meter/core/domain/profile/enums/allergen_types.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
 import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

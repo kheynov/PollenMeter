@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pollen_meter/core/domain/profile/enums/allergen_types.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
 
 extension LocalizedBuildContextExtension on BuildContext {
   AppLocalizations get loc => AppLocalizations.of(this)!;
