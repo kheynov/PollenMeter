@@ -1,53 +1,75 @@
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
 
-class PollenConcentrationGauge extends StatelessWidget {
-  const PollenConcentrationGauge(
-      {super.key,
-      required this.concentration,
-      required this.progressBarColor,
-      required this.text});
+import 'models/gauge/gauge_model.dart';
 
-  final double concentration;
-  final Color progressBarColor;
-  final String text;
+class PollenConcentrationGauge extends StatelessWidget {
+  const PollenConcentrationGauge({
+    super.key,
+    required this.data,
+  });
+
+  final GaugeModel data;
 
   //TODO: replace hardcoded constants with theme data and/or calculate in runtime
   //TODO: find out what the max concentration from the API is
   //(The gauge would just clip if the value exceeds the max; it is only for information purposes)
   @override
   Widget build(BuildContext context) {
+    double textShare = 0.1;
+    late double largerOfTextsShare;
+    if (data.bottomTitle?.isNotEmpty ?? false) {
+      largerOfTextsShare = 7.0 / 12;
+    } else {
+      largerOfTextsShare = 1;
+    }
     return LayoutBuilder(
       builder: (context, constraints) => Column(
         children: [
           RadialGauge(
-            //radius: constraints.
-            radius: constraints.maxWidth < constraints.maxHeight
-                ? constraints.maxWidth / 2
-                : constraints.maxHeight / 2,
-            value: 250,
-            progressBar: GaugeRoundedProgressBar(color: progressBarColor),
-            axis: const GaugeAxis(
+            radius: constraints.biggest.shortestSide * (1 - textShare) / 2,
+            value: data.value,
+            progressBar: GaugeRoundedProgressBar(color: data.color),
+            axis: GaugeAxis(
               min: 0,
               max: 500,
               degrees: 270,
               style: GaugeAxisStyle(
-                thickness: 20,
-                background: Colors.red,
+                thickness: (constraints.biggest.shortestSide / 20),
+                background: Colors.blue,
               ),
             ),
-            child: const FittedBox(fit: BoxFit.fill, child: Icon(Icons.forest)),
+            child: FittedBox(fit: BoxFit.contain, child: Icon(data.icon)),
           ),
           FittedBox(
-              fit: BoxFit.cover,
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+            fit: BoxFit.scaleDown,
+            child: Column(
+              children: [
+                Text(
+                  data.title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: constraints.biggest.shortestSide *
+                        textShare *
+                        largerOfTextsShare,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ))
+                data.bottomTitle != null
+                    ? Text(
+                        data.bottomTitle!,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: constraints.biggest.shortestSide *
+                              textShare *
+                              (1 - largerOfTextsShare),
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
+          ),
         ],
       ),
     );

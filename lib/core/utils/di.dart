@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pollen_meter/core/data/ambee_api/ambee_api.dart';
 import 'package:pollen_meter/core/data/profile/local/profile_local_data_source.dart';
 import 'package:pollen_meter/core/data/profile/repository/profile_data_repository_local_impl.dart';
+//import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
 import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.dart';
 import 'package:pollen_meter/core/domain/profile/repository/profile_data_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +19,7 @@ class ServiceLocator {
     /// Register dependencies
     Logger.log('Dependencies initializing...');
 
-    _locator.registerFactoryAsync<SharedPreferences>(
+    _locator.registerSingletonAsync<SharedPreferences>(
         () async => await SharedPreferences.getInstance());
 
     _locator.registerLazySingleton<ProfileLocalDataStore>(() =>

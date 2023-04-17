@@ -20,10 +20,10 @@ class PollenSelectionWidget extends StatefulWidget {
   final double spacing;
 
   /// Список моделек
-  final List<PollenModel> listPollens;
+  final List<PollenTileModel> listPollens;
 
   /// Функция, реагирующая на изменение состояния элементов
-  final Function(PollenModel pollenModel) onChoiceOfTile;
+  final Function(PollenTileModel pollenModel) onChoiceOfTile;
 
   @override
   State<PollenSelectionWidget> createState() => _PollenSelectionWidgetState();
