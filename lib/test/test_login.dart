@@ -1,56 +1,90 @@
-import 'dart:ui';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/auth.dart';
-import '../firebase_options.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pollen_meter/core/utils/coordinates.dart';
 
-void main() async {
-  initializeFirebase();
-  runApp(const ProviderScope(child: MyApp()));
-}
+import '../main.dart';
 
-void initializeFirebase() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
-}
+class LoginTestMainPage extends ConsumerWidget {
+  const LoginTestMainPage({Key? key}) : super(key: key);
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return const SignInScreen(
-      providerConfigs: [
-        EmailProviderConfiguration(),
-        GoogleProviderConfiguration(
-          clientId:
-              '374533370010-15698fjfa6tssse8gumdincoi8uam5lq.apps.googleusercontent.com',
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pollenLogic = ref.watch(pollenDataProvider(Coordinates(45, 47)));
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            pollenLogic.when(
+              data: (data) => Text(data.toString()),
+              error: (Object error, StackTrace stackTrace) {
+                return Text(error.toString());
+              },
+              loading: () => const Text('loading...'),
+            ),
+            FloatingActionButton(
+              onPressed: () => context.go('/dashboard'),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SignInScreen(
+            providerConfigs: [
+              EmailProviderConfiguration(),
+              GoogleProviderConfiguration(
+                clientId:
+                    '374533370010-15698fjfa6tssse8gumdincoi8uam5lq.apps.googleusercontent.com',
+              ),
+            ],
+          );
+        } else {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [Text('Authorized')],
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+class SignOutPage extends StatelessWidget {
+  const SignOutPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Sign out'),
+            FloatingActionButton(
+              onPressed: () => FirebaseAuth.instance.signOut(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
