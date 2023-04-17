@@ -31,6 +31,7 @@ dependencies:
 
   flutterfire_ui: ^0.4.3+20
   google_sign_in: ^5.4.4
+  location: ^4.4.0
 
 
 dev_dependencies:

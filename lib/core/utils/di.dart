@@ -9,6 +9,8 @@ import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.d
 //import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
 import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.dart';
 import 'package:pollen_meter/core/domain/profile/repository/profile_data_repository.dart';
+import 'package:pollen_meter/dashboard/data/location_repository_impl.dart';
+import 'package:pollen_meter/dashboard/domain/location_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/ambee_api/repository/pollen_repository_api_impl.dart';
@@ -45,6 +47,9 @@ class ServiceLocator {
     _locator.registerLazySingleton<PollenRepository>(
         () => PollenRepositoryApiImpl(ambeeClient: _locator<AmbeeClient>()));
 
+    _locator.registerLazySingleton<LocationRepository>(
+        () => LocationRepositoryImpl());
+
     Logger.log('Dependencies initialized!');
   }
 
@@ -59,4 +64,7 @@ class ServiceLocator {
 
   static FirebaseProfileService get firebaseService =>
       _locator<FirebaseProfileService>();
+
+  static LocationRepository get locationRepository =>
+      _locator<LocationRepository>();
 }
