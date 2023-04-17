@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_statistic_mapper.dart';
-import 'package:pollen_meter/core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
-import 'package:pollen_meter/core_ui/gauge.dart';
-import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
+import 'package:pollen_meter/core_ui/gauge.dart';
+import 'package:pollen_meter/core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
+import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
+import 'package:pollen_meter/main.dart';
 
 import '../../core/utils/logger.dart';
 import '../../core_ui/gauge/models/gauge_model.dart';

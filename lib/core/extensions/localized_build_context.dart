@@ -1,11 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergen_types.dart';
 import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
 
 extension LocalizedBuildContextExtension on BuildContext {
   AppLocalizations get loc => AppLocalizations.of(this)!;
 
-  String stringFromLocAllergens(Allergens allergens) {
+  String fromPollenLevel({required AllergenType allergenType, required int count}){
+    switch (allergenType) {
+      case AllergenType.weed:
+        return _levelRiskName(count: count, level1: 20, level2: 77, level3: 266);
+      case AllergenType.tree:
+        return _levelRiskName(count: count, level1: 95, level2: 207, level3: 703);
+      case AllergenType.grass:
+        return _levelRiskName(count: count, level1: 29, level2: 60, level3: 341);
+    }
+  }
+
+  String fromAllergensType(AllergenType allergenType){
+    switch (allergenType) {
+      case AllergenType.weed:
+        return loc.weedPollen;
+      case AllergenType.tree:
+        return loc.treePollen;
+      case AllergenType.grass:
+        return loc.grassPollen;
+    }
+  }
+
+  String _levelRiskName({required int count, required int level1, required int level2, required int level3,}) {
+    if (count <= level1) {
+      return loc.lowRisk;
+    } else if (count <= level2) {
+      return loc.moderateRisk;
+    } else if (count <= level3) {
+      return loc.highRisk;
+    } else {
+      return loc.veryHighRisk;
+    }
+  }
+
+  String fromAllergens(Allergens allergens) {
     final appLocal = AppLocalizations.of(this)!;
     switch (allergens) {
       case Allergens.hazel:
@@ -62,4 +97,6 @@ extension LocalizedBuildContextExtension on BuildContext {
         return appLocal.grass;
     }
   }
+
+
 }

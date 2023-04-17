@@ -7,6 +7,7 @@ enum AllergenType {
 }
 
 extension AllergenTypeExtension on AllergenType {
+
   List<Allergens> get listAllergens {
     switch (this) {
       case AllergenType.weed:
