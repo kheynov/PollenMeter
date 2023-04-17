@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:pollen_meter/test/test_bnb.dart';
+import 'package:pollen_meter/bottom_nav_bar_navigator/presentation/bottom_nav_bar_navigator.dart';
 import 'package:pollen_meter/test/test_routes.dart';
 
 class RouteGenerator {
@@ -9,7 +9,7 @@ class RouteGenerator {
     routes: [
       GoRoute(
         path: '/dashboard',
-        builder: (context, state) => const MyHomePageTestBNB(),
+        builder: (context, state) => const BottomNavBarNavigator(),
         routes: const [],
       ),
       GoRoute(

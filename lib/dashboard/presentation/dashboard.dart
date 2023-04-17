@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_statistic_mapper.dart';
 import 'package:pollen_meter/core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
-import 'package:pollen_meter/core_ui/pollen_concentration_gauge.dart';
+import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pollen_meter/main.dart';
@@ -30,8 +30,10 @@ class DashboardPage extends ConsumerWidget {
     );
     final List<GaugeModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
       data: (data) {
-        return data.pollenData
-            .toGaugeModelsAuxiliary(context, ref, data.profileData);
+        //TODO: исправить, когда будет исправлен PollenToGaugeMapper
+        // return data.pollenData
+        //     .toGaugeModelsAuxiliary(context, ref, data.profileData);
+        return List<GaugeModel>.empty();
       },
       error: (error, stackTrace) {
         return List<GaugeModel>.empty();
@@ -67,7 +69,7 @@ class DashboardPage extends ConsumerWidget {
                 return const SizedBox(height: 70);
               case 1:
                 return pollenLogic.when(
-                  data: (data) => PollenConcentrationGauge(
+                  data: (data) => Gauge(
                     data: gaugeModelMain,
                   ),
                   error: (error, stackTrace) => Text(
@@ -102,7 +104,7 @@ class DashboardPage extends ConsumerWidget {
                       data: (data) {
                         return gaugeModelAuxiliary
                             .map(
-                              (e) => PollenConcentrationGauge(
+                              (e) => Gauge(
                                 data: e,
                               ),
                             )

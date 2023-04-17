@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
       theme: brightTheme,
       routerConfig: RouteGenerator().router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      supportedLocales: const [Locale('en'), Locale('ru')],
     );
   }
 }

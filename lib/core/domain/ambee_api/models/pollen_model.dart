@@ -7,8 +7,13 @@ class PollenModel {
   final List<GrassPollenLevel> grassPollenLevels;
   final List<WeedPollenLevel> weedPollenLevels;
 
-  PollenModel(this.count, this.risk, this.treePollenLevels,
-      this.grassPollenLevels, this.weedPollenLevels);
+  PollenModel(
+    this.count,
+    this.risk,
+    this.treePollenLevels,
+    this.grassPollenLevels,
+    this.weedPollenLevels,
+  );
 
   @override
   String toString() {
