@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pollen_meter/dashboard/presentation/dashboard.dart';
 import 'package:pollen_meter/test/test_routes.dart';
 
-import '../core_ui/bottom_nav_bar.dart';
+import '../../core_ui/bottom_nav_bar.dart';
 
-class MyHomePageTestBNB extends StatefulWidget {
-  const MyHomePageTestBNB({Key? key}) : super(key: key);
+class BottomNavBarNavigator extends StatefulWidget {
+  const BottomNavBarNavigator({Key? key}) : super(key: key);
   @override
-  State createState() => _MyHomePageTestBNBState();
+  State createState() => _BottomNavBarNavigatorState();
 }
 
-class _MyHomePageTestBNBState extends State<MyHomePageTestBNB>
+class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
     with TickerProviderStateMixin {
   late TabController tabController;
   @override
