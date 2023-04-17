@@ -1,0 +1,35 @@
+{
+    "@@locale": "ru",
+    "appTitle": ".пыльцометр",
+
+    "tree": "Дерево",
+    "weed": "Сорняк",
+    "grass": "Трава",
+
+    "hazel": "Орешник",
+    "elm": "Вяз",
+    "alder": "Ольха",
+    "cottonWood": "Тополь",
+    "oak": "Дуб",
+    "plane": "Платан",
+    "birch": "Береза",
+    "cypress": "Кипарис",
+    "mulberry": "Шелковица",
+    "ash": "Ясень",
+    "maple": "Клён",
+    "casuarina": "Казуарина",
+    "acacia": "Акация",
+    "myrtaceae": "Миртовые",
+    "willow": "Ива",
+    "olive": "Олива",
+    "pine": "Сосна",
+
+    "mugwort": "Полынь",
+    "chenopod": "Маревые",
+    "ragweed": "Амброзия",
+    "nettle": "Крапива",
+    "sedges": "Осока",
+    "aster": "Астра",
+    "plantago": "Подорожник",
+    "rumex": "Щавель"
+}

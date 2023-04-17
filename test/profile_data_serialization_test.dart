@@ -6,7 +6,7 @@ import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  final data = ProfileDataModel(true, [
+  final data = ProfileDataModel(ThemeTypes.dark, [
     Allergens.alder,
     Allergens.ash,
     Allergens.birch,

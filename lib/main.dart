@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: brightTheme,
       routerConfig: RouteGenerator().router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      supportedLocales: const [Locale('en'), Locale('ru')],
     );
   }
 }
@@ -38,6 +39,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Placeholder(
+      child: Text(
+        context.loc.plantago,
+      ),
+    );
   }
 }

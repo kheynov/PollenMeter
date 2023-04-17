@@ -48,6 +48,7 @@ dependencies:
   go_router: ^6.5.0
   convex_bottom_bar: ^3.2.0
   shared_preferences: ^2.1.0
+  intl: any
 
 
 dev_dependencies:
@@ -62,6 +63,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   json_serializable: ^6.5.0
   build_runner: ^2.3.0
+  flutter_svg: ^2.0.5
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
