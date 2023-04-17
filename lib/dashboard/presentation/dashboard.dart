@@ -9,9 +9,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 
-import '../core/utils/logger.dart';
-import '../core_ui/models/gauge/gauge_model.dart';
-import '../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
+import '../../core/utils/logger.dart';
+import '../../core_ui/models/gauge/gauge_model.dart';
+import '../../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
