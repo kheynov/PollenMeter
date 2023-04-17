@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'gauge/models/gauge_model.dart';
 
-class PollenConcentrationGauge extends StatelessWidget {
-  const PollenConcentrationGauge({
+class Gauge extends StatelessWidget {
+  const Gauge({
     super.key,
     required this.data,
   });
