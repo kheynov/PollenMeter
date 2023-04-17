@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core_ui/models/gauge/gauge_model.dart';
+import '../../../../core_ui/gauge/models/gauge_model.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/l10n.dart';
 import '../../profile/model/profile_data_model.dart';

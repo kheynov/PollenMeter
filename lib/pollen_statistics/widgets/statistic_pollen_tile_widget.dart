@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pollen_meter/core/utils/colors.dart';
-import 'package:pollen_meter/core_ui/models/statistic_pollen_tile/statistic_pollen_tile_model.dart';
+import 'package:pollen_meter/core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
 
 class StatisticPollenTileWidget extends StatelessWidget {
   const StatisticPollenTileWidget({

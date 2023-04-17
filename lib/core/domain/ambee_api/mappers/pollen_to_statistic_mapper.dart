@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pollen_meter/core/utils/l10n.dart';
-import '../../../../core_ui/models/statistic_pollen_tile/statistic_pollen_tile_model.dart';
+import '../../../../core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
 import '../models/pollen_model.dart';
 
 extension PollenToStatisticMapper on PollenModel {
