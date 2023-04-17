@@ -31,7 +31,7 @@ const _$AllergensEnumMap = {
   Allergens.hazel: 'hazel',
   Allergens.elm: 'elm',
   Allergens.alder: 'alder',
-  Allergens.cottonWood: 'cottonWood',
+  Allergens.poplar: 'cottonWood',
   Allergens.oak: 'oak',
   Allergens.plane: 'plane',
   Allergens.birch: 'birch',

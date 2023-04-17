@@ -1,10 +1,10 @@
 //TODO: Поправить под глобальную модельку профиля в будущем
-class PollenModel {
+class PollenTileModel {
   final String name;
   bool selected;
   final String? pathImage;
 
-  PollenModel({
+  PollenTileModel({
     required this.name,
     required this.selected,
     required this.pathImage,
@@ -18,7 +18,7 @@ class PollenModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PollenModel &&
+      other is PollenTileModel &&
           runtimeType == other.runtimeType &&
           name == other.name &&
           pathImage == other.pathImage;

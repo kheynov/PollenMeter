@@ -1,15 +1,18 @@
 {
     "@@locale": "en",
     "appTitle": ".pollenmeter",
-
-    "tree": "Tree",
-    "weed": "Weed",
-    "grass": "Grass",
-
+    "alert": "Don't leave your room, this is better left undone",
+    "lowRisk": "Low",
+    "moderateRisk": "Moderate",
+    "highRisk": "High",
+    "veryHighRisk": "Very High",
+    "treePollen": "Tree",
+    "weedPollen": "Weed",
+    "grassPollen": "Grass",
     "hazel": "Hazel",
     "elm": "Elm",
     "alder": "Alder",
-    "cottonWood": "Poplar / Cottonwood",
+    "poplar": "Poplar / Cottonwood",
     "oak": "Oak",
     "plane": "Plane",
     "birch": "Birch",
@@ -30,5 +33,6 @@
     "sedges": "Sedges",
     "aster": "Aster",
     "plantago": "Plantago",
-    "rumex": "Rumex"
+    "rumex": "Rumex",
+    "grass": "Grass / Poaceae"
 }

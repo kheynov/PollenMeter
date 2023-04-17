@@ -4,7 +4,7 @@ enum Allergens {
   hazel(type: AllergenType.tree),
   elm(type: AllergenType.tree),
   alder(type: AllergenType.tree),
-  cottonWood(type: AllergenType.tree),
+  poplar(type: AllergenType.tree),
   oak(type: AllergenType.tree),
   plane(type: AllergenType.tree),
   birch(type: AllergenType.tree),

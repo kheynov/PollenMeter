@@ -5,14 +5,14 @@ import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.
 import '../../../domain/ambee_api/models/pollen_model.dart';
 
 class PollenRepositoryApiImpl implements PollenRepository {
-  final AmbeeClient _service;
+  final AmbeeClient ambeeClient;
 
-  PollenRepositoryApiImpl(this._service);
+  PollenRepositoryApiImpl({required this.ambeeClient});
 
   @override
   Future<PollenModel> fetchData(
-      {required int latitude, required int longitude}) async {
-    final res = await _service.getPollenData(
+      {required double latitude, required double longitude}) async {
+    final res = await ambeeClient.getPollenData(
       latitude: latitude,
       longitude: longitude,
     );

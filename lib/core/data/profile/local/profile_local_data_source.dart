@@ -17,8 +17,8 @@ class ProfileLocalDataStore {
     }
   }
 
-  Future<void> saveProfile(ProfileDataModel profile) {
-    return sharedPreferences.setString(
+  Future<bool> saveProfile(ProfileDataModel profile) async {
+    return await sharedPreferences.setString(
       'profile',
       jsonEncode(profile.toJson()),
     );

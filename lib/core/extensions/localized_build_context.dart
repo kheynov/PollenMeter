@@ -14,8 +14,8 @@ extension LocalizedBuildContextExtension on BuildContext {
         return appLocal.elm;
       case Allergens.alder:
         return appLocal.alder;
-      case Allergens.cottonWood:
-        return appLocal.cottonWood;
+      case Allergens.poplar:
+        return appLocal.poplar;
       case Allergens.oak:
         return appLocal.oak;
       case Allergens.plane:

@@ -25,7 +25,7 @@ extension AllergenTypeExtension on AllergenType {
           Allergens.hazel,
           Allergens.elm,
           Allergens.alder,
-          Allergens.cottonWood,
+          Allergens.poplar,
           Allergens.oak,
           Allergens.plane,
           Allergens.birch,
