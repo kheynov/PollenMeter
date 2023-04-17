@@ -59,6 +59,10 @@ final auxiliaryGaugeLogicProvider =
   },
 );
 
+final locationProvider = FutureProvider<Coordinates>((ref) async {
+  return ServiceLocator.locationRepository.getLocation();
+});
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

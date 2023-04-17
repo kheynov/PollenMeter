@@ -18,14 +18,23 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final coordinatesLogic = ref.watch(locationProvider);
+    late final Coordinates coordinates = coordinatesLogic.when(
+      data: (data) => data,
+      error: (error, stackTrace) {
+        Logger.log('Error getting coordinates: ${error.toString()}');
+        return Coordinates(0, 0);
+      },
+      loading: () => Coordinates(0, 0),
+    );
     final pollenLogic = ref.watch(
       pollenDataProvider(
-        Coordinates(43.414212, 39.950548),
+        coordinates,
       ),
     ); //TODO: get coordinates from location
     final auxiliaryGaugeLogic = ref.watch(
       auxiliaryGaugeLogicProvider(
-        Coordinates(43.414212, 39.950548),
+        coordinates,
       ),
     );
     final List<GaugeModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
