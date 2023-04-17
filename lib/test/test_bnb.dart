@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pollen_meter/dashboard/dashboard.dart';
+import 'package:pollen_meter/dashboard/presentation/dashboard.dart';
 import 'package:pollen_meter/test/test_routes.dart';
 
 import '../core_ui/bottom_nav_bar.dart';

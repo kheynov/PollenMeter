@@ -1,7 +1,7 @@
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
 
-import 'models/gauge/gauge_model.dart';
+import 'gauge/models/gauge_model.dart';
 
 class PollenConcentrationGauge extends StatelessWidget {
   const PollenConcentrationGauge({
