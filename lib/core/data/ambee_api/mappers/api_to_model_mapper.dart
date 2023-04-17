@@ -9,13 +9,13 @@ extension PollenDtoMapper on PollenDTO {
       count,
       risk,
       species.tree.entries
-          .map((entry) => TreePollenLevel(entry.key, entry.value))
+          .map((entry) => TreePollenLevel(_mapAllergens[entry.key]! , entry.value))
           .toList(),
       species.grass.entries
-          .map((entry) => GrassPollenLevel(entry.key, entry.value))
+          .map((entry) => GrassPollenLevel(_mapAllergens[entry.key]!, entry.value))
           .toList(),
       species.weed.entries
-          .map((entry) => WeedPollenLevel(entry.key, entry.value))
+          .map((entry) => WeedPollenLevel(_mapAllergens[entry.key]!, entry.value))
           .toList(),
     );
   }

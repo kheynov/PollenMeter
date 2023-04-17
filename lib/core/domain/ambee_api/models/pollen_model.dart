@@ -36,13 +36,13 @@ class PollenLevel {
 }
 
 class TreePollenLevel extends PollenLevel {
-  TreePollenLevel(super.name, super.level);
+  TreePollenLevel(super.allergens, super.level);
 }
 
 class GrassPollenLevel extends PollenLevel {
-  GrassPollenLevel(super.name, super.level);
+  GrassPollenLevel(super.allergens, super.level);
 }
 
 class WeedPollenLevel extends PollenLevel {
-  WeedPollenLevel(super.name, super.level);
+  WeedPollenLevel(super.allergens, super.level);
 }

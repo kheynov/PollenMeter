@@ -26,7 +26,7 @@ extension PollenToGaugeMapper on PollenModel {
     List result = [
       GaugeModel(
         value: count.treePollen.toDouble(),
-        title: riskNames[risk.treePollen] ?? 'Error',
+        title: ,
         icon: Icons.park,
         color: riskColors[risk.treePollen] ?? Colors.white60,
         bottomTitle: AppLocalizations.of(context)?.treePollen,
