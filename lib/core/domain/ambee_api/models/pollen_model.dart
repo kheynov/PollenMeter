@@ -1,3 +1,5 @@
+import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
+
 import '../../../data/ambee_api/dto/pollen_dto.dart';
 
 class PollenModel {
@@ -22,14 +24,14 @@ class PollenModel {
 }
 
 class PollenLevel {
-  final String name;
+  final Allergens allergens;
   final int level;
 
-  PollenLevel(this.name, this.level);
+  PollenLevel(this.allergens, this.level);
 
   @override
   String toString() {
-    return 'PollenLevel($runtimeType){name: $name, level: $level}';
+    return 'PollenLevel($runtimeType){name: $allergens, level: $level}';
   }
 }
 
