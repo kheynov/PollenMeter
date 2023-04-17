@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_gauge_mapper.dart';
-import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_statistic_mapper.dart';
+import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core_ui/gauge.dart';
-import 'package:pollen_meter/core_ui/statistic_pollen_tile/models/statistic_pollen_tile_model.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
 
 import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/logger.dart';
-import '../../core_ui/gauge/models/gauge_model.dart';
+import '../../core_ui/pollen/models/pollen_ui_model.dart';
 import '../../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
 
 class DashboardPage extends ConsumerWidget {
@@ -30,37 +28,37 @@ class DashboardPage extends ConsumerWidget {
         Coordinates(40.506036, -3.740210),
       ),
     );
-    final List<GaugeModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
+    final List<PollenUIModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
       data: (data) {
         //TODO: исправить, когда будет исправлен PollenToGaugeMapper
         final ultraData = data.pollenData
-            .toGaugeModelsAuxiliary(context, ref, data.profileData);
+            .toPollenUIModelsWithPrefs(context, ref, data.profileData);
         Logger.log(ultraData.toString());
         return ultraData;
       },
       error: (error, stackTrace) {
         Logger.log("Error: $error");
         Logger.log("StackTrace: ${stackTrace.toString()}");
-        return List<GaugeModel>.empty();
+        return List<PollenUIModel>.empty();
       },
-      loading: () => List<GaugeModel>.empty(),
+      loading: () => List<PollenUIModel>.empty(),
     );
-    final List<StatisticPollenTileModel> statisticPollens = pollenLogic.when(
+    final List<PollenUIModel> statisticPollens = pollenLogic.when(
       data: (data) {
         Logger.log(data.toString());
-        return data.toStatisticPollenTileModels(context);
+        return data.toPollenUIModelsEverything(context);
       },
       error: (error, stackTrace) {
         Logger.log(error.toString());
-        return List<StatisticPollenTileModel>.empty();
+        return List<PollenUIModel>.empty();
       },
-      loading: () => List<StatisticPollenTileModel>.empty(),
+      loading: () => List<PollenUIModel>.empty(),
     );
-    late final GaugeModel gaugeModelMain;
+    late final PollenUIModel gaugeModelMain;
 
     pollenLogic.whenData(
       (value) {
-        gaugeModelMain = value.toGaugeModelMain(context);
+        gaugeModelMain = value.toPollenModelBasic(context);
       },
     );
 
@@ -89,11 +87,11 @@ class DashboardPage extends ConsumerWidget {
               case 3:
                 return pollenLogic.when(
                   data: (data) => (context.fromPollenLevelUnlocalized(
-                                  allergenType: gaugeModelMain.allergenType,
+                                  allergenType: gaugeModelMain.allergenType!,
                                   count: gaugeModelMain.value.toInt()) ==
                               RiskLevel.high ||
                           context.fromPollenLevelUnlocalized(
-                                  allergenType: gaugeModelMain.allergenType,
+                                  allergenType: gaugeModelMain.allergenType!,
                                   count: gaugeModelMain.value.toInt()) ==
                               RiskLevel.veryHigh)
                       ? HighPollenLevelAlert(

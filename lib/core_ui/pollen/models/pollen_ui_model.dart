@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../../core/domain/profile/enums/allergen_type.dart';
 
-class GaugeModel {
+class PollenUIModel {
   final double value;
   final IconData icon;
   final Color color;
   final String title;
   final String? bottomTitle;
-  final AllergenType allergenType;
+  final AllergenType? allergenType;
 
-  GaugeModel({
+  PollenUIModel({
     required this.value,
     required this.title,
     required this.icon,
     required this.color,
-    required this.allergenType,
+    this.allergenType,
     this.bottomTitle,
   });
   @override

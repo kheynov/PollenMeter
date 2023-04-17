@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/core/utils/colors.dart';
-import '../../../../core_ui/gauge/models/gauge_model.dart';
+import '../../../../core_ui/pollen/models/pollen_ui_model.dart';
 import '../../profile/enums/allergen_type.dart';
 import '../../profile/model/profile_data_model.dart';
 import '../models/pollen_model.dart';
@@ -13,10 +13,10 @@ import '../models/pollen_model.dart';
     Get the plant category with the highest risk. Make a list of the three categories,
     sort it, and take the 1st element.
  */
-extension PollenToGaugeMapper on PollenModel {
-  GaugeModel toGaugeModelMain(BuildContext context) {
+extension PollenToPollenUIMapper on PollenModel {
+  PollenUIModel toPollenModelBasic(BuildContext context) {
     List result = [
-      GaugeModel(
+      PollenUIModel(
         value: count.treePollen.toDouble(),
         title: context.fromPollenLevel(
             allergenType: AllergenType.tree, count: count.treePollen),
@@ -26,7 +26,7 @@ extension PollenToGaugeMapper on PollenModel {
         bottomTitle: context.fromAllergenType(AllergenType.tree),
         allergenType: AllergenType.tree,
       ),
-      GaugeModel(
+      PollenUIModel(
         value: count.weedPollen.toDouble(),
         title: context.fromPollenLevel(
             allergenType: AllergenType.weed, count: count.weedPollen),
@@ -36,7 +36,7 @@ extension PollenToGaugeMapper on PollenModel {
         bottomTitle: context.fromAllergenType(AllergenType.weed),
         allergenType: AllergenType.weed,
       ),
-      GaugeModel(
+      PollenUIModel(
         value: count.grassPollen.toDouble(),
         title: context.fromPollenLevel(
             allergenType: AllergenType.grass, count: count.grassPollen),
@@ -51,11 +51,47 @@ extension PollenToGaugeMapper on PollenModel {
     return result[0];
   }
 
+  List<PollenUIModel> toPollenUIModelsEverything(BuildContext context) {
+    List<PollenUIModel> result = weedPollenLevels
+        .map(
+          (e) => PollenUIModel(
+            value: e.level.toDouble(),
+            title: context.fromAllergen(e.allergen),
+            icon: Icons.nature,
+            color: riskColor(context.fromPollenLevelUnlocalized(
+                allergenType: AllergenType.weed, count: e.level)),
+          ),
+        )
+        .followedBy(
+          grassPollenLevels.map(
+            (e) => PollenUIModel(
+                value: e.level.toDouble(),
+                title: context.fromAllergen(e.allergen),
+                icon: Icons.grass,
+                color: riskColor(context.fromPollenLevelUnlocalized(
+                    allergenType: AllergenType.grass, count: e.level))),
+          ),
+        )
+        .followedBy(
+          treePollenLevels.map(
+            (e) => PollenUIModel(
+                value: e.level.toDouble(),
+                title: context.fromAllergen(e.allergen),
+                icon: Icons.park,
+                color: riskColor(context.fromPollenLevelUnlocalized(
+                    allergenType: AllergenType.tree, count: e.level))),
+          ),
+        )
+        .toList();
+    result.sort((lhs, rhs) => rhs.value.compareTo(lhs.value));
+    return result;
+  }
+
 /*
     Make three lists of the categories, filter them by the user's allergens,
     and then make a single combined list of GaugeModels from the three filtered lists.
  */
-  List<GaugeModel> toGaugeModelsAuxiliary(
+  List<PollenUIModel> toPollenUIModelsWithPrefs(
       BuildContext context, WidgetRef ref, ProfileDataModel profile) {
     List<PollenLevel> grassList = (grassPollenLevels.where(
       (apiElement) => profile.allergens.any(
@@ -76,7 +112,7 @@ extension PollenToGaugeMapper on PollenModel {
 
     return grassList
         .map(
-          (pollenLevel) => GaugeModel(
+          (pollenLevel) => PollenUIModel(
             value: pollenLevel.level.toDouble(),
             title: context.fromAllergen(pollenLevel.allergen),
             icon: Icons.grass,
@@ -87,7 +123,7 @@ extension PollenToGaugeMapper on PollenModel {
         )
         .followedBy(
           weedList.map(
-            (pollenLevel) => GaugeModel(
+            (pollenLevel) => PollenUIModel(
               value: pollenLevel.level.toDouble(),
               title: context.fromAllergen(pollenLevel.allergen),
               icon: Icons.nature,
@@ -99,7 +135,7 @@ extension PollenToGaugeMapper on PollenModel {
         )
         .followedBy(
           treeList.map(
-            (pollenLevel) => GaugeModel(
+            (pollenLevel) => PollenUIModel(
               value: pollenLevel.level.toDouble(),
               title: context.fromAllergen(pollenLevel.allergen),
               icon: Icons.park,

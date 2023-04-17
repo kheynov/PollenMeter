@@ -1,8 +1,7 @@
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
-
-import 'gauge/models/gauge_model.dart';
+import 'package:pollen_meter/core_ui/pollen/models/pollen_ui_model.dart';
 
 class Gauge extends StatelessWidget {
   const Gauge({
@@ -10,7 +9,7 @@ class Gauge extends StatelessWidget {
     required this.data,
   });
 
-  final GaugeModel data;
+  final PollenUIModel data;
 
   //TODO: replace hardcoded constants with theme data and/or calculate in runtime
   //TODO: find out what the max concentration from the API is
@@ -33,7 +32,8 @@ class Gauge extends StatelessWidget {
             progressBar: GaugeRoundedProgressBar(color: data.color),
             axis: GaugeAxis(
               min: 0,
-              max: context.reasonableTypeLimit(allergenType: data.allergenType),
+              max:
+                  context.reasonableTypeLimit(allergenType: data.allergenType!),
               degrees: 270,
               style: GaugeAxisStyle(
                 thickness: (constraints.biggest.shortestSide / 20),
