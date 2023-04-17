@@ -30,8 +30,10 @@ class DashboardPage extends ConsumerWidget {
     );
     final List<GaugeModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
       data: (data) {
-        return data.pollenData
-            .toGaugeModelsAuxiliary(context, ref, data.profileData);
+        //TODO: исправить, когда будет исправлен PollenToGaugeMapper
+        // return data.pollenData
+        //     .toGaugeModelsAuxiliary(context, ref, data.profileData);
+        return List<GaugeModel>.empty();
       },
       error: (error, stackTrace) {
         return List<GaugeModel>.empty();
