@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
@@ -63,81 +64,129 @@ class DashboardPage extends ConsumerWidget {
     );
 
     return Scaffold(
-      body: Center(
-        child: ListView.builder(
-          itemCount: 5 + statisticPollens.length,
-          itemBuilder: (BuildContext context, int index) {
-            switch (index) {
-              case 0:
-                return const SizedBox(height: 70);
-              case 1:
-                return pollenLogic.when(
-                  data: (data) => Gauge(
-                    data: gaugeModelMain,
-                  ),
-                  error: (error, stackTrace) => Text(
-                    error.toString(),
-                  ),
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              case 2:
-                return const SizedBox(height: 20);
-              case 3:
-                return pollenLogic.when(
-                  data: (data) => (context.fromPollenLevelUnlocalized(
-                                  allergenType: gaugeModelMain.allergenType!,
-                                  count: gaugeModelMain.value.toInt()) ==
-                              RiskLevel.high ||
-                          context.fromPollenLevelUnlocalized(
-                                  allergenType: gaugeModelMain.allergenType!,
-                                  count: gaugeModelMain.value.toInt()) ==
-                              RiskLevel.veryHigh)
-                      ? HighPollenLevelAlert(
-                          msg: AppLocalizations.of(context)?.alert ?? 'Error')
-                      : const SizedBox.shrink(),
-                  error: (error, stackTrace) => Text(
-                    error.toString(),
-                  ),
-                  loading: () => const SizedBox(height: 20),
-                );
-              case 4:
-                return SizedBox(
-                  height: 125,
-                  child: ListView.separated(
-                    itemCount: gaugeModelAuxiliary.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) =>
-                        auxiliaryGaugeLogic.when(
-                      data: (data) {
-                        return gaugeModelAuxiliary
-                            .map(
-                              (e) => Gauge(
-                                data: e,
-                              ),
-                            )
-                            .toList()[index];
-                      },
-                      error: (error, stackTrace) {
-                        return Text(
-                          error.toString(),
-                        );
-                      },
-                      loading: () {
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text("12 апреля"),
+                          Text("Добрый вечер, Егор)"),
+                        ],
+                      ),
+                      MaterialButton(
+                          onPressed: () {
+                            context.push('/profile');
+                          },
+                          color: Colors.green,
+                          shape: const CircleBorder(),
+                          height: 50,
+                          child: const Icon(Icons.person)),
+                    ],
+                  )),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 5 + statisticPollens.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    switch (index) {
+                      case 0:
                         return const SizedBox.shrink();
-                      },
-                    ),
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(width: 10),
-                  ),
-                );
-              default:
-                return SizedBox(
-                    child: StatisticPollenTileWidget(
-                        statisticModel: statisticPollens[index - 5]));
-            }
-          },
+                      // return Container(
+                      //   padding: const EdgeInsets.all(20),
+                      //   alignment: Alignment.centerRight,
+                      //   child: MaterialButton(
+                      //     onPressed: () {
+                      //       context.go('/profile');
+                      //     },
+                      //     color: Colors.green,
+                      //     shape: const CircleBorder(),
+                      //     child: const Icon(Icons.person),
+                      //   ),
+                      // );
+                      case 1:
+                        return pollenLogic.when(
+                          data: (data) => Gauge(
+                            data: gaugeModelMain,
+                          ),
+                          error: (error, stackTrace) => Text(
+                            error.toString(),
+                          ),
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      case 2:
+                        return const SizedBox(height: 20);
+                      case 3:
+                        return pollenLogic.when(
+                          data: (data) => (context.fromPollenLevelUnlocalized(
+                                          allergenType:
+                                              gaugeModelMain.allergenType!,
+                                          count:
+                                              gaugeModelMain.value.toInt()) ==
+                                      RiskLevel.high ||
+                                  context.fromPollenLevelUnlocalized(
+                                          allergenType:
+                                              gaugeModelMain.allergenType!,
+                                          count:
+                                              gaugeModelMain.value.toInt()) ==
+                                      RiskLevel.veryHigh)
+                              ? HighPollenLevelAlert(
+                                  msg: AppLocalizations.of(context)?.alert ??
+                                      'Error')
+                              : const SizedBox.shrink(),
+                          error: (error, stackTrace) => Text(
+                            error.toString(),
+                          ),
+                          loading: () => const SizedBox(height: 20),
+                        );
+                      case 4:
+                        return SizedBox(
+                          height: 125,
+                          child: ListView.separated(
+                            itemCount: gaugeModelAuxiliary.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) =>
+                                auxiliaryGaugeLogic.when(
+                              data: (data) {
+                                return gaugeModelAuxiliary
+                                    .map(
+                                      (e) => Gauge(
+                                        data: e,
+                                      ),
+                                    )
+                                    .toList()[index];
+                              },
+                              error: (error, stackTrace) {
+                                return Text(
+                                  error.toString(),
+                                );
+                              },
+                              loading: () {
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const SizedBox(width: 10),
+                          ),
+                        );
+                      default:
+                        return SizedBox(
+                            child: StatisticPollenTileWidget(
+                                statisticModel: statisticPollens[index - 5]));
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
