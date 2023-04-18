@@ -18,7 +18,8 @@ import 'firebase_options.dart';
 void main() async {
   initializeFirebase();
   await ServiceLocator.initApp();
-  await Future.delayed(const Duration(seconds: 5));
+  await Future.delayed(
+      const Duration(seconds: 5)); //TODO: this unbreaks Firebase
   runApp(const ProviderScope(child: MyApp()));
 }
 
