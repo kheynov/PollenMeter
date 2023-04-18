@@ -5,13 +5,13 @@ part 'pollen_dto.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class PollenDTO {
   @JsonKey(name: 'Count')
-  final PollenCount count;
+  final PollenCountDTO count;
 
   @JsonKey(name: 'Risk')
-  final PollenRisk risk;
+  final PollenRiskDTO risk;
 
   @JsonKey(name: 'Species')
-  final PollenSpecies species;
+  final PollenSpeciesDTO species;
 
   @JsonKey(name: 'updatedAt')
   final String updatedAt;
@@ -26,7 +26,7 @@ class PollenDTO {
 }
 
 @JsonSerializable(ignoreUnannotated: true)
-class PollenCount {
+class PollenCountDTO {
   @JsonKey(name: 'grass_pollen')
   final int grassPollen;
 
@@ -36,9 +36,9 @@ class PollenCount {
   @JsonKey(name: 'weed_pollen')
   final int weedPollen;
 
-  PollenCount(this.grassPollen, this.treePollen, this.weedPollen);
+  PollenCountDTO(this.grassPollen, this.treePollen, this.weedPollen);
 
-  factory PollenCount.fromJson(Map<String, dynamic> json) =>
+  factory PollenCountDTO.fromJson(Map<String, dynamic> json) =>
       _$PollenCountFromJson(json);
 
   Map<String, dynamic> toJson() => _$PollenCountToJson(this);
@@ -50,7 +50,7 @@ class PollenCount {
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class PollenRisk {
+class PollenRiskDTO {
   @JsonKey(name: 'grass_pollen')
   final String grassPollen;
 
@@ -60,9 +60,9 @@ class PollenRisk {
   @JsonKey(name: 'weed_pollen')
   final String weedPollen;
 
-  PollenRisk(this.grassPollen, this.treePollen, this.weedPollen);
+  PollenRiskDTO(this.grassPollen, this.treePollen, this.weedPollen);
 
-  factory PollenRisk.fromJson(Map<String, dynamic> json) {
+  factory PollenRiskDTO.fromJson(Map<String, dynamic> json) {
     return _$PollenRiskFromJson(json);
   }
 
@@ -75,7 +75,7 @@ class PollenRisk {
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class PollenSpecies {
+class PollenSpeciesDTO {
   @JsonKey(name: 'Grass')
   final Map<String, int> grass;
 
@@ -88,9 +88,9 @@ class PollenSpecies {
   @JsonKey(name: 'Others')
   final int other;
 
-  PollenSpecies(this.grass, this.tree, this.weed, this.other);
+  PollenSpeciesDTO(this.grass, this.tree, this.weed, this.other);
 
-  factory PollenSpecies.fromJson(Map<String, dynamic> json) {
+  factory PollenSpeciesDTO.fromJson(Map<String, dynamic> json) {
     return _$PollenSpeciesFromJson(json);
   }
 

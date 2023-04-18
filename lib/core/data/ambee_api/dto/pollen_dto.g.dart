@@ -7,9 +7,9 @@ part of 'pollen_dto.dart';
 // **************************************************************************
 
 PollenDTO _$PollenDTOFromJson(Map<String, dynamic> json) => PollenDTO(
-      PollenCount.fromJson(json['Count'] as Map<String, dynamic>),
-      PollenRisk.fromJson(json['Risk'] as Map<String, dynamic>),
-      PollenSpecies.fromJson(json['Species'] as Map<String, dynamic>),
+      PollenCountDTO.fromJson(json['Count'] as Map<String, dynamic>),
+      PollenRiskDTO.fromJson(json['Risk'] as Map<String, dynamic>),
+      PollenSpeciesDTO.fromJson(json['Species'] as Map<String, dynamic>),
       json['updatedAt'] as String,
     );
 
@@ -20,41 +20,42 @@ Map<String, dynamic> _$PollenDTOToJson(PollenDTO instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt,
     };
 
-PollenCount _$PollenCountFromJson(Map<String, dynamic> json) => PollenCount(
+PollenCountDTO _$PollenCountFromJson(Map<String, dynamic> json) =>
+    PollenCountDTO(
       json['grass_pollen'] as int,
       json['tree_pollen'] as int,
       json['weed_pollen'] as int,
     );
 
-Map<String, dynamic> _$PollenCountToJson(PollenCount instance) =>
+Map<String, dynamic> _$PollenCountToJson(PollenCountDTO instance) =>
     <String, dynamic>{
       'grass_pollen': instance.grassPollen,
       'tree_pollen': instance.treePollen,
       'weed_pollen': instance.weedPollen,
     };
 
-PollenRisk _$PollenRiskFromJson(Map<String, dynamic> json) => PollenRisk(
+PollenRiskDTO _$PollenRiskFromJson(Map<String, dynamic> json) => PollenRiskDTO(
       json['grass_pollen'] as String,
       json['tree_pollen'] as String,
       json['weed_pollen'] as String,
     );
 
-Map<String, dynamic> _$PollenRiskToJson(PollenRisk instance) =>
+Map<String, dynamic> _$PollenRiskToJson(PollenRiskDTO instance) =>
     <String, dynamic>{
       'grass_pollen': instance.grassPollen,
       'tree_pollen': instance.treePollen,
       'weed_pollen': instance.weedPollen,
     };
 
-PollenSpecies _$PollenSpeciesFromJson(Map<String, dynamic> json) =>
-    PollenSpecies(
+PollenSpeciesDTO _$PollenSpeciesFromJson(Map<String, dynamic> json) =>
+    PollenSpeciesDTO(
       Map<String, int>.from(json['Grass'] as Map),
       Map<String, int>.from(json['Tree'] as Map),
       Map<String, int>.from(json['Weed'] as Map),
       json['Others'] as int,
     );
 
-Map<String, dynamic> _$PollenSpeciesToJson(PollenSpecies instance) =>
+Map<String, dynamic> _$PollenSpeciesToJson(PollenSpeciesDTO instance) =>
     <String, dynamic>{
       'Grass': instance.grass,
       'Tree': instance.tree,
