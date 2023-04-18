@@ -1,10 +1,12 @@
-name: Check CI
+name: Build CI
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
-  check:
+  build:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +23,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
-
 
       - name: run formatter
         run: dart format --set-exit-if-changed .
@@ -41,3 +42,15 @@ jobs:
 
       - name: run linter
         run: flutter analyze
+
+      - name: build apk
+        run: |
+          flutter pub get
+          flutter build apk
+
+      - name: upload artifacts
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: build/app/outputs/flutter-apk/app-release.apk
