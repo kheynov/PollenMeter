@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
-import 'package:pollen_meter/core/utils/colors.dart';
+import 'package:pollen_meter/core/extensions/theme_colors_build_context.dart';
 import '../../../../core_ui/pollen/models/pollen_ui_model.dart';
 import '../../profile/enums/allergen_type.dart';
 import '../../profile/model/profile_data_model.dart';
@@ -21,7 +20,7 @@ extension PollenToPollenUIMapper on PollenModel {
         title: context.fromPollenLevel(
             allergenType: AllergenType.tree, count: count.treePollen),
         icon: Icons.park,
-        color: riskColor(context.fromPollenLevelUnlocalized(
+        color: context.fromRiskLevel(context.fromPollenLevelUnlocalized(
             allergenType: AllergenType.tree, count: count.treePollen)),
         bottomTitle: context.fromAllergenType(AllergenType.tree),
         allergenType: AllergenType.tree,
@@ -31,7 +30,7 @@ extension PollenToPollenUIMapper on PollenModel {
         title: context.fromPollenLevel(
             allergenType: AllergenType.weed, count: count.weedPollen),
         icon: Icons.nature,
-        color: riskColor(context.fromPollenLevelUnlocalized(
+        color: context.fromRiskLevel(context.fromPollenLevelUnlocalized(
             allergenType: AllergenType.weed, count: count.weedPollen)),
         bottomTitle: context.fromAllergenType(AllergenType.weed),
         allergenType: AllergenType.weed,
@@ -41,7 +40,7 @@ extension PollenToPollenUIMapper on PollenModel {
         title: context.fromPollenLevel(
             allergenType: AllergenType.grass, count: count.grassPollen),
         icon: Icons.grass,
-        color: riskColor(context.fromPollenLevelUnlocalized(
+        color: context.fromRiskLevel(context.fromPollenLevelUnlocalized(
             allergenType: AllergenType.grass, count: count.grassPollen)),
         bottomTitle: context.fromAllergenType(AllergenType.grass),
         allergenType: AllergenType.grass,
@@ -58,18 +57,23 @@ extension PollenToPollenUIMapper on PollenModel {
             value: e.level.toDouble(),
             title: context.fromAllergen(e.allergen),
             icon: Icons.nature,
-            color: riskColor(context.fromPollenLevelUnlocalized(
-                allergenType: AllergenType.weed, count: e.level)),
+            color: context.fromRiskLevel(
+              context.fromPollenLevelUnlocalized(
+                  allergenType: AllergenType.weed, count: e.level),
+            ),
           ),
         )
         .followedBy(
           grassPollenLevels.map(
             (e) => PollenUIModel(
-                value: e.level.toDouble(),
-                title: context.fromAllergen(e.allergen),
-                icon: Icons.grass,
-                color: riskColor(context.fromPollenLevelUnlocalized(
-                    allergenType: AllergenType.grass, count: e.level))),
+              value: e.level.toDouble(),
+              title: context.fromAllergen(e.allergen),
+              icon: Icons.grass,
+              color: context.fromRiskLevel(
+                context.fromPollenLevelUnlocalized(
+                    allergenType: AllergenType.grass, count: e.level),
+              ),
+            ),
           ),
         )
         .followedBy(
@@ -78,7 +82,7 @@ extension PollenToPollenUIMapper on PollenModel {
                 value: e.level.toDouble(),
                 title: context.fromAllergen(e.allergen),
                 icon: Icons.park,
-                color: riskColor(context.fromPollenLevelUnlocalized(
+                color: context.fromRiskLevel(context.fromPollenLevelUnlocalized(
                     allergenType: AllergenType.tree, count: e.level))),
           ),
         )
@@ -92,7 +96,7 @@ extension PollenToPollenUIMapper on PollenModel {
     and then make a single combined list of GaugeModels from the three filtered lists.
  */
   List<PollenUIModel> toPollenUIModelsWithPrefs(
-      BuildContext context, WidgetRef ref, ProfileDataModel profile) {
+      BuildContext context, ProfileDataModel profile) {
     List<PollenLevel> grassList = (grassPollenLevels.where(
       (apiElement) => profile.allergens.any(
         (profileElement) => apiElement.allergen == profileElement,
@@ -116,8 +120,10 @@ extension PollenToPollenUIMapper on PollenModel {
             value: pollenLevel.level.toDouble(),
             title: context.fromAllergen(pollenLevel.allergen),
             icon: Icons.grass,
-            color: riskColor(context.fromPollenLevelUnlocalized(
-                allergenType: AllergenType.grass, count: pollenLevel.level)),
+            color: context.fromRiskLevel(
+              context.fromPollenLevelUnlocalized(
+                  allergenType: AllergenType.grass, count: pollenLevel.level),
+            ),
             allergenType: AllergenType.grass,
           ),
         )
@@ -127,8 +133,10 @@ extension PollenToPollenUIMapper on PollenModel {
               value: pollenLevel.level.toDouble(),
               title: context.fromAllergen(pollenLevel.allergen),
               icon: Icons.nature,
-              color: riskColor(context.fromPollenLevelUnlocalized(
-                  allergenType: AllergenType.weed, count: pollenLevel.level)),
+              color: context.fromRiskLevel(
+                context.fromPollenLevelUnlocalized(
+                    allergenType: AllergenType.weed, count: pollenLevel.level),
+              ),
               allergenType: AllergenType.weed,
             ),
           ),
@@ -139,8 +147,10 @@ extension PollenToPollenUIMapper on PollenModel {
               value: pollenLevel.level.toDouble(),
               title: context.fromAllergen(pollenLevel.allergen),
               icon: Icons.park,
-              color: riskColor(context.fromPollenLevelUnlocalized(
-                  allergenType: AllergenType.tree, count: pollenLevel.level)),
+              color: context.fromRiskLevel(
+                context.fromPollenLevelUnlocalized(
+                    allergenType: AllergenType.tree, count: pollenLevel.level),
+              ),
               allergenType: AllergenType.tree,
             ),
           ),

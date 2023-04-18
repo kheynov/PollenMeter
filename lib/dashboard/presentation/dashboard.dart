@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
-import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
@@ -19,51 +18,35 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pollenLogic = ref.watch(
-      pollenDataProvider(
-        Coordinates(40.506036, -3.740210),
-      ),
-    ); //TODO: get coordinates from location
-    final auxiliaryGaugeLogic = ref.watch(
-      auxiliaryGaugeLogicProvider(
-        Coordinates(40.506036, -3.740210),
-      ),
+    final pollenUILogic = ref.watch(
+      pollenUILogicProvider,
     );
-    final List<PollenUIModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
-      data: (data) {
-        //TODO: исправить, когда будет исправлен PollenToGaugeMapper
-        final ultraData = data.pollenData
-            .toPollenUIModelsWithPrefs(context, ref, data.profileData);
-        Logger.log(ultraData.toString());
-        return ultraData;
-      },
-      error: (error, stackTrace) {
-        Logger.log("Error: $error");
-        Logger.log("StackTrace: ${stackTrace.toString()}");
-        return List<PollenUIModel>.empty();
-      },
-      loading: () => List<PollenUIModel>.empty(),
-    );
-    final List<PollenUIModel> statisticPollens = pollenLogic.when(
-      data: (data) {
-        Logger.log(data.toString());
-        return data.toPollenUIModelsEverything(context);
-      },
-      error: (error, stackTrace) {
-        Logger.log(error.toString());
-        return List<PollenUIModel>.empty();
-      },
-      loading: () => List<PollenUIModel>.empty(),
-    );
-    late final PollenUIModel gaugeModelMain;
-
-    pollenLogic.whenData(
-      (value) {
-        gaugeModelMain = value.toPollenModelBasic(context);
-      },
-    );
+    late final List<PollenUIModel>
+        pollenUIModelsWithPrefs; //for the small gauges;
+    // only includes data for allergens that are enabled in profile
+    late final PollenUIModel
+        pollenUIModelBasic; //for the big gauge; only uses average data by categories
+    late final List<PollenUIModel>
+        pollenUIModelsEverything; //for the bottom stats;
+    //includes everything
+    pollenUILogic.when(data: (data) {
+      pollenUIModelsWithPrefs =
+          data.pollenData.toPollenUIModelsWithPrefs(context, data.profileData);
+      pollenUIModelsEverything =
+          data.pollenData.toPollenUIModelsEverything(context);
+      pollenUIModelBasic = data.pollenData.toPollenModelBasic(context);
+    }, error: (error, stackTrace) {
+      Logger.log("Error: $error");
+      Logger.log("StackTrace: ${stackTrace.toString()}");
+      pollenUIModelsEverything = List<PollenUIModel>.empty();
+      pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
+    }, loading: () {
+      pollenUIModelsEverything = List<PollenUIModel>.empty();
+      pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
+    });
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -92,7 +75,7 @@ class DashboardPage extends ConsumerWidget {
                   )),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 5 + statisticPollens.length,
+                  itemCount: 5 + pollenUIModelsWithPrefs.length,
                   itemBuilder: (BuildContext context, int index) {
                     switch (index) {
                       case 0:
@@ -110,9 +93,9 @@ class DashboardPage extends ConsumerWidget {
                       //   ),
                       // );
                       case 1:
-                        return pollenLogic.when(
+                        return pollenUILogic.when(
                           data: (data) => Gauge(
-                            data: gaugeModelMain,
+                            data: pollenUIModelBasic,
                           ),
                           error: (error, stackTrace) => Text(
                             error.toString(),
@@ -124,18 +107,18 @@ class DashboardPage extends ConsumerWidget {
                       case 2:
                         return const SizedBox(height: 20);
                       case 3:
-                        return pollenLogic.when(
+                        return pollenUILogic.when(
                           data: (data) => (context.fromPollenLevelUnlocalized(
                                           allergenType:
-                                              gaugeModelMain.allergenType!,
+                                              pollenUIModelBasic.allergenType!,
                                           count:
-                                              gaugeModelMain.value.toInt()) ==
+                                              pollenUIModelBasic.value.toInt()) ==
                                       RiskLevel.high ||
                                   context.fromPollenLevelUnlocalized(
                                           allergenType:
-                                              gaugeModelMain.allergenType!,
+                                              pollenUIModelBasic.allergenType!,
                                           count:
-                                              gaugeModelMain.value.toInt()) ==
+                                              pollenUIModelBasic.value.toInt()) ==
                                       RiskLevel.veryHigh)
                               ? HighPollenLevelAlert(
                                   msg: AppLocalizations.of(context)?.alert ??
@@ -150,12 +133,12 @@ class DashboardPage extends ConsumerWidget {
                         return SizedBox(
                           height: 125,
                           child: ListView.separated(
-                            itemCount: gaugeModelAuxiliary.length,
+                            itemCount: pollenUIModelsWithPrefs.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) =>
-                                auxiliaryGaugeLogic.when(
+                                pollenUILogic.when(
                               data: (data) {
-                                return gaugeModelAuxiliary
+                                return pollenUIModelsWithPrefs
                                     .map(
                                       (e) => Gauge(
                                         data: e,
@@ -180,7 +163,7 @@ class DashboardPage extends ConsumerWidget {
                       default:
                         return SizedBox(
                             child: StatisticPollenTileWidget(
-                                statisticModel: statisticPollens[index - 5]));
+                                statisticModel: pollenUIModelsEverything[index - 5]));
                     }
                   },
                 ),
