@@ -11,9 +11,6 @@ class Gauge extends StatelessWidget {
 
   final PollenUIModel data;
 
-  //TODO: replace hardcoded constants with theme data and/or calculate in runtime
-  //TODO: find out what the max concentration from the API is
-  //(The gauge would just clip if the value exceeds the max; it is only for information purposes)
   @override
   Widget build(BuildContext context) {
     double textShare = 0.1;
@@ -37,7 +34,7 @@ class Gauge extends StatelessWidget {
               degrees: 270,
               style: GaugeAxisStyle(
                 thickness: (constraints.biggest.shortestSide / 20),
-                background: Colors.blue,
+                background: Theme.of(context).colorScheme.outlineVariant,
               ),
             ),
             child: FittedBox(fit: BoxFit.contain, child: Icon(data.icon)),
@@ -49,10 +46,12 @@ class Gauge extends StatelessWidget {
                 Text(
                   data.title,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
                     fontSize: constraints.biggest.shortestSide *
                         textShare *
                         largerOfTextsShare,
+                    fontFamily:
+                        Theme.of(context).textTheme.labelLarge?.fontFamily,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -60,10 +59,14 @@ class Gauge extends StatelessWidget {
                     ? Text(
                         data.bottomTitle!,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Theme.of(context).textTheme.labelLarge?.color,
                           fontSize: constraints.biggest.shortestSide *
                               textShare *
                               (1 - largerOfTextsShare),
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.fontFamily,
                         ),
                         textAlign: TextAlign.center,
                       )
