@@ -39,9 +39,9 @@ class PollenCountDTO {
   PollenCountDTO(this.grassPollen, this.treePollen, this.weedPollen);
 
   factory PollenCountDTO.fromJson(Map<String, dynamic> json) =>
-      _$PollenCountFromJson(json);
+      _$PollenCountDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PollenCountToJson(this);
+  Map<String, dynamic> toJson() => _$PollenCountDTOToJson(this);
 
   @override
   String toString() {
@@ -63,10 +63,10 @@ class PollenRiskDTO {
   PollenRiskDTO(this.grassPollen, this.treePollen, this.weedPollen);
 
   factory PollenRiskDTO.fromJson(Map<String, dynamic> json) {
-    return _$PollenRiskFromJson(json);
+    return _$PollenRiskDTOFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$PollenRiskToJson(this);
+  Map<String, dynamic> toJson() => _$PollenRiskDTOToJson(this);
 
   @override
   String toString() {
@@ -91,10 +91,10 @@ class PollenSpeciesDTO {
   PollenSpeciesDTO(this.grass, this.tree, this.weed, this.other);
 
   factory PollenSpeciesDTO.fromJson(Map<String, dynamic> json) {
-    return _$PollenSpeciesFromJson(json);
+    return _$PollenSpeciesDTOFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$PollenSpeciesToJson(this);
+  Map<String, dynamic> toJson() => _$PollenSpeciesDTOToJson(this);
 
   @override
   String toString() {

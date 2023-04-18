@@ -10,7 +10,7 @@ ProfileDataModel _$ProfileDataModelFromJson(Map<String, dynamic> json) =>
     ProfileDataModel(
       $enumDecode(_$ThemeTypesEnumMap, json['theme']),
       (json['allergens'] as List<dynamic>)
-          .map((e) => $enumDecode(_$AllergensEnumMap, e))
+          .map((e) => $enumDecode(_$AllergenEnumMap, e))
           .toList(),
     );
 
@@ -18,20 +18,20 @@ Map<String, dynamic> _$ProfileDataModelToJson(ProfileDataModel instance) =>
     <String, dynamic>{
       'theme': _$ThemeTypesEnumMap[instance.theme]!,
       'allergens':
-          instance.allergens.map((e) => _$AllergensEnumMap[e]!).toList(),
+          instance.allergens.map((e) => _$AllergenEnumMap[e]!).toList(),
     };
 
 const _$ThemeTypesEnumMap = {
-  ThemeTypes.dark: 'dart',
+  ThemeTypes.dark: 'dark',
   ThemeTypes.light: 'light',
   ThemeTypes.system: 'system',
 };
 
-const _$AllergensEnumMap = {
+const _$AllergenEnumMap = {
   Allergen.hazel: 'hazel',
   Allergen.elm: 'elm',
   Allergen.alder: 'alder',
-  Allergen.poplar: 'cottonWood',
+  Allergen.poplar: 'poplar',
   Allergen.oak: 'oak',
   Allergen.plane: 'plane',
   Allergen.birch: 'birch',

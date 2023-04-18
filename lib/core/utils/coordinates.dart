@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'coordinates.g.dart';
+
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class Coordinates {
   final double latitude, longitude;
 
@@ -17,4 +22,10 @@ class Coordinates {
   String toString() {
     return 'Coordinates{latitude: $latitude, longitude: $longitude}';
   }
+
+  factory Coordinates.fromJson(Map<String, dynamic> json) {
+    return _$CoordinatesFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$CoordinatesToJson(this);
 }
