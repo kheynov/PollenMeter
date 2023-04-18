@@ -41,17 +41,40 @@ class ProfilePage extends ConsumerWidget {
             const SizedBox(
               height: 20,
             ),
-            PollenSelectionWidget(
-              listPollens: Allergen.values
-                  .map((allergen) => PollenTileModel(
-                      name: allergen.name,
-                      selected: Random().nextBool(),
-                      pathImage: 'assets/images/pollen/default.svg'))
-                  .toList(),
-              onChoiceOfTile: (pollenTileModel) {
-                Logger.log(pollenTileModel.name);
-              },
+            SizedBox(
+              //wtf
+              height: 1500,
+              child: PollenSelectionWidget(
+                listPollens: Allergen.values
+                    .map((allergen) => PollenTileModel(
+                        name: allergen.name,
+                        selected: Random().nextBool(),
+                        pathImage: null))
+                    .toList(),
+                onChoiceOfTile: (pollenTileModel) {
+                  Logger.log(pollenTileModel.name);
+                },
+              ),
             ),
+            Row(
+              children: [
+                const Text("Местоположение"),
+                MaterialButton(
+                  onPressed: () {},
+                  shape: const CircleBorder(),
+                  color: Colors.green,
+                  child: const Icon(Icons.edit),
+                ),
+              ],
+            ),
+            const Text("Текущее"),
+            MaterialButton(
+              onPressed: () {},
+              shape: const CircleBorder(),
+              color: Colors.green,
+              child: const Icon(Icons.edit),
+            ),
+            const Text("Сменить тему"),
           ],
         ),
       ),
