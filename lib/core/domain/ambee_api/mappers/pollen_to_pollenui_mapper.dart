@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/core/utils/colors.dart';
 import '../../../../core_ui/pollen/models/pollen_ui_model.dart';
@@ -92,7 +91,7 @@ extension PollenToPollenUIMapper on PollenModel {
     and then make a single combined list of GaugeModels from the three filtered lists.
  */
   List<PollenUIModel> toPollenUIModelsWithPrefs(
-      BuildContext context, WidgetRef ref, ProfileDataModel profile) {
+      BuildContext context, ProfileDataModel profile) {
     List<PollenLevel> grassList = (grassPollenLevels.where(
       (apiElement) => profile.allergens.any(
         (profileElement) => apiElement.allergen == profileElement,

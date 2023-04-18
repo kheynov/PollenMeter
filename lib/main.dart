@@ -11,12 +11,15 @@ import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
 
 import 'core/domain/ambee_api/models/pollen_model.dart';
-import 'core/domain/gauge/auxiliary_gauge_logic.dart';
+import 'core/domain/gauge/pollen_ui_logic.dart';
 import 'firebase_options.dart';
 
 void main() async {
   initializeFirebase();
   await ServiceLocator.initApp();
+  await Future.delayed(const Duration(
+      seconds:
+          1)); //TODO: remove this when SharedPreferences not initializing in time is fixed
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -49,15 +52,18 @@ final profileDataProvider = FutureProvider(
   },
 );
 
-final auxiliaryGaugeLogicProvider =
-    FutureProvider.family<AuxiliaryGaugeLogic, Coordinates>(
-  (ref, coords) async {
-    final pollenData = await ref.watch(pollenDataProvider(coords).future);
+final pollenUILogicProvider = FutureProvider<PollenUILogic>(
+  (ref) async {
     final profileData = await ref.watch(profileDataProvider.future);
-    return AuxiliaryGaugeLogic(
-        profileData: profileData, pollenData: pollenData);
+    final locationData = await ref.watch(locationProvider.future);
+    final pollenData = await ref.watch(pollenDataProvider(locationData).future);
+    return PollenUILogic(profileData: profileData, pollenData: pollenData);
   },
 );
+
+final locationProvider = FutureProvider<Coordinates>((ref) async {
+  return ServiceLocator.locationRepository.getLocation();
+});
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
