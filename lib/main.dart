@@ -38,8 +38,7 @@ void initializeFirebase() async {
 
 final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
   (ref, coords) async {
-    return ServiceLocator.pollenRepository
-        .fetchData(latitude: coords.latitude, longitude: coords.longitude);
+    return ServiceLocator.fetchDataFromAmbeeUseCase(coordinates: coords);
   },
 );
 
