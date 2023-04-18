@@ -75,7 +75,7 @@ class DashboardPage extends ConsumerWidget {
                   )),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 5 + pollenUIModelsWithPrefs.length,
+                  itemCount: 5 + pollenUIModelsEverything.length,
                   itemBuilder: (BuildContext context, int index) {
                     switch (index) {
                       case 0:
@@ -111,14 +111,14 @@ class DashboardPage extends ConsumerWidget {
                           data: (data) => (context.fromPollenLevelUnlocalized(
                                           allergenType:
                                               pollenUIModelBasic.allergenType!,
-                                          count:
-                                              pollenUIModelBasic.value.toInt()) ==
+                                          count: pollenUIModelBasic.value
+                                              .toInt()) ==
                                       RiskLevel.high ||
                                   context.fromPollenLevelUnlocalized(
                                           allergenType:
                                               pollenUIModelBasic.allergenType!,
-                                          count:
-                                              pollenUIModelBasic.value.toInt()) ==
+                                          count: pollenUIModelBasic.value
+                                              .toInt()) ==
                                       RiskLevel.veryHigh)
                               ? HighPollenLevelAlert(
                                   msg: AppLocalizations.of(context)?.alert ??
@@ -163,7 +163,8 @@ class DashboardPage extends ConsumerWidget {
                       default:
                         return SizedBox(
                             child: StatisticPollenTileWidget(
-                                statisticModel: pollenUIModelsEverything[index - 5]));
+                                statisticModel:
+                                    pollenUIModelsEverything[index - 5]));
                     }
                   },
                 ),

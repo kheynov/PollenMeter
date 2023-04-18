@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/profile/presentation/widgets/pollen_selection.dart';
 import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
 import '../../../core/domain/profile/enums/allergen.dart';
-import '../../../core/utils/logger.dart';
-import 'dart:math';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -46,13 +45,20 @@ class ProfilePage extends ConsumerWidget {
               height: 1500,
               child: PollenSelectionWidget(
                 listPollens: Allergen.values
-                    .map((allergen) => PollenTileModel(
-                        name: allergen.name,
-                        selected: Random().nextBool(),
-                        pathImage: null))
+                    .map(
+                      (allergen) => PollenTileModel(
+                          selected: ref
+                              .watch(profileLogicProvider)
+                              .allergens
+                              .contains(allergen),
+                          pathImage: null,
+                          allergen: allergen),
+                    )
                     .toList(),
                 onChoiceOfTile: (pollenTileModel) {
-                  Logger.log(pollenTileModel.name);
+                  ref.read(profileLogicProvider.notifier).toggleAllergen(
+                      pollenTileModel
+                          .allergen); //.allergens.firstWhere((element) => element == pollenTileModel.allergen)
                 },
               ),
             ),

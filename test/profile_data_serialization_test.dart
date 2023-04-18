@@ -10,7 +10,7 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
-  final data = ProfileDataModel(ThemeTypes.dark, [
+  const data = ProfileDataModel(ThemeTypes.dark, [
     Allergen.alder,
     Allergen.ash,
     Allergen.birch,

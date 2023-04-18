@@ -34,60 +34,35 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          shrinkWrap: true,
-          slivers: <Widget>[
-            SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 1,
-                crossAxisSpacing: widget.spacing,
-                mainAxisSpacing: widget.spacing,
-                crossAxisCount: widget.crossAxisCount,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => SquareTileWidget(
-                  text: widget.listPollens[index].name,
-                  image: widget.listPollens[index].pathImage != null
-                      ? Image.asset(widget.listPollens[index].pathImage!)
-                      : const Icon(
-                          Icons.local_florist,
-                          size: 40,
-                        ),
-                  selected: widget.listPollens[index].selected,
-                  onTap: (bool selected) {
-                    log(widget.listPollens[index].toString(),
-                        name:
-                            'SquareTileWidget - ${widget.listPollens[index].name}');
-                    widget.listPollens[index].selected = selected;
-                    widget.onChoiceOfTile.call(widget.listPollens[index]);
-                    setState(() {});
-                  },
-                ),
-                childCount: widget.listPollens.length,
-              ),
-            )
-          ],
-          //itemCount: widget.listPollens.length,
-          // itemBuilder: (BuildContext context, int index) {
-          //   return SquareTileWidget(
-          //     text: widget.listPollens[index].name,
-          //     image: widget.listPollens[index].pathImage != null
-          //         ? Image.asset(widget.listPollens[index].pathImage!)
-          //         : const Icon(
-          //             Icons.local_florist,
-          //             size: 40,
-          //           ),
-          //     selected: widget.listPollens[index].selected,
-          //     onTap: (bool selected) {
-          //       log(widget.listPollens[index].toString(),
-          //           name:
-          //               'SquareTileWidget - ${widget.listPollens[index].name}');
-          //       widget.listPollens[index].selected = selected;
-          //       widget.onChoiceOfTile.call(widget.listPollens[index]);
-          //       setState(() {});
-          //     },
-          //);
-          //},
+        child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 1,
+            crossAxisSpacing: widget.spacing,
+            mainAxisSpacing: widget.spacing,
+            crossAxisCount: widget.crossAxisCount,
+          ),
+          itemCount: widget.listPollens.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SquareTileWidget(
+              text: widget.listPollens[index].allergen.name,
+              image: widget.listPollens[index].pathImage != null
+                  ? Image.asset(widget.listPollens[index].pathImage!)
+                  : const Icon(
+                      Icons.local_florist,
+                      size: 40,
+                    ),
+              selected: widget.listPollens[index].selected,
+              onTap: (bool selected) {
+                log(widget.listPollens[index].toString(),
+                    name:
+                        'SquareTileWidget - ${widget.listPollens[index].allergen.name}');
+                widget.listPollens[index].selected = selected;
+                widget.onChoiceOfTile.call(widget.listPollens[index]);
+                setState(() {});
+              },
+            );
+          },
         ),
       ),
     );

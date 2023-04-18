@@ -7,11 +7,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core/utils/di.dart';
+import 'package:pollen_meter/profile/domain/logic/profile_logic.dart';
 import 'package:pollen_meter/routes.dart';
 import 'package:pollen_meter/theme.dart';
 
 import 'core/domain/ambee_api/models/pollen_model.dart';
 import 'core/domain/gauge/pollen_ui_logic.dart';
+import 'core/domain/profile/model/profile_data_model.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -42,17 +44,24 @@ final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
   },
 );
 
-final profileDataProvider = FutureProvider(
-  (ref) async {
-    return ServiceLocator.profileDataRepository.getProfile();
+final profileServiceProvider = Provider(
+  (ref) {
+    return ServiceLocator.profileService;
+  },
+);
+
+final profileLogicProvider =
+    StateNotifierProvider<ProfileNotifier, ProfileDataModel>(
+  (ref) {
+    return ProfileNotifier(ref.watch(profileServiceProvider));
   },
 );
 
 final pollenUILogicProvider = FutureProvider<PollenUILogic>(
   (ref) async {
-    final profileData = await ref.watch(profileDataProvider.future);
     final locationData = await ref.watch(locationProvider.future);
     final pollenData = await ref.watch(pollenDataProvider(locationData).future);
+    final profileData = ref.watch(profileLogicProvider);
     return PollenUILogic(profileData: profileData, pollenData: pollenData);
   },
 );
