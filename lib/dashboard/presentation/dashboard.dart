@@ -11,7 +11,6 @@ import 'package:pollen_meter/main.dart';
 import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
-import '../../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -26,22 +25,15 @@ class DashboardPage extends ConsumerWidget {
     // only includes data for allergens that are enabled in profile
     late final PollenUIModel
         pollenUIModelBasic; //for the big gauge; only uses average data by categories
-    late final List<PollenUIModel>
-        pollenUIModelsEverything; //for the bottom stats;
-    //includes everything
     pollenUILogic.when(data: (data) {
       pollenUIModelsWithPrefs =
           data.pollenData.toPollenUIModelsWithPrefs(context, data.profileData);
-      pollenUIModelsEverything =
-          data.pollenData.toPollenUIModelsEverything(context);
       pollenUIModelBasic = data.pollenData.toPollenModelBasic(context);
     }, error: (error, stackTrace) {
       Logger.log("Error: $error");
       Logger.log("StackTrace: ${stackTrace.toString()}");
-      pollenUIModelsEverything = List<PollenUIModel>.empty();
       pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
     }, loading: () {
-      pollenUIModelsEverything = List<PollenUIModel>.empty();
       pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
     });
 
@@ -74,99 +66,96 @@ class DashboardPage extends ConsumerWidget {
                     ],
                   )),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 5 + pollenUIModelsEverything.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    switch (index) {
-                      case 0:
-                        return const SizedBox.shrink();
-                      // return Container(
-                      //   padding: const EdgeInsets.all(20),
-                      //   alignment: Alignment.centerRight,
-                      //   child: MaterialButton(
-                      //     onPressed: () {
-                      //       context.go('/profile');
-                      //     },
-                      //     color: Colors.green,
-                      //     shape: const CircleBorder(),
-                      //     child: const Icon(Icons.person),
-                      //   ),
-                      // );
-                      case 1:
-                        return pollenUILogic.when(
-                          data: (data) => Gauge(
-                            data: pollenUIModelBasic,
-                          ),
-                          error: (error, stackTrace) => Text(
-                            error.toString(),
-                          ),
-                          loading: () => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      case 2:
-                        return const SizedBox(height: 20);
-                      case 3:
-                        return pollenUILogic.when(
-                          data: (data) => (context.fromPollenLevelUnlocalized(
-                                          allergenType:
-                                              pollenUIModelBasic.allergenType!,
-                                          count: pollenUIModelBasic.value
-                                              .toInt()) ==
-                                      RiskLevel.high ||
-                                  context.fromPollenLevelUnlocalized(
-                                          allergenType:
-                                              pollenUIModelBasic.allergenType!,
-                                          count: pollenUIModelBasic.value
-                                              .toInt()) ==
-                                      RiskLevel.veryHigh)
-                              ? HighPollenLevelAlert(
-                                  msg: AppLocalizations.of(context)?.alert ??
-                                      'Error')
-                              : const SizedBox.shrink(),
-                          error: (error, stackTrace) => Text(
-                            error.toString(),
-                          ),
-                          loading: () => const SizedBox(height: 20),
-                        );
-                      case 4:
-                        return SizedBox(
-                          height: 125,
-                          child: ListView.separated(
-                            itemCount: pollenUIModelsWithPrefs.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) =>
-                                pollenUILogic.when(
-                              data: (data) {
-                                return pollenUIModelsWithPrefs
-                                    .map(
-                                      (e) => Gauge(
-                                        data: e,
-                                      ),
-                                    )
-                                    .toList()[index];
-                              },
-                              error: (error, stackTrace) {
-                                return Text(
-                                  error.toString(),
-                                );
-                              },
-                              loading: () {
-                                return const SizedBox.shrink();
-                              },
-                            ),
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    const SizedBox(width: 10),
-                          ),
-                        );
-                      default:
-                        return SizedBox(
-                            child: StatisticPollenTileWidget(
-                                statisticModel:
-                                    pollenUIModelsEverything[index - 5]));
-                    }
-                  },
+                child: ListView(
+                  children: [
+                    const SizedBox.shrink(),
+                    // return Container(
+                    //   padding: const EdgeInsets.all(20),
+                    //   alignment: Alignment.centerRight,
+                    //   child: MaterialButton(
+                    //     onPressed: () {
+                    //       context.go('/profile');
+                    //     },
+                    //     color: Colors.green,
+                    //     shape: const CircleBorder(),
+                    //     child: const Icon(Icons.person),
+                    //   ),
+                    // );
+                    pollenUILogic.when(
+                      data: (data) => InkWell(
+                        child: Gauge(
+                          data: pollenUIModelBasic,
+                        ),
+                        onTap: () {
+                          context.push('/statistics');
+                        },
+                      ),
+                      error: (error, stackTrace) => Text(
+                        error.toString(),
+                      ),
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    pollenUILogic.when(
+                      data: (data) => (context.fromPollenLevelUnlocalized(
+                                      allergenType:
+                                          pollenUIModelBasic.allergenType!,
+                                      count:
+                                          pollenUIModelBasic.value.toInt()) ==
+                                  RiskLevel.high ||
+                              context.fromPollenLevelUnlocalized(
+                                      allergenType:
+                                          pollenUIModelBasic.allergenType!,
+                                      count:
+                                          pollenUIModelBasic.value.toInt()) ==
+                                  RiskLevel.veryHigh)
+                          ? HighPollenLevelAlert(
+                              msg: AppLocalizations.of(context)?.alert ??
+                                  'Error')
+                          : const SizedBox.shrink(),
+                      error: (error, stackTrace) => Text(
+                        error.toString(),
+                      ),
+                      loading: () => const SizedBox(height: 20),
+                    ),
+
+                    SizedBox(
+                      height: 125,
+                      child: ListView.separated(
+                        itemCount: pollenUIModelsWithPrefs.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) =>
+                            pollenUILogic.when(
+                          data: (data) {
+                            return pollenUIModelsWithPrefs
+                                .map(
+                                  (e) => InkWell(
+                                    child: Gauge(
+                                      data: e,
+                                    ),
+                                    onTap: () {
+                                      context.push('/statistics');
+                                    },
+                                  ),
+                                )
+                                .toList()[index];
+                          },
+                          error: (error, stackTrace) {
+                            return Text(
+                              error.toString(),
+                            );
+                          },
+                          loading: () {
+                            return const SizedBox.shrink();
+                          },
+                        ),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const SizedBox(width: 10),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
