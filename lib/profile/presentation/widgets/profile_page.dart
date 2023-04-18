@@ -12,6 +12,7 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: ListView(
           children: [
@@ -75,7 +76,9 @@ class ProfilePage extends ConsumerWidget {
             ),
             const Text("Текущее"),
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                ref.watch(profileLogicProvider.notifier).toggleTheme();
+              },
               shape: const CircleBorder(),
               color: Colors.green,
               child: const Icon(Icons.edit),

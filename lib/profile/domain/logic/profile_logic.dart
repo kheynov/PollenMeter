@@ -17,4 +17,13 @@ class ProfileNotifier extends StateNotifier<ProfileDataModel> {
             : [...state.allergens, allergen]);
     profileService.saveProfile(state);
   }
+
+  void toggleTheme() {
+    if (state.theme == ThemeTypes.dark) {
+      state = state.copyWith(theme: ThemeTypes.light);
+    } else {
+      state = state.copyWith(theme: ThemeTypes.dark);
+    }
+    profileService.saveProfile(state);
+  }
 }
