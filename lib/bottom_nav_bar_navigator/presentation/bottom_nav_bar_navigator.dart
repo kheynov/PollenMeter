@@ -28,7 +28,6 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: TabBarView(
         controller: tabController,
         children: const [
