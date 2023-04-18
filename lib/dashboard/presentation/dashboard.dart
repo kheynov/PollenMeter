@@ -3,12 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
-import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
 
+import '../../core/domain/profile/enums/allergen.dart';
 import '../../core/domain/profile/enums/risk_level.dart';
+import '../../core/domain/profile/model/profile_data_model.dart';
+import '../../core/utils/di.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
 import '../../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
@@ -18,75 +20,58 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coordinatesLogic = ref.watch(locationProvider);
-    late final Coordinates coordinates = coordinatesLogic.when(
-      data: (data) => data,
-      error: (error, stackTrace) {
-        Logger.log('Error getting coordinates: ${error.toString()}');
-        return Coordinates(0, 0);
-      },
-      loading: () => Coordinates(0, 0),
+    final pollenUILogic = ref.watch(
+      pollenUILogicProvider,
     );
-    final pollenLogic = ref.watch(
-      pollenDataProvider(
-        coordinates,
-      ),
-    ); //TODO: get coordinates from location
-    final auxiliaryGaugeLogic = ref.watch(
-      auxiliaryGaugeLogicProvider(
-        coordinates,
-      ),
-    );
-    final List<PollenUIModel> gaugeModelAuxiliary = auxiliaryGaugeLogic.when(
-      data: (data) {
-        //TODO: исправить, когда будет исправлен PollenToGaugeMapper
-        final ultraData = data.pollenData
-            .toPollenUIModelsWithPrefs(context, ref, data.profileData);
-        Logger.log(ultraData.toString());
-        return ultraData;
-      },
-      error: (error, stackTrace) {
-        Logger.log("Error: $error");
-        Logger.log("StackTrace: ${stackTrace.toString()}");
-        return List<PollenUIModel>.empty();
-      },
-      loading: () => List<PollenUIModel>.empty(),
-    );
-    final List<PollenUIModel> statisticPollens = pollenLogic.when(
-      data: (data) {
-        Logger.log(data.toString());
-        return data.toPollenUIModelsEverything(context);
-      },
-      error: (error, stackTrace) {
-        Logger.log(error.toString());
-        return List<PollenUIModel>.empty();
-      },
-      loading: () => List<PollenUIModel>.empty(),
-    );
-    late final PollenUIModel gaugeModelMain;
-
-    pollenLogic.whenData(
-      (value) {
-        gaugeModelMain = value.toPollenModelBasic(context);
-      },
-    );
+    late final List<PollenUIModel>
+        pollenUIModelsWithPrefs; //for the small gauges;
+    // only includes data for allergens that are enabled in profile
+    late final PollenUIModel
+        pollenUIModelBasic; //for the big gauge; only uses average data by categories
+    late final List<PollenUIModel>
+        pollenUIModelsEverything; //for the bottom stats;
+    //includes everything
+    pollenUILogic.when(data: (data) {
+      pollenUIModelsWithPrefs =
+          data.pollenData.toPollenUIModelsWithPrefs(context, data.profileData);
+      pollenUIModelsEverything =
+          data.pollenData.toPollenUIModelsEverything(context);
+      pollenUIModelBasic = data.pollenData.toPollenModelBasic(context);
+    }, error: (error, stackTrace) {
+      Logger.log("Error: $error");
+      Logger.log("StackTrace: ${stackTrace.toString()}");
+      pollenUIModelsEverything = List<PollenUIModel>.empty();
+      pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
+    }, loading: () {
+      pollenUIModelsEverything = List<PollenUIModel>.empty();
+      pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
+    });
 
     return Scaffold(
       body: Center(
         child: ListView.builder(
-          itemCount: 5 + statisticPollens.length,
+          itemCount: 5 + pollenUIModelsWithPrefs.length,
           itemBuilder: (BuildContext context, int index) {
             switch (index) {
               case 0:
                 return const SizedBox(height: 70);
               case 1:
-                return pollenLogic.when(
+                return pollenUILogic.when(
                   data: (data) => Gauge(
-                    data: gaugeModelMain,
+                    data: pollenUIModelBasic,
                   ),
-                  error: (error, stackTrace) => Text(
-                    error.toString(),
-                  ),
+                  error: (error, stackTrace) {
+                    final data = ProfileDataModel(ThemeTypes.dark, [
+                      Allergen.alder,
+                      Allergen.ash,
+                      Allergen.birch,
+                      Allergen.chenopod,
+                      Allergen.cypress,
+                      Allergen.elm,
+                    ]);
+                    ServiceLocator.profileDataRepository.saveProfile(data);
+                    return Text(error.toString());
+                  },
                   loading: () => const Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -94,14 +79,16 @@ class DashboardPage extends ConsumerWidget {
               case 2:
                 return const SizedBox(height: 20);
               case 3:
-                return pollenLogic.when(
+                return pollenUILogic.when(
                   data: (data) => (context.fromPollenLevelUnlocalized(
-                                  allergenType: gaugeModelMain.allergenType!,
-                                  count: gaugeModelMain.value.toInt()) ==
+                                  allergenType:
+                                      pollenUIModelBasic.allergenType!,
+                                  count: pollenUIModelBasic.value.toInt()) ==
                               RiskLevel.high ||
                           context.fromPollenLevelUnlocalized(
-                                  allergenType: gaugeModelMain.allergenType!,
-                                  count: gaugeModelMain.value.toInt()) ==
+                                  allergenType:
+                                      pollenUIModelBasic.allergenType!,
+                                  count: pollenUIModelBasic.value.toInt()) ==
                               RiskLevel.veryHigh)
                       ? HighPollenLevelAlert(
                           msg: AppLocalizations.of(context)?.alert ?? 'Error')
@@ -115,12 +102,12 @@ class DashboardPage extends ConsumerWidget {
                 return SizedBox(
                   height: 125,
                   child: ListView.separated(
-                    itemCount: gaugeModelAuxiliary.length,
+                    itemCount: pollenUIModelsWithPrefs.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) =>
-                        auxiliaryGaugeLogic.when(
+                        pollenUILogic.when(
                       data: (data) {
-                        return gaugeModelAuxiliary
+                        return pollenUIModelsWithPrefs
                             .map(
                               (e) => Gauge(
                                 data: e,
@@ -144,7 +131,7 @@ class DashboardPage extends ConsumerWidget {
               default:
                 return SizedBox(
                     child: StatisticPollenTileWidget(
-                        statisticModel: statisticPollens[index - 5]));
+                        statisticModel: pollenUIModelsEverything[index - 5]));
             }
           },
         ),
