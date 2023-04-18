@@ -48,6 +48,7 @@ class DashboardPage extends ConsumerWidget {
     });
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: ListView.builder(
           itemCount: 5 + pollenUIModelsWithPrefs.length,

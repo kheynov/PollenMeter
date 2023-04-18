@@ -19,10 +19,13 @@ class HighPollenLevelAlert extends StatelessWidget {
           children: [
             Icon(Icons.warning, color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 10),
-            Text(
-              msg,
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.center,
+            Expanded(
+              child: Text(
+                msg,
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
             ),
           ],
         ),
