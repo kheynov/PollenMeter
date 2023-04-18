@@ -17,7 +17,7 @@ import 'firebase_options.dart';
 void main() async {
   initializeFirebase();
   await ServiceLocator.initApp();
-  WidgetsFlutterBinding.ensureInitialized();
+  await Future.delayed(const Duration(seconds: 1)); //TODO: remove this when SharedPreferences not initializing in time is fixed
   runApp(const ProviderScope(child: MyApp()));
 }
 
