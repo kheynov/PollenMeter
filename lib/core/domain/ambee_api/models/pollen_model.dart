@@ -1,15 +1,13 @@
-import '../../../data/ambee_api/dto/pollen_dto.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergen.dart';
 
 class PollenModel {
   final PollenCount count;
-  final PollenRisk risk;
-  final List<TreePollenLevel> treePollenLevels;
-  final List<GrassPollenLevel> grassPollenLevels;
-  final List<WeedPollenLevel> weedPollenLevels;
+  final List<PollenLevel> treePollenLevels;
+  final List<PollenLevel> grassPollenLevels;
+  final List<PollenLevel> weedPollenLevels;
 
   PollenModel(
     this.count,
-    this.risk,
     this.treePollenLevels,
     this.grassPollenLevels,
     this.weedPollenLevels,
@@ -17,30 +15,26 @@ class PollenModel {
 
   @override
   String toString() {
-    return 'PollenModel{count: $count, risk: $risk, treePollenLevels: $treePollenLevels, grassPollenLevels: $grassPollenLevels, weedPollenLevels: $weedPollenLevels}';
+    return 'PollenModel{count: $count, treePollenLevels: $treePollenLevels, grassPollenLevels: $grassPollenLevels, weedPollenLevels: $weedPollenLevels}';
   }
+}
+
+class PollenCount {
+  final int grassPollen;
+  final int treePollen;
+  final int weedPollen;
+
+  PollenCount(this.grassPollen, this.treePollen, this.weedPollen);
 }
 
 class PollenLevel {
-  final String name;
+  final Allergen allergen;
   final int level;
 
-  PollenLevel(this.name, this.level);
+  PollenLevel(this.allergen, this.level);
 
   @override
   String toString() {
-    return 'PollenLevel($runtimeType){name: $name, level: $level}';
+    return 'PollenLevel($runtimeType){name: $allergen, level: $level}';
   }
-}
-
-class TreePollenLevel extends PollenLevel {
-  TreePollenLevel(super.name, super.level);
-}
-
-class GrassPollenLevel extends PollenLevel {
-  GrassPollenLevel(super.name, super.level);
-}
-
-class WeedPollenLevel extends PollenLevel {
-  WeedPollenLevel(super.name, super.level);
 }

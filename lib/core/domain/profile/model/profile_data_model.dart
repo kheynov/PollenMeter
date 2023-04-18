@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pollen_meter/core/domain/profile/enums/allergens.dart';
+import 'package:pollen_meter/core/domain/profile/enums/allergen.dart';
 
 part 'profile_data_model.g.dart';
 
@@ -8,7 +8,7 @@ enum ThemeTypes { dark, light, system }
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class ProfileDataModel {
   ThemeTypes theme;
-  List<Allergens> allergens;
+  List<Allergen> allergens;
 
   ProfileDataModel(this.theme, this.allergens);
 
