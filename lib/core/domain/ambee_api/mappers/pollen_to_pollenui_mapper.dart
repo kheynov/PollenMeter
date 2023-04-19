@@ -118,8 +118,7 @@ extension PollenToPollenUIMapper on PollenModel {
         (profileElement) => apiElement.allergen == profileElement,
       ),
     )).toList();
-
-    return grassList
+    List<PollenUIModel> result = grassList
         .map(
           (pollenLevel) => PollenUIModel(
             value: pollenLevel.level.toDouble(),
@@ -161,5 +160,7 @@ extension PollenToPollenUIMapper on PollenModel {
           ),
         )
         .toList();
+    result.sort((lhs, rhs) => rhs.value.compareTo(lhs.value));
+    return result;
   }
 }

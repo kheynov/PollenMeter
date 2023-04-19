@@ -21,6 +21,7 @@ final brightTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: GoogleFonts.montserrat().fontFamily,
   textTheme: theme.textTheme.copyWith(
+    //The names are completely arbitrary. Just make sure you use the same names.
     displayLarge: theme.textTheme.displayLarge!.copyWith(
       fontSize: 36,
       fontWeight: FontWeight.bold,
@@ -73,6 +74,24 @@ final brightTheme = ThemeData(
       fontSize: 12,
       fontWeight: FontWeight.normal,
       color: Colors.white,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    titleLarge: theme.textTheme.titleLarge!.copyWith(
+      fontSize: 10,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    titleMedium: theme.textTheme.titleMedium!.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    titleSmall: theme.textTheme.titleSmall!.copyWith(
+      fontSize: 20,
+      fontWeight: FontWeight.normal,
+      color: Colors.black,
       fontFamily: GoogleFonts.montserrat().fontFamily,
     ),
   ),

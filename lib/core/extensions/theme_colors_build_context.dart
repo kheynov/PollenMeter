@@ -25,7 +25,7 @@ extension ColorBuildContextExtension on BuildContext {
       case RiskLevel.low:
         return [
           theme.extension<PollenMeterColors>()!.lowRisk ?? Colors.lightGreen,
-          theme.primaryColor
+          theme.colorScheme.primary
         ];
       case RiskLevel.moderate:
         return [

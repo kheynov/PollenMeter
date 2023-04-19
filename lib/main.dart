@@ -5,6 +5,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:pollen_meter/core/utils/coordinates.dart';
 import 'package:pollen_meter/core/utils/di.dart';
 import 'package:pollen_meter/profile/domain/logic/profile_logic.dart';
@@ -18,6 +20,7 @@ import 'firebase_options.dart';
 void main() async {
   await initializeFirebase();
   await ServiceLocator.initApp();
+  Intl.systemLocale = await findSystemLocale();
   runApp(const ProviderScope(child: MyApp()));
 }
 

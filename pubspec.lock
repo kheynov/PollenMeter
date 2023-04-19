@@ -44,10 +44,11 @@ packages:
   blobs:
     dependency: "direct main"
     description:
-      name: blobs
-      sha256: "7fb3f0d9928e73c646d5ad418a6755eae825a5572f1334f3c3a7d74fd471e9c3"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "40e258e00b5215fb7f9a4c90388a5e451f270cfd"
+      url: "https://github.com/michael15346/flutter_blobs.git"
+    source: git
     version: "2.0.0"
   boolean_selector:
     dependency: transitive
