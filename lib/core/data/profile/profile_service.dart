@@ -3,13 +3,15 @@ import 'package:pollen_meter/core/data/profile/local/data_source/profile_local_d
 import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.dart';
 import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 
-class ProfileService {
+import '../../domain/profile/repository/profile_data_repository.dart';
+
+class ProfileServiceImpl implements ProfileService {
   final ProfileLocalDataStore localRepository;
   final FirebaseProfileService remoteRepository;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  ProfileService(this.localRepository, this.remoteRepository);
+  ProfileServiceImpl(this.localRepository, this.remoteRepository);
 
   Future<void> syncFromRemoteRepository() async {
     assert(auth.currentUser != null);
@@ -23,10 +25,12 @@ class ProfileService {
         remoteRepository.saveProfile(profile, auth.currentUser!.uid));
   }
 
+  @override
   Future<ProfileDataModel> getProfile() async {
     return await localRepository.getProfile();
   }
 
+  @override
   Future<void> saveProfile(ProfileDataModel profile) async {
     await localRepository.saveProfile(profile);
     if (auth.currentUser != null) {

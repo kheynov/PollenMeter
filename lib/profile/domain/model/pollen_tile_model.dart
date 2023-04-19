@@ -1,18 +1,20 @@
 //TODO: Поправить под глобальную модельку профиля в будущем
+import '../../../core/domain/profile/enums/allergen.dart';
+
 class PollenTileModel {
-  final String name;
   bool selected;
   final String? pathImage;
+  final Allergen allergen;
 
   PollenTileModel({
-    required this.name,
     required this.selected,
     required this.pathImage,
+    required this.allergen,
   });
 
   @override
   String toString() {
-    return 'PollenModel{name: $name, selected: $selected, iconData: $pathImage}';
+    return 'PollenModel{name: ${allergen.name}, selected: $selected, iconData: $pathImage}';
   }
 
   @override
@@ -20,9 +22,9 @@ class PollenTileModel {
       identical(this, other) ||
       other is PollenTileModel &&
           runtimeType == other.runtimeType &&
-          name == other.name &&
+          allergen.name == other.allergen.name &&
           pathImage == other.pathImage;
 
   @override
-  int get hashCode => name.hashCode ^ pathImage.hashCode;
+  int get hashCode => allergen.name.hashCode ^ pathImage.hashCode;
 }

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
 
-import '../../core/domain/profile/enums/allergen.dart';
 import '../../core/domain/profile/enums/risk_level.dart';
-import '../../core/domain/profile/model/profile_data_model.dart';
-import '../../core/utils/di.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
 import '../../pollen_statistics/widgets/statistic_pollen_tile_widget.dart';
@@ -49,92 +47,130 @@ class DashboardPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: ListView.builder(
-          itemCount: 5 + pollenUIModelsWithPrefs.length,
-          itemBuilder: (BuildContext context, int index) {
-            switch (index) {
-              case 0:
-                return const SizedBox(height: 70);
-              case 1:
-                return pollenUILogic.when(
-                  data: (data) => Gauge(
-                    data: pollenUIModelBasic,
-                  ),
-                  error: (error, stackTrace) {
-                    final data = ProfileDataModel(ThemeTypes.dark, [
-                      Allergen.alder,
-                      Allergen.ash,
-                      Allergen.birch,
-                      Allergen.chenopod,
-                      Allergen.cypress,
-                      Allergen.elm,
-                    ]);
-                    ServiceLocator.profileDataRepository.saveProfile(data);
-                    return Text(error.toString());
-                  },
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              case 2:
-                return const SizedBox(height: 20);
-              case 3:
-                return pollenUILogic.when(
-                  data: (data) => (context.fromPollenLevelUnlocalized(
-                                  allergenType:
-                                      pollenUIModelBasic.allergenType!,
-                                  count: pollenUIModelBasic.value.toInt()) ==
-                              RiskLevel.high ||
-                          context.fromPollenLevelUnlocalized(
-                                  allergenType:
-                                      pollenUIModelBasic.allergenType!,
-                                  count: pollenUIModelBasic.value.toInt()) ==
-                              RiskLevel.veryHigh)
-                      ? HighPollenLevelAlert(
-                          msg: AppLocalizations.of(context)?.alert ?? 'Error')
-                      : const SizedBox.shrink(),
-                  error: (error, stackTrace) => Text(
-                    error.toString(),
-                  ),
-                  loading: () => const SizedBox(height: 20),
-                );
-              case 4:
-                return SizedBox(
-                  height: 125,
-                  child: ListView.separated(
-                    itemCount: pollenUIModelsWithPrefs.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) =>
-                        pollenUILogic.when(
-                      data: (data) {
-                        return pollenUIModelsWithPrefs
-                            .map(
-                              (e) => Gauge(
-                                data: e,
-                              ),
-                            )
-                            .toList()[index];
-                      },
-                      error: (error, stackTrace) {
-                        return Text(
-                          error.toString(),
-                        );
-                      },
-                      loading: () {
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text("12 апреля"),
+                          Text("Добрый вечер, Егор)"),
+                        ],
+                      ),
+                      MaterialButton(
+                          onPressed: () {
+                            context.push('/profile');
+                          },
+                          color: Colors.green,
+                          shape: const CircleBorder(),
+                          height: 50,
+                          child: const Icon(Icons.person)),
+                    ],
+                  )),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 5 + pollenUIModelsEverything.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    switch (index) {
+                      case 0:
                         return const SizedBox.shrink();
-                      },
-                    ),
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(width: 10),
-                  ),
-                );
-              default:
-                return SizedBox(
-                    child: StatisticPollenTileWidget(
-                        statisticModel: pollenUIModelsEverything[index - 5]));
-            }
-          },
+                      // return Container(
+                      //   padding: const EdgeInsets.all(20),
+                      //   alignment: Alignment.centerRight,
+                      //   child: MaterialButton(
+                      //     onPressed: () {
+                      //       context.go('/profile');
+                      //     },
+                      //     color: Colors.green,
+                      //     shape: const CircleBorder(),
+                      //     child: const Icon(Icons.person),
+                      //   ),
+                      // );
+                      case 1:
+                        return pollenUILogic.when(
+                          data: (data) => Gauge(
+                            data: pollenUIModelBasic,
+                          ),
+                          error: (error, stackTrace) => Text(
+                            error.toString(),
+                          ),
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      case 2:
+                        return const SizedBox(height: 20);
+                      case 3:
+                        return pollenUILogic.when(
+                          data: (data) => (context.fromPollenLevelUnlocalized(
+                                          allergenType:
+                                              pollenUIModelBasic.allergenType!,
+                                          count: pollenUIModelBasic.value
+                                              .toInt()) ==
+                                      RiskLevel.high ||
+                                  context.fromPollenLevelUnlocalized(
+                                          allergenType:
+                                              pollenUIModelBasic.allergenType!,
+                                          count: pollenUIModelBasic.value
+                                              .toInt()) ==
+                                      RiskLevel.veryHigh)
+                              ? HighPollenLevelAlert(
+                                  msg: AppLocalizations.of(context)?.alert ??
+                                      'Error')
+                              : const SizedBox.shrink(),
+                          error: (error, stackTrace) => Text(
+                            error.toString(),
+                          ),
+                          loading: () => const SizedBox(height: 20),
+                        );
+                      case 4:
+                        return SizedBox(
+                          height: 125,
+                          child: ListView.separated(
+                            itemCount: pollenUIModelsWithPrefs.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) =>
+                                pollenUILogic.when(
+                              data: (data) {
+                                return pollenUIModelsWithPrefs
+                                    .map(
+                                      (e) => Gauge(
+                                        data: e,
+                                      ),
+                                    )
+                                    .toList()[index];
+                              },
+                              error: (error, stackTrace) {
+                                return Text(
+                                  error.toString(),
+                                );
+                              },
+                              loading: () {
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const SizedBox(width: 10),
+                          ),
+                        );
+                      default:
+                        return SizedBox(
+                            child: StatisticPollenTileWidget(
+                                statisticModel:
+                                    pollenUIModelsEverything[index - 5]));
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

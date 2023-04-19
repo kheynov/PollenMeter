@@ -35,6 +35,7 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
     return Scaffold(
       body: SafeArea(
         child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 1,
             crossAxisSpacing: widget.spacing,
@@ -44,7 +45,7 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
           itemCount: widget.listPollens.length,
           itemBuilder: (BuildContext context, int index) {
             return SquareTileWidget(
-              text: widget.listPollens[index].name,
+              text: widget.listPollens[index].allergen.name,
               image: widget.listPollens[index].pathImage != null
                   ? Image.asset(widget.listPollens[index].pathImage!)
                   : const Icon(
@@ -55,7 +56,7 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
               onTap: (bool selected) {
                 log(widget.listPollens[index].toString(),
                     name:
-                        'SquareTileWidget - ${widget.listPollens[index].name}');
+                        'SquareTileWidget - ${widget.listPollens[index].allergen.name}');
                 widget.listPollens[index].selected = selected;
                 widget.onChoiceOfTile.call(widget.listPollens[index]);
                 setState(() {});

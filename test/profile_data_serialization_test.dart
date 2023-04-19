@@ -10,7 +10,7 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
-  final data = ProfileDataModel(ThemeTypes.dark, [
+  const data = ProfileDataModel(ThemeTypes.dark, [
     Allergen.alder,
     Allergen.ash,
     Allergen.birch,
@@ -25,7 +25,7 @@ void main() async {
 
   await Future.delayed(const Duration(seconds: 1));
 
-  final repository = ServiceLocator.profileDataRepository;
+  final repository = ServiceLocator.profileService;
 
   await repository.saveProfile(data);
   final profile = await repository.getProfile();
