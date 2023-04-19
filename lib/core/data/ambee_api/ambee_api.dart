@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:pollen_meter/core/data/ambee_api/api_token.dart';
 import 'package:pollen_meter/core/data/ambee_api/dto/pollen_dto.dart';
 import 'package:pollen_meter/core/data/ambee_api/api_constants.dart';
+import 'package:pollen_meter/core/utils/logger.dart';
 
 class AmbeeClient {
   final Dio dio;
@@ -17,6 +18,7 @@ class AmbeeClient {
           options: Options(headers: {'x-api-key': apiKey}));
 
       var data = res.data['data'][0];
+      Logger.log(data.toString());
       return PollenDTO.fromJson(data);
     } on DioError catch (e) {
       if (e.response != null) {
@@ -30,7 +32,7 @@ class AmbeeClient {
       }
       rethrow;
     } catch (_, stacktrace) {
-      debugPrint(stacktrace as String?);
+      Logger.log(stacktrace.toString());
       rethrow;
     }
   }
