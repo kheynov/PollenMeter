@@ -40,10 +40,6 @@ class ServiceLocator {
     _locator.registerLazySingleton<AmbeeClient>(
         () => AmbeeClient(dio: _locator<Dio>()));
 
-    // _locator.registerLazySingleton<ProfileService>(() =>
-    //     ProfileDataRepositoryLocalImpl(
-    //         dataStore: _locator<ProfileLocalDataStore>()));
-
     _locator.registerLazySingleton<PollenRepository>(
         () => PollenRepositoryApiImpl(ambeeClient: _locator<AmbeeClient>()));
 
@@ -66,8 +62,6 @@ class ServiceLocator {
   static void dispose() {
     _locator.reset(dispose: true);
   }
-
-  static ProfileService get profileDataRepository => _locator<ProfileService>();
 
   static FetchDataFromAmbeeUseCase get fetchDataFromAmbeeUseCase =>
       _locator<FetchDataFromAmbeeUseCase>();
