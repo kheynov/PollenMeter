@@ -1,16 +1,18 @@
+import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
-import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
 
 import '../../core/domain/profile/enums/risk_level.dart';
+import '../../core/utils/blobs.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
+import 'clip_shadow_path.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -36,7 +38,7 @@ class DashboardPage extends ConsumerWidget {
     }, loading: () {
       pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
     });
-
+    BlobController blobCtl = BlobController();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -83,8 +85,27 @@ class DashboardPage extends ConsumerWidget {
                     // );
                     pollenUILogic.when(
                       data: (data) => InkWell(
-                        child: Gauge(
-                          data: pollenUIModelBasic,
+                        child: Center(
+                          child: ClipShadowPath(
+                              clipper: BlobClipper(id: getRandomID()),
+                              shadow: const Shadow(
+                                  blurRadius: 40, color: Color(0xff60d394)),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Color(0xffaaf683),
+                                    Color(0xff60d394),
+                                  ],
+                                )),
+                                width: 300,
+                                height: 300,
+                                child: const Center(child: Text("Жесть")),
+                              )
+                              //child: blobData.blob,
+                              ),
                         ),
                         onTap: () {
                           context.push('/statistics');
@@ -130,16 +151,42 @@ class DashboardPage extends ConsumerWidget {
                             pollenUILogic.when(
                           data: (data) {
                             return pollenUIModelsWithPrefs
-                                .map(
-                                  (e) => InkWell(
-                                    child: Gauge(
-                                      data: e,
-                                    ),
-                                    onTap: () {
-                                      context.push('/statistics');
-                                    },
-                                  ),
-                                )
+                                .map((e) => Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color(0xFF000000)
+                                                  .withAlpha(60),
+                                              blurRadius: 6.0,
+                                              spreadRadius: 0.0,
+                                              offset: const Offset(
+                                                0.0,
+                                                3.0,
+                                              ),
+                                            ),
+                                          ]),
+                                      child: ClipPath(
+                                          clipper: BlobClipper(),
+                                          child: LayoutBuilder(
+                                            builder: (context, constraints) =>
+                                                Blob.random(
+                                              size: constraints
+                                                  .biggest.shortestSide,
+                                              controller: blobCtl,
+                                              styles: BlobStyles(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                          )
+                                          // onTap: () {
+                                          //   context.push('/statistics');
+                                          // },
+                                          ),
+                                    ))
                                 .toList()[index];
                           },
                           error: (error, stackTrace) {
