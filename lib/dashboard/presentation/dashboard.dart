@@ -13,6 +13,7 @@ import '../../core/utils/blobs.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
 import 'clip_shadow_path.dart';
+import 'dashboard_tile.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -38,7 +39,6 @@ class DashboardPage extends ConsumerWidget {
     }, loading: () {
       pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
     });
-    BlobController blobCtl = BlobController();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -201,44 +201,10 @@ class DashboardPage extends ConsumerWidget {
                             pollenUILogic.when(
                           data: (data) {
                             return pollenUIModelsWithPrefs
-                                .map(
-                                  (e) => Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: const Color(0xFF000000)
-                                              .withAlpha(60),
-                                          blurRadius: 6.0,
-                                          spreadRadius: 0.0,
-                                          offset: const Offset(
-                                            0.0,
-                                            3.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    child: ClipPath(
-                                      clipper: BlobClipper(),
-                                      child: LayoutBuilder(
-                                        builder: (context, constraints) =>
-                                            Blob.random(
-                                          size:
-                                              constraints.biggest.shortestSide,
-                                          controller: blobCtl,
-                                          styles: BlobStyles(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                      // onTap: () {
-                                      //   context.push('/statistics');
-                                      // },
-                                    ),
-                                  ),
-                                )
+                                .map((e) => DashboardTileWidget(
+                                    image: const Icon(Icons.abc),
+                                    text: "Text",
+                                    onTap: (e) {}))
                                 .toList()[index];
                           },
                           error: (error, stackTrace) {
