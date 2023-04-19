@@ -45,7 +45,6 @@ final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
   },
 );
 
-
 final profileServiceProvider = Provider(
   (ref) {
     return ServiceLocator.profileService;
