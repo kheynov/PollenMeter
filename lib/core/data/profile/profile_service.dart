@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pollen_meter/core/data/profile/local/data_source/profile_local_data_source.dart';
+import 'package:pollen_meter/core/data/profile/local/profile_local_data_source.dart';
 import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.dart';
 import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 
@@ -7,7 +7,7 @@ import '../../domain/profile/repository/profile_data_repository.dart';
 
 class ProfileServiceImpl implements ProfileService {
   final ProfileLocalDataStore localRepository;
-  final FirebaseProfileService remoteRepository;
+  final FirebaseProfileDataStore remoteRepository; // TODO: refactor
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -29,10 +29,6 @@ class ProfileServiceImpl implements ProfileService {
 
   @override
   Future<ProfileDataModel> getProfile() async {
-    if (auth.currentUser != null) {
-      final profile = await remoteRepository.getProfile(auth.currentUser!.uid);
-      await localRepository.saveProfile(profile);
-    }
     return await localRepository.getProfile();
   }
 
