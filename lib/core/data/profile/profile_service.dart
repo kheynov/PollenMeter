@@ -31,11 +31,10 @@ class ProfileServiceImpl implements ProfileService {
   }
 
   @override
-  Future<bool> saveProfile(ProfileDataModel profile) async {
+  Future<void> saveProfile(ProfileDataModel profile) async {
     await localRepository.saveProfile(profile);
     if (auth.currentUser != null) {
       await remoteRepository.saveProfile(profile, auth.currentUser!.uid);
     }
-    return true;
   }
 }
