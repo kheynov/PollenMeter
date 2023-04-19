@@ -44,7 +44,7 @@ final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
 
 final profileDataProvider = FutureProvider(
   (ref) async {
-    return ServiceLocator.profileDataRepository.getProfile();
+    return ServiceLocator.profileService.getProfile();
   },
 );
 

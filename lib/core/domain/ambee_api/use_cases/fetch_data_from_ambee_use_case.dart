@@ -9,15 +9,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'fetch_data_from_ambee_use_case.g.dart';
 
 class FetchDataFromAmbeeUseCase {
-  final PollenRepository pollenRepository;
+  final PollenRepository _pollenRepository;
 
-  final SharedPreferences preferences;
+  final SharedPreferences _preferences;
 
   FetchDataFromAmbeeUseCase(
-      {required this.pollenRepository, required this.preferences});
+      {required PollenRepository pollenRepository,
+      required SharedPreferences preferences})
+      : _preferences = preferences,
+        _pollenRepository = pollenRepository;
 
   Future<PollenModel> call({required Coordinates coordinates}) async {
-    final savedData = preferences.getString('api_cache');
+    final savedData = _preferences.getString('api_cache');
     if (savedData != null && savedData.isNotEmpty) {
       final cache = AmbeeApiCacheDto.fromJson(jsonDecode(savedData));
       if (cache.coordinates == coordinates &&
@@ -26,11 +29,11 @@ class FetchDataFromAmbeeUseCase {
       }
     }
 
-    final data = await pollenRepository.fetchData(
+    final data = await _pollenRepository.fetchData(
       latitude: coordinates.latitude,
       longitude: coordinates.longitude,
     );
-    preferences.setString('api_cache',
+    _preferences.setString('api_cache',
         jsonEncode(AmbeeApiCacheDto(coordinates, DateTime.now(), data)));
     return data;
   }
