@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pollen_meter/core/data/ambee_api/ambee_api.dart';
-import 'package:pollen_meter/core/data/profile/local/data_source/profile_local_data_source.dart';
+import 'package:pollen_meter/core/data/profile/local/profile_local_data_source.dart';
 import 'package:pollen_meter/core/data/profile/profile_service.dart';
 import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.dart';
 import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.dart';
@@ -28,8 +26,7 @@ class ServiceLocator {
     _locator.registerSingletonAsync<SharedPreferences>(
         () async => await SharedPreferences.getInstance());
 
-    _locator.registerLazySingleton(() => FirebaseProfileService(
-        FirebaseFirestore.instance, FirebaseAuth.instance));
+    _locator.registerLazySingleton(() => FirebaseProfileDataStore());
 
     _locator.registerLazySingleton<ProfileLocalDataStore>(() =>
         ProfileLocalDataStore(
@@ -53,7 +50,8 @@ class ServiceLocator {
     );
 
     _locator.registerLazySingleton<ProfileService>(() => ProfileServiceImpl(
-        _locator<ProfileLocalDataStore>(), _locator<FirebaseProfileService>()));
+        _locator<ProfileLocalDataStore>(),
+        _locator<FirebaseProfileDataStore>()));
 
     await GetIt.instance.allReady();
     Logger.log('Dependencies initialized!');
@@ -66,8 +64,8 @@ class ServiceLocator {
   static FetchDataFromAmbeeUseCase get fetchDataFromAmbeeUseCase =>
       _locator<FetchDataFromAmbeeUseCase>();
 
-  static FirebaseProfileService get firebaseService =>
-      _locator<FirebaseProfileService>();
+  static FirebaseProfileDataStore get firebaseService =>
+      _locator<FirebaseProfileDataStore>();
 
   static LocationRepository get locationRepository =>
       _locator<LocationRepository>();
