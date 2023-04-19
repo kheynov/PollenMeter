@@ -7,16 +7,22 @@ part of 'pollen_dto.dart';
 // **************************************************************************
 
 PollenDTO _$PollenDTOFromJson(Map<String, dynamic> json) => PollenDTO(
-      PollenCountDTO.fromJson(json['Count'] as Map<String, dynamic>),
-      PollenRiskDTO.fromJson(json['Risk'] as Map<String, dynamic>),
-      PollenSpeciesDTO.fromJson(json['Species'] as Map<String, dynamic>),
+      json['Count'] == null
+          ? null
+          : PollenCountDTO.fromJson(json['Count'] as Map<String, dynamic>),
+      json['Risk'] == null
+          ? null
+          : PollenRiskDTO.fromJson(json['Risk'] as Map<String, dynamic>),
+      json['Species'] == null
+          ? null
+          : PollenSpeciesDTO.fromJson(json['Species'] as Map<String, dynamic>),
       json['updatedAt'] as String,
     );
 
 Map<String, dynamic> _$PollenDTOToJson(PollenDTO instance) => <String, dynamic>{
-      'Count': instance.count.toJson(),
-      'Risk': instance.risk.toJson(),
-      'Species': instance.species.toJson(),
+      'Count': instance.count?.toJson(),
+      'Risk': instance.risk?.toJson(),
+      'Species': instance.species?.toJson(),
       'updatedAt': instance.updatedAt,
     };
 

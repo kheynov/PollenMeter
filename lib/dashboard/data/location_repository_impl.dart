@@ -11,7 +11,7 @@ class LocationRepositoryImpl implements LocationRepository {
     if (locationData.latitude == null || locationData.longitude == null) {
       throw LocationException('Cannot get current location');
     }
-    return Coordinates(locationData.latitude!, locationData.latitude!);
+    return Coordinates(locationData.latitude!, locationData.longitude!);
   }
 }
 

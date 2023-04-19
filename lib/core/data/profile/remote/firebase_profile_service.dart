@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pollen_meter/core/data/profile/remote/dto/firebase_profile_dto.dart';
 import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 
-class FirebaseProfileService {
-  final FirebaseAuth firebaseAuth;
+class FirebaseProfileDataStore {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  final FirebaseFirestore firestore;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   late final CollectionReference<FirebaseProfileDto> collection;
 
-  FirebaseProfileService(this.firestore, this.firebaseAuth) {
+  FirebaseProfileDataStore() {
     collection =
         firestore.collection('profiles').withConverter<FirebaseProfileDto>(
               fromFirestore: (snapshot, _) =>

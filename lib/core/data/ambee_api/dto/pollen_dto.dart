@@ -5,13 +5,13 @@ part 'pollen_dto.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class PollenDTO {
   @JsonKey(name: 'Count')
-  final PollenCountDTO count;
+  final PollenCountDTO? count;
 
   @JsonKey(name: 'Risk')
-  final PollenRiskDTO risk;
+  final PollenRiskDTO? risk;
 
   @JsonKey(name: 'Species')
-  final PollenSpeciesDTO species;
+  final PollenSpeciesDTO? species;
 
   @JsonKey(name: 'updatedAt')
   final String updatedAt;

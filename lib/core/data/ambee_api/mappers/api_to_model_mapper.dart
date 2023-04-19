@@ -6,16 +6,23 @@ import '../../../domain/ambee_api/models/pollen_model.dart';
 extension PollenDtoMapper on PollenDTO {
   PollenModel toPollenModel() {
     return PollenModel(
-      PollenCount(count.grassPollen, count.treePollen, count.grassPollen),
-      species.tree.entries
-          .map((entry) => PollenLevel(_mapAllergens[entry.key]!, entry.value))
-          .toList(),
-      species.grass.entries
-          .map((entry) => PollenLevel(_mapAllergens[entry.key]!, entry.value))
-          .toList(),
-      species.weed.entries
-          .map((entry) => PollenLevel(_mapAllergens[entry.key]!, entry.value))
-          .toList(),
+      PollenCount(count?.grassPollen ?? 0, count?.treePollen ?? 0,
+          count?.grassPollen ?? 0),
+      species?.tree.entries
+              .map((entry) =>
+                  PollenLevel(_mapAllergens[entry.key]!, entry.value))
+              .toList() ??
+          [],
+      species?.grass.entries
+              .map((entry) =>
+                  PollenLevel(_mapAllergens[entry.key]!, entry.value))
+              .toList() ??
+          [],
+      species?.weed.entries
+              .map((entry) =>
+                  PollenLevel(_mapAllergens[entry.key]!, entry.value))
+              .toList() ??
+          [],
     );
   }
 }
