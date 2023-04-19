@@ -7,7 +7,7 @@ import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_ma
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
-
+import 'package:pollen_meter/core/extensions/theme_colors_build_context.dart';
 import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/blobs.dart';
 import '../../core/utils/logger.dart';
@@ -58,13 +58,14 @@ class DashboardPage extends ConsumerWidget {
                         ],
                       ),
                       MaterialButton(
-                          onPressed: () {
-                            context.push('/profile');
-                          },
-                          color: Colors.green,
-                          shape: const CircleBorder(),
-                          height: 50,
-                          child: const Icon(Icons.person)),
+                        onPressed: () {
+                          context.push('/profile');
+                        },
+                        color: Colors.green,
+                        shape: const CircleBorder(),
+                        height: 50,
+                        child: const Icon(Icons.person),
+                      ),
                     ],
                   )),
               Expanded(
@@ -85,27 +86,76 @@ class DashboardPage extends ConsumerWidget {
                     // );
                     pollenUILogic.when(
                       data: (data) => InkWell(
-                        child: Center(
-                          child: ClipShadowPath(
-                              clipper: BlobClipper(id: getRandomID()),
-                              shadow: const Shadow(
-                                  blurRadius: 40, color: Color(0xff60d394)),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
+                        child: ClipShadowPath(
+                          clipper: BlobClipper(
+                            id: getRandomID(),
+                          ),
+                          shadow: Shadow(
+                            blurRadius: 40,
+                            color: context.fromRiskLevel(
+                              context.fromPollenLevelUnlocalized(
+                                allergenType: pollenUIModelBasic.allergenType!,
+                                count: pollenUIModelBasic.value.toInt(),
+                              ),
+                            ),
+                          ),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) => Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color(0xffaaf683),
-                                    Color(0xff60d394),
-                                  ],
-                                )),
-                                width: 300,
-                                height: 300,
-                                child: const Center(child: Text("Жесть")),
-                              )
-                              //child: blobData.blob,
+                                  colors: context.gradientFromRiskLevel(
+                                    context.fromPollenLevelUnlocalized(
+                                      allergenType:
+                                          pollenUIModelBasic.allergenType!,
+                                      count: pollenUIModelBasic.value.toInt(),
+                                    ),
+                                  ),
+                                ),
                               ),
+                              height: constraints.biggest.shortestSide,
+                              width: constraints.biggest.shortestSide,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      constraints.biggest.shortestSide * 1 / 3),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        pollenUIModelBasic.value
+                                            .toStringAsFixed(0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge,
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)?.unit ??
+                                            '',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displaySmall,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                      context.fromPollenLevel(
+                                        allergenType:
+                                            pollenUIModelBasic.allergenType!,
+                                        count: pollenUIModelBasic.value.toInt(),
+                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                         onTap: () {
                           context.push('/statistics');
@@ -151,42 +201,44 @@ class DashboardPage extends ConsumerWidget {
                             pollenUILogic.when(
                           data: (data) {
                             return pollenUIModelsWithPrefs
-                                .map((e) => Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: const Color(0xFF000000)
-                                                  .withAlpha(60),
-                                              blurRadius: 6.0,
-                                              spreadRadius: 0.0,
-                                              offset: const Offset(
-                                                0.0,
-                                                3.0,
-                                              ),
-                                            ),
-                                          ]),
-                                      child: ClipPath(
-                                          clipper: BlobClipper(),
-                                          child: LayoutBuilder(
-                                            builder: (context, constraints) =>
-                                                Blob.random(
-                                              size: constraints
-                                                  .biggest.shortestSide,
-                                              controller: blobCtl,
-                                              styles: BlobStyles(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                              ),
-                                            ),
-                                          )
-                                          // onTap: () {
-                                          //   context.push('/statistics');
-                                          // },
+                                .map(
+                                  (e) => Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: const Color(0xFF000000)
+                                              .withAlpha(60),
+                                          blurRadius: 6.0,
+                                          spreadRadius: 0.0,
+                                          offset: const Offset(
+                                            0.0,
+                                            3.0,
                                           ),
-                                    ))
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipPath(
+                                      clipper: BlobClipper(),
+                                      child: LayoutBuilder(
+                                        builder: (context, constraints) =>
+                                            Blob.random(
+                                          size:
+                                              constraints.biggest.shortestSide,
+                                          controller: blobCtl,
+                                          styles: BlobStyles(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        ),
+                                      ),
+                                      // onTap: () {
+                                      //   context.push('/statistics');
+                                      // },
+                                    ),
+                                  ),
+                                )
                                 .toList()[index];
                           },
                           error: (error, stackTrace) {

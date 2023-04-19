@@ -21,10 +21,22 @@ final brightTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: GoogleFonts.montserrat().fontFamily,
   textTheme: theme.textTheme.copyWith(
+    displayLarge: theme.textTheme.displayLarge!.copyWith(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
     displayMedium: theme.textTheme.displayMedium!.copyWith(
       fontSize: 18,
       fontWeight: FontWeight.normal,
       color: Colors.black,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    displaySmall: theme.textTheme.displaySmall!.copyWith(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
       fontFamily: GoogleFonts.montserrat().fontFamily,
     ),
     headlineLarge: theme.textTheme.headlineLarge!.copyWith(
@@ -52,9 +64,15 @@ final brightTheme = ThemeData(
       fontFamily: GoogleFonts.montserrat().fontFamily,
     ),
     bodyMedium: theme.textTheme.bodyMedium!.copyWith(
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.normal,
-      color: Colors.black,
+      color: const Color(0xff7e7e7e),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    bodySmall: theme.textTheme.bodySmall!.copyWith(
+      fontSize: 12,
+      fontWeight: FontWeight.normal,
+      color: Colors.white,
       fontFamily: GoogleFonts.montserrat().fontFamily,
     ),
   ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class HighPollenLevelAlert extends StatelessWidget {
   final String msg;
 
@@ -17,7 +19,10 @@ class HighPollenLevelAlert extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            Icon(Icons.warning, color: Theme.of(context).colorScheme.primary),
+            Icon(Icons.warning,
+                color: Theme.of(context)
+                    .extension<PollenMeterColors>()!
+                    .veryHighRisk),
             const SizedBox(width: 10),
             Expanded(
               child: Text(

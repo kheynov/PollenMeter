@@ -622,7 +622,7 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: intl
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
@@ -630,7 +630,7 @@ packages:
     source: hosted
     version: "0.17.0"
   intl_translation:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: intl_translation
       sha256: "492d4838bb5d75d4e764e8c1a1bb6d05667df14611ba7e9f37dd0f99c8bc3bf7"
