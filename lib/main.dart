@@ -16,14 +16,12 @@ import 'core/domain/profile/model/profile_data_model.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  initializeFirebase();
+  await initializeFirebase();
   await ServiceLocator.initApp();
-  await Future.delayed(
-      const Duration(seconds: 5)); //TODO: this unbreaks Firebase
   runApp(const ProviderScope(child: MyApp()));
 }
 
-void initializeFirebase() async {
+Future<void> initializeFirebase() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
