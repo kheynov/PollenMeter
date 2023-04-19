@@ -45,6 +45,7 @@ final pollenDataProvider = FutureProvider.family<PollenModel, Coordinates>(
   },
 );
 
+
 final profileServiceProvider = Provider(
   (ref) {
     return ServiceLocator.profileService;
@@ -55,6 +56,11 @@ final profileLogicProvider =
     StateNotifierProvider<ProfileNotifier, ProfileDataModel>(
   (ref) {
     return ProfileNotifier(ref.watch(profileServiceProvider));
+  },
+);
+final profileDataProvider = FutureProvider(
+  (ref) async {
+    return ServiceLocator.profileService.getProfile();
   },
 );
 
