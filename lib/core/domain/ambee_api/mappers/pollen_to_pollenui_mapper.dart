@@ -61,6 +61,7 @@ extension PollenToPollenUIMapper on PollenModel {
               context.fromPollenLevelUnlocalized(
                   allergenType: AllergenType.weed, count: e.level),
             ),
+            allergenType: AllergenType.weed,
           ),
         )
         .followedBy(
@@ -73,6 +74,7 @@ extension PollenToPollenUIMapper on PollenModel {
                 context.fromPollenLevelUnlocalized(
                     allergenType: AllergenType.grass, count: e.level),
               ),
+              allergenType: AllergenType.grass,
             ),
           ),
         )
@@ -82,8 +84,11 @@ extension PollenToPollenUIMapper on PollenModel {
                 value: e.level.toDouble(),
                 title: context.fromAllergen(e.allergen),
                 icon: Icons.park,
-                color: context.fromRiskLevel(context.fromPollenLevelUnlocalized(
-                    allergenType: AllergenType.tree, count: e.level))),
+                color: context.fromRiskLevel(
+                  context.fromPollenLevelUnlocalized(
+                      allergenType: AllergenType.tree, count: e.level),
+                ),
+                allergenType: AllergenType.tree),
           ),
         )
         .toList();

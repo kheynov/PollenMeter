@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:pollen_meter/bottom_nav_bar_navigator/presentation/bottom_nav_bar_navigator.dart';
+import 'package:pollen_meter/pollen_statistics/widgets/statistics_page.dart';
 import 'package:pollen_meter/profile/presentation/widgets/profile_page.dart';
-import 'package:pollen_meter/test/test_routes.dart';
 
 class RouteGenerator {
   GoRouter get router => _goRouter;
@@ -19,8 +19,8 @@ class RouteGenerator {
         routes: const [],
       ),
       GoRoute(
-        path: '/calendar',
-        builder: (context, state) => const MyHomePageTest3(),
+        path: '/statistics',
+        builder: (context, state) => const StatisticsPage(),
         routes: const [],
       ),
     ],

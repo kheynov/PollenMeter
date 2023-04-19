@@ -50,9 +50,11 @@ final profileServiceProvider = Provider(
 );
 
 final profileLogicProvider =
-    StateNotifierProvider<ProfileNotifier, ProfileDataModel>((ref) {
-  return ProfileNotifier(ref.watch(profileServiceProvider));
-});
+    StateNotifierProvider<ProfileNotifier, ProfileDataModel>(
+  (ref) {
+    return ProfileNotifier(ref.watch(profileServiceProvider));
+  },
+);
 final profileDataProvider = FutureProvider(
   (ref) async {
     return ServiceLocator.profileService.getProfile();
