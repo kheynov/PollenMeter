@@ -17,7 +17,7 @@ class LocalDiaryDataStore implements DiaryDataStore {
     if (diaryJson != null) {
       return Future.value(LocalDiaryDto.fromJson(jsonDecode(diaryJson)).data);
     } else {
-      throw Exception('No diary found');
+      return Future.value(List<DiaryModel>.empty());
     }
   }
 
