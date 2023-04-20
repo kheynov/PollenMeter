@@ -13,14 +13,20 @@ class DiaryService {
 
   Future<void> syncFromRemoteRepository() async {
     assert(auth.currentUser != null);
-    await localRepository.getDiaries().then(
-        (diaries) => diaries.map((diary) => remoteRepository.saveDiary(diary)));
+    await remoteRepository.getDiaries().then(
+          (diaries) => diaries.map(
+            (diary) => localRepository.saveDiary(diary),
+          ),
+        );
   }
 
   Future<void> syncToRemoteRepository() async {
     assert(auth.currentUser != null);
     await localRepository.getDiaries().then(
-        (diaries) => diaries.map((diary) => remoteRepository.saveDiary(diary)));
+          (diaries) => diaries.map(
+            (diary) => remoteRepository.saveDiary(diary),
+          ),
+        );
   }
 
   Future<List<DiaryModel>> getDiaries() async {
