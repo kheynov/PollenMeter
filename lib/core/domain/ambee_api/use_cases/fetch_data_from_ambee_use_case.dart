@@ -23,7 +23,7 @@ class FetchDataFromAmbeeUseCase {
     final savedData = _preferences.getString('api_cache');
     if (savedData != null && savedData.isNotEmpty) {
       final cache = AmbeeApiCacheDto.fromJson(jsonDecode(savedData));
-      if (cache.coordinates == coordinates &&
+      if (cache.coordinates.getDistance(coordinates) < 1.0 &&
           DateTime.now().difference(cache.timestamp).inMinutes < 60) {
         return cache.data;
       }

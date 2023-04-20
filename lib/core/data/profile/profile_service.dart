@@ -16,8 +16,9 @@ class ProfileServiceImpl implements ProfileService {
   @override
   Future<void> syncFromRemoteRepository() async {
     assert(auth.currentUser != null);
-    await localRepository.getProfile().then(
-        (value) => remoteRepository.saveProfile(value, auth.currentUser!.uid));
+    await remoteRepository
+        .getProfile(auth.currentUser!.uid)
+        .then((value) => localRepository.saveProfile(value));
   }
 
   @override
