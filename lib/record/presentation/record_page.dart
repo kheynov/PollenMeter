@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:pollen_meter/main.dart';
+import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
+import 'package:pollen_meter/profile/presentation/widgets/theme_selection.dart';
+import '../../../core/domain/profile/enums/allergen.dart';
+import '../../../core/domain/profile/model/profile_data_model.dart';
+import 'emotion_picker.dart';
+
+class RecordPage extends ConsumerWidget {
+  const RecordPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Container(
+                      padding:
+                          const EdgeInsets.only(left: 24, top: 32, bottom: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              context.pop();
+                            },
+                            child: const Icon(Icons.arrow_back),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(DateFormat('MMMMd').format(DateTime.now()),
+                              style: Theme.of(context).textTheme.titleMedium),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 24, right: 24, bottom: 16),
+                      child: EmotionPickerWidget(
+                        listPollens: Allergen.values
+                            .map(
+                              (allergen) => PollenTileModel(
+                                  selected: ref
+                                      .watch(profileLogicProvider)
+                                      .allergens
+                                      .contains(allergen),
+                                  pathImage: null,
+                                  allergen: allergen),
+                            )
+                            .toList(),
+                        onChoiceOfTile: (pollenTileModel) {
+                          ref
+                              .read(profileLogicProvider.notifier)
+                              .toggleAllergen(pollenTileModel
+                                  .allergen); //.allergens.firstWhere((element) => element == pollenTileModel.allergen)
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 24, right: 24, bottom: 16),
+                      child: ThemeSelectionWidget(
+                        onChoiceOfTile: (ThemeTypes themeTypes) {
+                          ref
+                              .watch(profileLogicProvider.notifier)
+                              .setTheme(themeTypes);
+                        },
+                        themeType: [ref.watch(profileLogicProvider).theme],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

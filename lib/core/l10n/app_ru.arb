@@ -49,5 +49,6 @@
   "themeMessage": "Тема",
   "darkTheme": "Тёмная",
   "lightTheme": "Светлая",
-  "systemTheme": "Системная"
+  "systemTheme": "Системная",
+  "feels": "Как вы чувствуете себя сегодня?"
 }

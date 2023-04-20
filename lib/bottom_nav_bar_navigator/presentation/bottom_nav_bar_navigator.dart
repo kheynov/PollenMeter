@@ -16,7 +16,7 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -33,7 +33,6 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
         children: const [
           DashboardPage(),
           MyHomePageTest2(),
-          MyHomePageTest3(),
         ],
       ),
       bottomNavigationBar: BottomNavBar(tabController: tabController),

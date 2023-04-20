@@ -49,6 +49,7 @@
     "themeMessage": "Тheme",
     "darkTheme": "Dark",
     "lightTheme": "Light",
-    "systemTheme": "System"
+    "systemTheme": "System",
+    "feels": "How are you today?"
 
 }

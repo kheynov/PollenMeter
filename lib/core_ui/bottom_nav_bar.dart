@@ -86,8 +86,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       size: 30),
                 ),
                 onTap: () {
-                  context.push('/profile');
-                }, //TODO: replace with record
+                  context.push('/record');
+                },
               ),
             ),
           ),

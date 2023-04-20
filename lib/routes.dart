@@ -3,6 +3,7 @@ import 'package:pollen_meter/bottom_nav_bar_navigator/presentation/bottom_nav_ba
 import 'package:pollen_meter/pollen_statistics/widgets/statistics_page.dart';
 import 'package:pollen_meter/profile/presentation/widgets/profile_page.dart';
 import 'package:pollen_meter/profile/presentation/widgets/sign_in_page.dart';
+import 'package:pollen_meter/record/presentation/record_page.dart';
 
 class RouteGenerator {
   GoRouter get router => _goRouter;
@@ -27,6 +28,11 @@ class RouteGenerator {
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginPage(),
+        routes: const [],
+      ),
+      GoRoute(
+        path: '/record',
+        builder: (context, state) => const RecordPage(),
         routes: const [],
       ),
     ],
