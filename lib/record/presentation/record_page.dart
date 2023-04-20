@@ -50,8 +50,8 @@ class RecordPage extends ConsumerWidget {
                       padding: const EdgeInsets.only(
                           left: 24, right: 24, bottom: 16),
                       child: EmotionPickerWidget(
-                        onChoice: (wellBeingState) {
-                          wellBeingState = wellBeingState;
+                        onChoice: (wellBeingStateExt) {
+                          wellBeingState = wellBeingStateExt;
                         },
                       ),
                     ),
@@ -59,8 +59,8 @@ class RecordPage extends ConsumerWidget {
                       padding: const EdgeInsets.only(
                           left: 24, right: 24, bottom: 16),
                       child: FeedbackWidget(
-                        onChoice: (feedback) {
-                          feedback = feedback;
+                        onChoice: (feedbackExt) {
+                          feedback = feedbackExt;
                         },
                       ),
                     ),
