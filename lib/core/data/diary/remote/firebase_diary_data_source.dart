@@ -12,7 +12,7 @@ class FirebaseDiaryDataStore implements DiaryDataStore {
 
   late final CollectionReference<FirebaseDiaryDto> collection;
 
-  FirebaseDiaryDataStore(this.firestore, this.collection) {
+  FirebaseDiaryDataStore(this.firestore) {
     collection =
         firestore.collection('diaries').withConverter<FirebaseDiaryDto>(
               fromFirestore: (snapshot, _) =>
