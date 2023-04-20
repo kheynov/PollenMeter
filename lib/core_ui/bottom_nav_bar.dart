@@ -82,7 +82,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 44,
                   width: 44,
                   child: Icon(Icons.add,
-                      color: Theme.of(context).textTheme.displayLarge!.color),
+                      color: Theme.of(context).textTheme.displayLarge!.color,
+                      size: 30),
                 ),
                 onTap: () {
                   context.push('/profile');
