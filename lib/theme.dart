@@ -3,6 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pollen_meter/pollen_meter_colors.dart';
 
 final ThemeData theme = ThemeData();
+final brightColorScheme = theme.colorScheme.copyWith(
+  primary: const Color(0xff60d394),
+  secondary: const Color(0xffF8F8F8),
+  background: const Color(0xffffffff),
+);
 final brightTheme = ThemeData(
   extensions: const <ThemeExtension<dynamic>>[
     PollenMeterColors(
@@ -12,11 +17,8 @@ final brightTheme = ThemeData(
       veryHighRisk: Color(0xffEE6055),
     ),
   ],
-  colorScheme: theme.colorScheme.copyWith(
-    primary: const Color(0xff60d394),
-    secondary: const Color(0xffF8F8F8),
-    background: const Color(0xffffffff),
-  ),
+  colorScheme: brightColorScheme,
+  shadowColor: const Color(0xff000000).withOpacity(0.25),
   brightness: Brightness.light,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: GoogleFonts.montserrat().fontFamily,
@@ -90,6 +92,18 @@ final brightTheme = ThemeData(
     ),
     titleSmall: theme.textTheme.titleSmall!.copyWith(
       fontSize: 20,
+      fontWeight: FontWeight.normal,
+      color: Colors.black,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    labelLarge: theme.textTheme.labelLarge!.copyWith(
+      fontSize: 10,
+      fontWeight: FontWeight.normal,
+      color: brightColorScheme.primary,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+    ),
+    labelMedium: theme.textTheme.labelMedium!.copyWith(
+      fontSize: 10,
       fontWeight: FontWeight.normal,
       color: Colors.black,
       fontFamily: GoogleFonts.montserrat().fontFamily,
