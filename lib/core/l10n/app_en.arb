@@ -1,7 +1,10 @@
 {
     "@@locale": "en",
     "appTitle": ".pollenmeter",
-    "alert": "Don't leave your room, this is better left undone",
+    "alertVeryHigh": "Don't leave your room, this is better left undone",
+    "alertHigh": "Don't leave your room, this is better left undone",
+    "alertModerate": "Lorem ipsum dolor sit amet",
+    "alertLow": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
     "lowRisk": "Low",
     "moderateRisk": "Moderate",
     "highRisk": "High",
@@ -34,5 +37,7 @@
     "aster": "Aster",
     "plantago": "Plantago",
     "rumex": "Rumex",
-    "grass": "Grass / Poaceae"
+    "grass": "Grass / Poaceae",
+    "unit": "pt/m³",
+    "greetingsMessage": "Welcome back!"
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class HighPollenLevelAlert extends StatelessWidget {
   final String msg;
+  final String emoticon;
 
-  const HighPollenLevelAlert({super.key, required this.msg});
-//TODO: proper theming instead of constants
+  const HighPollenLevelAlert(
+      {super.key, required this.msg, required this.emoticon});
 
   @override
   Widget build(BuildContext context) {
@@ -13,19 +14,19 @@ class HighPollenLevelAlert extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: Theme.of(context).colorScheme.secondary,
       ),
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.warning, color: Theme.of(context).colorScheme.primary),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                msg,
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-                softWrap: true,
-              ),
+            Text(emoticon, style: Theme.of(context).textTheme.titleSmall),
+            const SizedBox(height: 10),
+            Text(
+              msg,
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.left,
+              softWrap: true,
             ),
           ],
         ),

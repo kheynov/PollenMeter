@@ -1,16 +1,18 @@
+import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
-import 'package:pollen_meter/core_ui/gauge.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
-
+import 'package:pollen_meter/core/extensions/theme_colors_build_context.dart';
 import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
+import 'dashboard_tile.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -36,7 +38,13 @@ class DashboardPage extends ConsumerWidget {
     }, loading: () {
       pollenUIModelsWithPrefs = List<PollenUIModel>.empty();
     });
-
+    BlobController blobCtrl = BlobController();
+    Blob.animatedRandom(
+      size: 200,
+      edgesCount: 5,
+      minGrowth: 4,
+      controller: blobCtrl,
+    );
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -44,47 +52,114 @@ class DashboardPage extends ConsumerWidget {
           child: Column(
             children: [
               Container(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("12 апреля"),
-                          Text("Добрый вечер, Егор)"),
-                        ],
-                      ),
-                      MaterialButton(
-                          onPressed: () {
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(DateFormat('MMMMd').format(DateTime.now()),
+                            style: Theme.of(context).textTheme.displayMedium),
+                        GestureDetector(
+                          onTap: () {
                             context.push('/profile');
                           },
-                          color: Colors.green,
-                          shape: const CircleBorder(),
-                          height: 50,
-                          child: const Icon(Icons.person)),
-                    ],
-                  )),
+                          child: const Icon(Icons.person_outline),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(context.loc.greetingsMessage,
+                            style: Theme.of(context).textTheme.titleMedium),
+                        GestureDetector(
+                          onTap: () {
+                            context.push('/statistics');
+                          },
+                          child: const Icon(Icons.info_outline),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView(
                   children: [
-                    const SizedBox.shrink(),
-                    // return Container(
-                    //   padding: const EdgeInsets.all(20),
-                    //   alignment: Alignment.centerRight,
-                    //   child: MaterialButton(
-                    //     onPressed: () {
-                    //       context.go('/profile');
-                    //     },
-                    //     color: Colors.green,
-                    //     shape: const CircleBorder(),
-                    //     child: const Icon(Icons.person),
-                    //   ),
-                    // );
                     pollenUILogic.when(
-                      data: (data) => InkWell(
-                        child: Gauge(
-                          data: pollenUIModelBasic,
+                      data: (data) => GestureDetector(
+                        child: Center(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) =>
+                                Blob.animatedRandom(
+                              duration: const Duration(seconds: 10),
+                              size: constraints.biggest.shortestSide * 3 / 5,
+                              loop: true,
+                              styles: BlobStyles(
+                                color: context.fromRiskLevel(
+                                  context.fromPollenLevelUnlocalized(
+                                    allergenType:
+                                        pollenUIModelBasic.allergenType!,
+                                    count: pollenUIModelBasic.value.toInt(),
+                                  ),
+                                ),
+                                gradient: LinearGradient(
+                                  colors: context.gradientFromRiskLevel(
+                                    context.fromPollenLevelUnlocalized(
+                                      allergenType:
+                                          pollenUIModelBasic.allergenType!,
+                                      count: pollenUIModelBasic.value.toInt(),
+                                    ),
+                                  ),
+                                ).createShader(
+                                  Rect.fromLTRB(
+                                      0,
+                                      0,
+                                      constraints.biggest.shortestSide * 3 / 5,
+                                      constraints.biggest.shortestSide * 3 / 5),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        pollenUIModelBasic.value
+                                            .toStringAsFixed(0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge,
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)?.unit ??
+                                            '',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displaySmall,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                      textAlign: TextAlign.center,
+                                      context.fromPollenLevel(
+                                        allergenType:
+                                            pollenUIModelBasic.allergenType!,
+                                        count: pollenUIModelBasic.value.toInt(),
+                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                         onTap: () {
                           context.push('/statistics');
@@ -97,47 +172,41 @@ class DashboardPage extends ConsumerWidget {
                         child: CircularProgressIndicator(),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    pollenUILogic.when(
-                      data: (data) => (context.fromPollenLevelUnlocalized(
-                                      allergenType:
-                                          pollenUIModelBasic.allergenType!,
-                                      count:
-                                          pollenUIModelBasic.value.toInt()) ==
-                                  RiskLevel.high ||
-                              context.fromPollenLevelUnlocalized(
-                                      allergenType:
-                                          pollenUIModelBasic.allergenType!,
-                                      count:
-                                          pollenUIModelBasic.value.toInt()) ==
-                                  RiskLevel.veryHigh)
-                          ? HighPollenLevelAlert(
-                              msg: AppLocalizations.of(context)?.alert ??
-                                  'Error')
-                          : const SizedBox.shrink(),
-                      error: (error, stackTrace) => Text(
-                        error.toString(),
-                      ),
-                      loading: () => const SizedBox(height: 20),
-                    ),
-
                     SizedBox(
                       height: 125,
                       child: ListView.separated(
                         itemCount: pollenUIModelsWithPrefs.length,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) =>
                             pollenUILogic.when(
                           data: (data) {
                             return pollenUIModelsWithPrefs
                                 .map(
-                                  (e) => InkWell(
-                                    child: Gauge(
-                                      data: e,
+                                  (e) => AspectRatio(
+                                    aspectRatio: 119 / 113,
+                                    child: DashboardTileWidget(
+                                      image: Container(
+                                        height: 28,
+                                        width: 28,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: e.color,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: e.color.withOpacity(0.5),
+                                              spreadRadius: 1,
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 1),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      text: e.title,
+                                      onTap: (e) {},
+                                      value: e.value.toStringAsFixed(0),
+                                      units: context.loc.unit,
                                     ),
-                                    onTap: () {
-                                      context.push('/statistics');
-                                    },
                                   ),
                                 )
                                 .toList()[index];
@@ -154,6 +223,47 @@ class DashboardPage extends ConsumerWidget {
                         separatorBuilder: (BuildContext context, int index) =>
                             const SizedBox(width: 10),
                       ),
+                    ),
+                    const SizedBox(height: 40),
+                    pollenUILogic.when(
+                      data: (data) {
+                        switch (context.fromPollenLevelUnlocalized(
+                            allergenType: pollenUIModelBasic.allergenType!,
+                            count: pollenUIModelBasic.value.toInt())) {
+                          case RiskLevel.low:
+                            return Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: HighPollenLevelAlert(
+                                    msg: context.loc.alertLow, emoticon: "🎉"));
+                          case RiskLevel.moderate:
+                            return Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: HighPollenLevelAlert(
+                                    msg: context.loc.alertModerate,
+                                    emoticon: "⚠️"));
+                          case RiskLevel.high:
+                            return Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: HighPollenLevelAlert(
+                                    msg: context.loc.alertHigh, emoticon: "❌"));
+                          case RiskLevel.veryHigh:
+                            return Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: HighPollenLevelAlert(
+                                    msg: context.loc.alertVeryHigh,
+                                    emoticon: "💀"));
+                          default:
+                            return const SizedBox.shrink();
+                        }
+                      },
+                      error: (error, stackTrace) => Text(
+                        error.toString(),
+                      ),
+                      loading: () => const SizedBox(height: 20),
                     ),
                   ],
                 ),
