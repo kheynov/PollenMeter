@@ -18,12 +18,9 @@ class ProfileNotifier extends StateNotifier<ProfileDataModel> {
     profileService.saveProfile(state);
   }
 
-  void toggleTheme() {
-    if (state.theme == ThemeTypes.dark) {
-      state = state.copyWith(theme: ThemeTypes.light);
-    } else {
-      state = state.copyWith(theme: ThemeTypes.dark);
-    }
+  void setTheme(ThemeTypes themeType) {
+    state = state.copyWith(theme: themeType);
+
     profileService.saveProfile(state);
   }
 }

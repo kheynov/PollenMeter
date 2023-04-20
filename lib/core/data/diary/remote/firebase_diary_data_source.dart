@@ -13,7 +13,7 @@ class FirebaseDiaryDataStore implements DiaryDataStore {
 
   FirebaseDiaryDataStore(this.firestore, this.collection) {
     collection =
-        firestore.collection('profiles').withConverter<FirebaseDiaryDto>(
+        firestore.collection('diaries').withConverter<FirebaseDiaryDto>(
               fromFirestore: (snapshot, _) =>
                   FirebaseDiaryDto.fromJson(snapshot.data()!),
               toFirestore: (dto, _) => dto.toJson(),

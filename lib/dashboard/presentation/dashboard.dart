@@ -1,4 +1,5 @@
 import 'package:blobs/blobs.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final FirebaseAuth instance = FirebaseAuth.instance;
     final pollenUILogic = ref.watch(
       pollenUILogicProvider,
     );
@@ -52,8 +54,7 @@ class DashboardPage extends ConsumerWidget {
           child: Column(
             children: [
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                padding: const EdgeInsets.only(left: 24, right: 24, top: 32),
                 child: Column(
                   children: [
                     Row(
@@ -63,7 +64,11 @@ class DashboardPage extends ConsumerWidget {
                             style: Theme.of(context).textTheme.displayMedium),
                         GestureDetector(
                           onTap: () {
-                            context.push('/profile');
+                            if (instance.currentUser == null) {
+                              context.push('/login');
+                            } else {
+                              context.push('/profile');
+                            }
                           },
                           child: const Icon(Icons.person_outline),
                         ),
@@ -96,7 +101,7 @@ class DashboardPage extends ConsumerWidget {
                             builder: (context, constraints) =>
                                 Blob.animatedRandom(
                               duration: const Duration(seconds: 10),
-                              size: constraints.biggest.shortestSide * 3 / 5,
+                              size: constraints.biggest.shortestSide * 9 / 10,
                               loop: true,
                               styles: BlobStyles(
                                 color: context.fromRiskLevel(
@@ -118,8 +123,10 @@ class DashboardPage extends ConsumerWidget {
                                   Rect.fromLTRB(
                                       0,
                                       0,
-                                      constraints.biggest.shortestSide * 3 / 5,
-                                      constraints.biggest.shortestSide * 3 / 5),
+                                      constraints.biggest.shortestSide * 9 / 10,
+                                      constraints.biggest.shortestSide *
+                                          9 /
+                                          10),
                                 ),
                               ),
                               child: Column(

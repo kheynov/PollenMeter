@@ -42,6 +42,13 @@
     "greetingsMessage": "Welcome back!",
     "sortedByRiskLevel": "By risk level",
     "dashboardPage": "Main",
-    "diaryPage": "Diary"
+    "diaryPage": "Diary",
+    "allergyMessage": "What are you allergic to?",
+    "profilePage": "Profile",
+    "locationMessage": "Location",
+    "themeMessage": "Тheme",
+    "darkTheme": "Dark",
+    "lightTheme": "Light",
+    "systemTheme": "System"
 
 }

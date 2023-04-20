@@ -109,6 +109,13 @@ final brightTheme = ThemeData(
       color: Colors.black,
       fontFamily: GoogleFonts.montserrat().fontFamily,
     ),
+    labelSmall: theme.textTheme.labelSmall!.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+      color: Colors.white,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      letterSpacing: 0,
+    ),
   ),
 );
 
