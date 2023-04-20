@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/profile/presentation/widgets/pollen_selection.dart';
 import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
+import 'package:pollen_meter/profile/presentation/widgets/theme_selection.dart';
 import '../../../core/domain/profile/enums/allergen.dart';
+import '../../../core/domain/profile/model/profile_data_model.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -13,78 +16,73 @@ class ProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: ListView(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    height: 50,
-                    shape: const CircleBorder(),
-                    color: Colors.green,
-                    onPressed: () {
-                      context.pop();
-                    },
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                  const Text("Профиль")
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text("На что у вас аллергия?"),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              //wtf
-              height: 1500,
-              child: PollenSelectionWidget(
-                listPollens: Allergen.values
-                    .map(
-                      (allergen) => PollenTileModel(
-                          selected: ref
-                              .watch(profileLogicProvider)
-                              .allergens
-                              .contains(allergen),
-                          pathImage: null,
-                          allergen: allergen),
-                    )
-                    .toList(),
-                onChoiceOfTile: (pollenTileModel) {
-                  ref.read(profileLogicProvider.notifier).toggleAllergen(
-                      pollenTileModel
-                          .allergen); //.allergens.firstWhere((element) => element == pollenTileModel.allergen)
-                },
-              ),
-            ),
-            Row(
-              children: [
-                const Text("Местоположение"),
-                MaterialButton(
-                  onPressed: () {},
-                  shape: const CircleBorder(),
-                  color: Colors.green,
-                  child: const Icon(Icons.edit),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Container(
+                      padding:
+                          const EdgeInsets.only(left: 24, top: 32, bottom: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              context.pop();
+                            },
+                            child: const Icon(Icons.arrow_back),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(context.loc.profilePage,
+                              style: Theme.of(context).textTheme.titleMedium),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 24, right: 24, bottom: 16),
+                      child: PollenSelectionWidget(
+                        listPollens: Allergen.values
+                            .map(
+                              (allergen) => PollenTileModel(
+                                  selected: ref
+                                      .watch(profileLogicProvider)
+                                      .allergens
+                                      .contains(allergen),
+                                  pathImage: null,
+                                  allergen: allergen),
+                            )
+                            .toList(),
+                        onChoiceOfTile: (pollenTileModel) {
+                          ref
+                              .read(profileLogicProvider.notifier)
+                              .toggleAllergen(pollenTileModel
+                                  .allergen); //.allergens.firstWhere((element) => element == pollenTileModel.allergen)
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 24, right: 24, bottom: 16),
+                      child: ThemeSelectionWidget(
+                        onChoiceOfTile: (ThemeTypes themeTypes) {
+                          ref
+                              .watch(profileLogicProvider.notifier)
+                              .setTheme(themeTypes);
+                        },
+                        themeType: [ref.watch(profileLogicProvider).theme],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const Text("Текущее"),
-            MaterialButton(
-              onPressed: () {
-                ref.watch(profileLogicProvider.notifier).toggleTheme();
-              },
-              shape: const CircleBorder(),
-              color: Colors.green,
-              child: const Icon(Icons.edit),
-            ),
-            const Text("Сменить тему"),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

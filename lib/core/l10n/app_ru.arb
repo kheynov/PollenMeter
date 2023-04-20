@@ -42,5 +42,12 @@
   "greetingsMessage": "Добрый день!",
   "sortedByRiskLevel": "По уровню риска",
   "dashboardPage": "Главная",
-  "diaryPage": "Дневник"
+  "diaryPage": "Дневник",
+  "allergyMessage": "На что у Вас аллергия?",
+  "profilePage": "Профиль",
+  "locationMessage": "Местоположение",
+  "themeMessage": "Тема",
+  "darkTheme": "Тёмная",
+  "lightTheme": "Светлая",
+  "systemTheme": "Системная"
 }
