@@ -3,17 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:pollen_meter/main.dart';
-import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
-import 'package:pollen_meter/profile/presentation/widgets/theme_selection.dart';
-import '../../../core/domain/profile/enums/allergen.dart';
-import '../../../core/domain/profile/model/profile_data_model.dart';
 import 'emotion_picker.dart';
+import 'feedback.dart';
 
 class RecordPage extends ConsumerWidget {
   const RecordPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // WellBeingState _wellBeingState = WellBeingState.dead;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -47,34 +45,15 @@ class RecordPage extends ConsumerWidget {
                       padding: const EdgeInsets.only(
                           left: 24, right: 24, bottom: 16),
                       child: EmotionPickerWidget(
-                        listPollens: Allergen.values
-                            .map(
-                              (allergen) => PollenTileModel(
-                                  selected: ref
-                                      .watch(profileLogicProvider)
-                                      .allergens
-                                      .contains(allergen),
-                                  pathImage: null,
-                                  allergen: allergen),
-                            )
-                            .toList(),
-                        onChoiceOfTile: (pollenTileModel) {
-                          ref
-                              .read(profileLogicProvider.notifier)
-                              .toggleAllergen(pollenTileModel
-                                  .allergen); //.allergens.firstWhere((element) => element == pollenTileModel.allergen)
+                        onChoice: (wellBeingState) {
+                          // _wellBeingState = wellBeingState;
                         },
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.only(
                           left: 24, right: 24, bottom: 16),
-                      child: ThemeSelectionWidget(
-                        onChoiceOfTile: (ThemeTypes themeTypes) {
-                          ref
-                              .watch(profileLogicProvider.notifier)
-                              .setTheme(themeTypes);
-                        },
+                      child: FeedbackWidget(
                         themeType: [ref.watch(profileLogicProvider).theme],
                       ),
                     ),
