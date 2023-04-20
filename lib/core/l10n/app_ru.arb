@@ -49,5 +49,8 @@
   "themeMessage": "Тема",
   "darkTheme": "Тёмная",
   "lightTheme": "Светлая",
-  "systemTheme": "Системная"
+  "systemTheme": "Системная",
+  "month": "Месяц",
+  "twoWeeks": "2 недели",
+  "week": "Неделя"
 }

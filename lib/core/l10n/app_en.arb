@@ -49,6 +49,8 @@
     "themeMessage": "Тheme",
     "darkTheme": "Dark",
     "lightTheme": "Light",
-    "systemTheme": "System"
-
+    "systemTheme": "System",
+    "month": "Month",
+    "twoWeeks": "2 weeks",
+    "week": "Week"
 }
