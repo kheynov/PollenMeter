@@ -16,8 +16,9 @@ class ProfileServiceImpl implements ProfileService {
   @override
   Future<void> syncFromRemoteRepository() async {
     assert(auth.currentUser != null);
-    await localRepository.getProfile().then(
-        (value) => remoteRepository.saveProfile(value, auth.currentUser!.uid));
+    await remoteRepository
+        .getProfile(auth.currentUser!.uid)
+        .then((value) => localRepository.saveProfile(value));
   }
 
   @override
@@ -29,6 +30,10 @@ class ProfileServiceImpl implements ProfileService {
 
   @override
   Future<ProfileDataModel> getProfile() async {
+    if (auth.currentUser != null) {
+      final profile = await remoteRepository.getProfile(auth.currentUser!.uid);
+      await localRepository.saveProfile(profile);
+    }
     return await localRepository.getProfile();
   }
 

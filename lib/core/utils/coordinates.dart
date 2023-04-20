@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'coordinates.g.dart';
@@ -14,6 +16,11 @@ class Coordinates {
       other is Coordinates &&
           other.latitude == latitude &&
           other.longitude == longitude;
+
+  double getDistance(Coordinates other) {
+    return sqrt(pow(other.latitude - latitude, 2) +
+        pow(other.longitude - longitude, 2));
+  }
 
   @override
   int get hashCode => latitude.hashCode ^ longitude.hashCode;
