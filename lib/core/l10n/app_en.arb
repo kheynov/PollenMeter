@@ -40,5 +40,8 @@
     "grass": "Grass / Poaceae",
     "unit": "pt/m³",
     "greetingsMessage": "Welcome back!",
-    "sortedByRiskLevel": "By risk level"
+    "sortedByRiskLevel": "By risk level",
+    "dashboardPage": "Main",
+    "diaryPage": "Diary"
+
 }

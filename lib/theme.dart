@@ -7,6 +7,7 @@ final brightColorScheme = theme.colorScheme.copyWith(
   primary: const Color(0xff60d394),
   secondary: const Color(0xffF8F8F8),
   background: const Color(0xffffffff),
+  outline: const Color(0xff000000),
 );
 final brightTheme = ThemeData(
   extensions: const <ThemeExtension<dynamic>>[
