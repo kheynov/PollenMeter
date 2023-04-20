@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class EmotionPickerWidget extends StatefulWidget {
   const EmotionPickerWidget({
     Key? key,
@@ -28,6 +30,7 @@ class EmotionPickerWidget extends StatefulWidget {
 }
 
 class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
+  double _curPosition = 3;
   @override
   Widget build(BuildContext context) {
     // GroupButtonController tabController = GroupButtonController(
@@ -49,7 +52,7 @@ class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
               style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: const [
               Text('☠'),
               Text('😭'),
@@ -58,6 +61,20 @@ class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
               Text('🙂'),
               Text('😀'),
             ],
+          ),
+          Slider(
+            value: _curPosition,
+            min: 0,
+            max: 5,
+            divisions: 5,
+            onChanged: (value) {
+              setState(() {
+                _curPosition = value;
+              });
+            },
+            activeColor:
+                Theme.of(context).extension<PollenMeterColors>()?.highRisk!,
+            inactiveColor: Theme.of(context).colorScheme.background,
           ),
         ],
       ),
