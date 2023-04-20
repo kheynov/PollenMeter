@@ -73,7 +73,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 25, top: 32),
+                padding: const EdgeInsets.only(left: 24, right: 24, top: 32),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -102,10 +102,11 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                   return true;
                 },
                 options: GroupButtonOptions(
-                    borderRadius: BorderRadius.circular(15),
-                    unselectedColor: Theme.of(context).colorScheme.secondary,
-                    selectedShadow: [],
-                    unselectedShadow: []),
+                  borderRadius: BorderRadius.circular(15),
+                  unselectedColor: Theme.of(context).colorScheme.secondary,
+                  selectedShadow: [],
+                  unselectedShadow: [],
+                ),
                 isRadio: true,
                 buttons: [
                   AllergenType.tree,
@@ -125,7 +126,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
               const SizedBox(height: 16),
               Expanded(
                 child: TabBarView(controller: _properTabController, children: [
-                  Column(
+                  ListView(
                     children: pollenUIModelsEverything
                         .where((element) =>
                             element.allergenType == AllergenType.tree)
@@ -136,7 +137,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                         .expand((i) => i)
                         .toList(),
                   ),
-                  Column(
+                  ListView(
                     children: pollenUIModelsEverything
                         .where((element) =>
                             element.allergenType == AllergenType.grass)
@@ -147,7 +148,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                         .expand((i) => i)
                         .toList(),
                   ),
-                  Column(
+                  ListView(
                     children: pollenUIModelsEverything
                         .where((element) =>
                             element.allergenType == AllergenType.weed)
