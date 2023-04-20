@@ -39,5 +39,6 @@
   "rumex": "Щавель",
   "grass": "Трава / злаки",
   "unit": "ед./м³",
-  "greetingsMessage": "Добрый день!"
+  "greetingsMessage": "Добрый день!",
+  "sortedByRiskLevel": "По уровню риска"
 }

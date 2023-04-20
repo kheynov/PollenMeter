@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:pollen_meter/core/domain/ambee_api/mappers/pollen_to_pollenui_mapper.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/main.dart';
@@ -19,11 +20,18 @@ class StatisticsPage extends ConsumerStatefulWidget {
 
 class _StatisticsPageState extends ConsumerState<StatisticsPage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  late GroupButtonController _tabController;
+  late TabController _properTabController;
+  late bool isDescendingOrder = true;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 3);
+    isDescendingOrder = true;
+    _properTabController = TabController(vsync: this, length: 3);
+    _tabController = GroupButtonController(selectedIndex: 0);
+    _properTabController.addListener(() {
+      _tabController.selectIndex(_properTabController.index);
+    });
   }
 
   @override
@@ -41,8 +49,15 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
         pollenUIModelsEverything; //for the bottom stats;
     //includes everything
     pollenUILogic.when(data: (data) {
-      pollenUIModelsEverything =
-          data.pollenData.toPollenUIModelsEverything(context);
+      if (isDescendingOrder) {
+        pollenUIModelsEverything =
+            data.pollenData.toPollenUIModelsEverything(context);
+      } else {
+        pollenUIModelsEverything = data.pollenData
+            .toPollenUIModelsEverything(context)
+            .reversed
+            .toList();
+      }
     }, error: (error, stackTrace) {
       Logger.log("Error: $error");
       Logger.log("StackTrace: ${stackTrace.toString()}");
@@ -52,76 +67,102 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     });
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: ListView(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    height: 50,
-                    shape: const CircleBorder(),
-                    color: Colors.green,
-                    onPressed: () {
-                      context.pop();
-                    },
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                  const Text("Статистика")
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GroupButton(
-              onSelected: (dynamic, index, isSelected) {
-                _tabController.animateTo(index);
-                return true;
-              },
-              isRadio: true,
-              buttons: [
-                AllergenType.tree,
-                AllergenType.grass,
-                AllergenType.weed
-              ].map((e) => context.fromAllergenType(e)).toList(),
-            ),
-            SizedBox(
-              height: 2000,
-              child: TabBarView(
-                  //TODO: this is bad...
-                  controller: _tabController,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(left: 25, top: 32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Column(
-                      children: pollenUIModelsEverything
-                          .where((element) =>
-                              element.allergenType == AllergenType.tree)
-                          .map((e) =>
-                              StatisticPollenTileWidget(statisticModel: e))
-                          .toList(),
+                    GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: const Icon(Icons.arrow_back),
                     ),
-                    Column(
-                      children: pollenUIModelsEverything
-                          .where((element) =>
-                              element.allergenType == AllergenType.grass)
-                          .map((e) =>
-                              StatisticPollenTileWidget(statisticModel: e))
-                          .toList(),
-                    ),
-                    Column(
-                      children: pollenUIModelsEverything
-                          .where((element) =>
-                              element.allergenType == AllergenType.weed)
-                          .map((e) =>
-                              StatisticPollenTileWidget(statisticModel: e))
-                          .toList(),
-                    ),
-                  ] //pollenUIModelsEverything.map((e) => StatisticPollenTileWidget(statisticModel: e)).toList(),
+                    const SizedBox(width: 10),
+                    Text(
+                        DateFormat('MMMMd').format(
+                          DateTime.now(),
+                        ),
+                        style: Theme.of(context).textTheme.titleMedium),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              GroupButton(
+                controller: _tabController,
+                onSelected: (dynamic, index, isSelected) {
+                  _properTabController.animateTo(index);
+                  return true;
+                },
+                options: GroupButtonOptions(
+                    borderRadius: BorderRadius.circular(15),
+                    unselectedColor: Theme.of(context).colorScheme.secondary,
+                    selectedShadow: [],
+                    unselectedShadow: []),
+                isRadio: true,
+                buttons: [
+                  AllergenType.tree,
+                  AllergenType.grass,
+                  AllergenType.weed
+                ].map((e) => context.fromAllergenType(e)).toList(),
+              ),
+              const SizedBox(height: 16),
+              GestureDetector(
+                child: Text(
+                    '${context.loc.sortedByRiskLevel} ${isDescendingOrder ? '↓' : '↑'}'),
+                onTap: () {
+                  isDescendingOrder = !isDescendingOrder;
+                  setState(() {});
+                },
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: TabBarView(controller: _properTabController, children: [
+                  Column(
+                    children: pollenUIModelsEverything
+                        .where((element) =>
+                            element.allergenType == AllergenType.tree)
+                        .map((e) => [
+                              StatisticPollenTileWidget(statisticModel: e),
+                              const SizedBox(height: 12)
+                            ])
+                        .expand((i) => i)
+                        .toList(),
                   ),
-            ),
-          ],
+                  Column(
+                    children: pollenUIModelsEverything
+                        .where((element) =>
+                            element.allergenType == AllergenType.grass)
+                        .map((e) => [
+                              StatisticPollenTileWidget(statisticModel: e),
+                              const SizedBox(height: 12)
+                            ])
+                        .expand((i) => i)
+                        .toList(),
+                  ),
+                  Column(
+                    children: pollenUIModelsEverything
+                        .where((element) =>
+                            element.allergenType == AllergenType.weed)
+                        .map((e) => [
+                              StatisticPollenTileWidget(statisticModel: e),
+                              const SizedBox(height: 12)
+                            ])
+                        .expand((i) => i)
+                        .toList(),
+                  ),
+                ] //pollenUIModelsEverything.map((e) => StatisticPollenTileWidget(statisticModel: e)).toList(),
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
     );

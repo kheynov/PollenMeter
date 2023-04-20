@@ -49,17 +49,19 @@ class DashboardTileWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: '$value ',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      TextSpan(
-                        text: units,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      )
-                    ]),
-                  )
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '$value ',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        TextSpan(
+                          text: units,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             )
