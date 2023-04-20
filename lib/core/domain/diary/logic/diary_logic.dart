@@ -11,7 +11,11 @@ class DiaryNotifier extends StateNotifier<List<DiaryModel>> {
   }
 
   void addDiary(String message, WellBeingState newWellBeingState) {
-    state = [...state, DiaryModel(message, newWellBeingState)];
-    diaryService.saveDiary(DiaryModel(message, newWellBeingState));
+    state = [
+      ...state,
+      DiaryModel(message, newWellBeingState,
+          DateTime.now().millisecondsSinceEpoch.toString())
+    ];
+    diaryService.saveDiary(state.last);
   }
 }
