@@ -38,6 +38,7 @@ dependencies:
       url: https://github.com/michael15346/flutter_blobs.git
   intl: ^0.17.0
   intl_translation: ^0.18.0
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:

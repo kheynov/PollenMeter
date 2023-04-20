@@ -40,5 +40,7 @@
   "grass": "Трава / злаки",
   "unit": "ед./м³",
   "greetingsMessage": "Добрый день!",
-  "sortedByRiskLevel": "По уровню риска"
+  "sortedByRiskLevel": "По уровню риска",
+  "dashboardPage": "Главная",
+  "diaryPage": "Дневник"
 }
