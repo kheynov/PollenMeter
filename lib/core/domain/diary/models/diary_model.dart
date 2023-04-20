@@ -7,8 +7,9 @@ part 'diary_model.g.dart';
 class DiaryModel {
   final String message;
   final WellBeingState state;
+  final String timestamp;
 
-  const DiaryModel(this.message, this.state);
+  const DiaryModel(this.message, this.state, this.timestamp);
 
   factory DiaryModel.fromJson(Map<String, dynamic> json) {
     return _$DiaryModelFromJson(json);

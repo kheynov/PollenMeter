@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pollen_meter/core/data/ambee_api/ambee_api.dart';
+import 'package:pollen_meter/core/data/diary/local/local_diary_data_source.dart';
+import 'package:pollen_meter/core/data/diary/remote/firebase_diary_data_source.dart';
 import 'package:pollen_meter/core/data/profile/local/profile_local_data_source.dart';
 import 'package:pollen_meter/core/data/profile/profile_service.dart';
 import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.dart';
 import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.dart';
 import 'package:pollen_meter/core/domain/ambee_api/use_cases/fetch_data_from_ambee_use_case.dart';
+import 'package:pollen_meter/core/domain/diary/repository/diary_repository.dart';
 import 'package:pollen_meter/core/domain/profile/repository/profile_data_repository.dart';
 import 'package:pollen_meter/dashboard/data/location_repository_impl.dart';
 import 'package:pollen_meter/dashboard/domain/location_repository.dart';
@@ -18,6 +21,8 @@ class ServiceLocator {
   const ServiceLocator._();
 
   static final GetIt _locator = GetIt.instance;
+
+  static GetIt get locator => _locator;
 
   static initApp() async {
     /// Register dependencies
@@ -52,6 +57,11 @@ class ServiceLocator {
     _locator.registerLazySingleton<ProfileService>(() => ProfileServiceImpl(
         _locator<ProfileLocalDataStore>(),
         _locator<FirebaseProfileDataStore>()));
+
+    _locator.registerLazySingleton<FirebaseDiaryDataStore>(() => FirebaseDiaryDataStore());
+
+    _locator.registerLazySingleton<LocalDiaryDataStore>(() =>
+        LocalDiaryDataStore(_locator<SharedPreferences>()));
 
     await GetIt.instance.allReady();
     Logger.log('Dependencies initialized!');
