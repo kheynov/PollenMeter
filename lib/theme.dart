@@ -10,114 +10,135 @@ final brightColorScheme = theme.colorScheme.copyWith(
   outline: const Color(0xff000000),
 );
 final brightTheme = ThemeData(
-  extensions: const <ThemeExtension<dynamic>>[
-    PollenMeterColors(
-      lowRisk: Color(0xffaaf683),
-      moderateRisk: Color(0xffffd97d),
-      highRisk: Color(0xffFF9B85),
-      veryHighRisk: Color(0xffEE6055),
+    extensions: const <ThemeExtension<dynamic>>[
+      PollenMeterColors(
+        lowRisk: Color(0xffaaf683),
+        moderateRisk: Color(0xffffd97d),
+        highRisk: Color(0xffFF9B85),
+        veryHighRisk: Color(0xffEE6055),
+      ),
+    ],
+    colorScheme: brightColorScheme,
+    shadowColor: const Color(0xff000000).withOpacity(0.25),
+    brightness: Brightness.light,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    fontFamily: GoogleFonts.montserrat().fontFamily,
+    textTheme: theme.textTheme.copyWith(
+      //The names are completely arbitrary. Just make sure you use the same names.
+      displayLarge: theme.textTheme.displayLarge!.copyWith(
+        fontSize: 36,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      displayMedium: theme.textTheme.displayMedium!.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      displaySmall: theme.textTheme.displaySmall!.copyWith(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      headlineLarge: theme.textTheme.headlineLarge!.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      headlineMedium: theme.textTheme.headlineMedium!.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      headlineSmall: theme.textTheme.headlineSmall!.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      bodyLarge: theme.textTheme.bodyLarge!.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      bodyMedium: theme.textTheme.bodyMedium!.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        color: const Color(0xff7e7e7e),
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      bodySmall: theme.textTheme.bodySmall!.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: Colors.white,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      titleLarge: theme.textTheme.titleLarge!.copyWith(
+        fontSize: 10,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      titleMedium: theme.textTheme.titleMedium!.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      titleSmall: theme.textTheme.titleSmall!.copyWith(
+        fontSize: 20,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      labelLarge: theme.textTheme.labelLarge!.copyWith(
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+        color: brightColorScheme.primary,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      labelMedium: theme.textTheme.labelMedium!.copyWith(
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
+      labelSmall: theme.textTheme.labelSmall!.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        color: Colors.white,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
+        letterSpacing: 0,
+      ),
     ),
-  ],
-  colorScheme: brightColorScheme,
-  shadowColor: const Color(0xff000000).withOpacity(0.25),
-  brightness: Brightness.light,
-  visualDensity: VisualDensity.adaptivePlatformDensity,
-  fontFamily: GoogleFonts.montserrat().fontFamily,
-  textTheme: theme.textTheme.copyWith(
-    //The names are completely arbitrary. Just make sure you use the same names.
-    displayLarge: theme.textTheme.displayLarge!.copyWith(
-      fontSize: 36,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    displayMedium: theme.textTheme.displayMedium!.copyWith(
+    primaryTextTheme: theme.primaryTextTheme.copyWith(
+        displayLarge: theme.primaryTextTheme.displayLarge!.copyWith(
       fontSize: 18,
-      fontWeight: FontWeight.normal,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    displaySmall: theme.textTheme.displaySmall!.copyWith(
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    headlineLarge: theme.textTheme.headlineLarge!.copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    headlineMedium: theme.textTheme.headlineMedium!.copyWith(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    headlineSmall: theme.textTheme.headlineSmall!.copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    bodyLarge: theme.textTheme.bodyLarge!.copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    bodyMedium: theme.textTheme.bodyMedium!.copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: const Color(0xff7e7e7e),
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    bodySmall: theme.textTheme.bodySmall!.copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    titleLarge: theme.textTheme.titleLarge!.copyWith(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    titleMedium: theme.textTheme.titleMedium!.copyWith(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    titleSmall: theme.textTheme.titleSmall!.copyWith(
-      fontSize: 20,
-      fontWeight: FontWeight.normal,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    labelLarge: theme.textTheme.labelLarge!.copyWith(
-      fontSize: 10,
-      fontWeight: FontWeight.normal,
-      color: brightColorScheme.primary,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    labelMedium: theme.textTheme.labelMedium!.copyWith(
-      fontSize: 10,
-      fontWeight: FontWeight.normal,
-      color: Colors.black,
-      fontFamily: GoogleFonts.montserrat().fontFamily,
-    ),
-    labelSmall: theme.textTheme.labelSmall!.copyWith(
-      fontSize: 14,
       fontWeight: FontWeight.normal,
       color: Colors.white,
       fontFamily: GoogleFonts.montserrat().fontFamily,
       letterSpacing: 0,
-    ),
-  ),
-);
+    )));
 
 final darkTheme = ThemeData(
   extensions: const <ThemeExtension<dynamic>>[

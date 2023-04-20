@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 
 class FeedbackWidget extends StatefulWidget {
   const FeedbackWidget({
     Key? key,
-    required this.themeType,
+    required this.onChoice,
   }) : super(key: key);
 
-  final List<ThemeTypes> themeType;
+  final Function(String feedback) onChoice;
 
   @override
   State<FeedbackWidget> createState() => _FeedbackWidgetState();
@@ -25,10 +24,39 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(context.loc.themeMessage,
+          Text(context.loc.describeWellBeing,
               style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 20),
+          TextField(
+            cursorColor: Theme.of(context).colorScheme.outline,
+            cursorWidth: 1,
+            keyboardType: TextInputType.multiline,
+            minLines: 6,
+            maxLines: null,
+            style: Theme.of(context).textTheme.labelMedium,
+            decoration: InputDecoration(
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              hintStyle: Theme.of(context).textTheme.labelMedium,
+              floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
+              labelStyle: Theme.of(context).textTheme.labelMedium,
+              enabledBorder: OutlineInputBorder(
+                gapPadding: 7,
+                borderSide: BorderSide(
+                    width: 1, color: Theme.of(context).colorScheme.outline),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                gapPadding: 7,
+                borderSide: BorderSide(
+                    width: 1, color: Theme.of(context).colorScheme.outline),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+              ),
+              labelText: context.loc.comment,
+            ),
+            onChanged: widget.onChoice,
+          ),
         ],
       ),
     );

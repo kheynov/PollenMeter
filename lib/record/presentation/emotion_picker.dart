@@ -21,12 +21,6 @@ class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
   double _curPosition = 3;
   @override
   Widget build(BuildContext context) {
-    // GroupButtonController tabController = GroupButtonController(
-    //   selectedIndexes: List.generate(widget.listPollens.length,
-    //           (i) => ((widget.listPollens[i].selected ? i : null)))
-    //       .whereType<int>()
-    //       .toList(),
-    // );
     Map<int, WellBeingState> toWellBeingState = {
       0: WellBeingState.dead,
       1: WellBeingState.bad,
@@ -49,14 +43,7 @@ class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              Text('☠'),
-              Text('😭'),
-              Text('🙁'),
-              Text('😐'),
-              Text('🙂'),
-              Text('😀'),
-            ],
+            children: WellBeingState.values.map((e) => Text(e.emoji)).toList(),
           ),
           Slider(
             value: _curPosition,
