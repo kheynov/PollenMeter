@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pollen_meter/core/data/diary/remote/dto/firebase_diary_dto.dart';
 import 'package:pollen_meter/core/domain/diary/models/diary_model.dart';
 import 'package:pollen_meter/core/domain/diary/repository/diary_repository.dart';
+import 'package:pollen_meter/core/utils/logger.dart';
 
 class FirebaseDiaryDataStore implements DiaryDataStore {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -47,10 +48,16 @@ class FirebaseDiaryDataStore implements DiaryDataStore {
   @override
   Future<void> saveDiary(DiaryModel diary) async {
     assert(checkUserAuthorized());
-    final doc = await collection
-        .where('uid', isEqualTo: firebaseAuth.currentUser!.uid)
-        .get()
-        .then((value) => value.docs[0]);
-    collection.doc(doc.id).update(diary.toJson());
+    try {
+      final doc = await collection
+          .where('uid', isEqualTo: firebaseAuth.currentUser!.uid)
+          .get()
+          .then((value) => value.docs[0]);
+      collection.doc(doc.id).delete();
+    } catch (e) {
+      Logger.log('Умные мысли');
+    }
+    collection
+        .add(FirebaseDiaryDto(data: diary, uid: firebaseAuth.currentUser!.uid));
   }
 }
