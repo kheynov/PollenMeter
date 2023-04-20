@@ -25,16 +25,25 @@ class ProfileServiceImpl implements ProfileService {
   Future<void> syncToRemoteRepository() async {
     assert(auth.currentUser != null);
     await localRepository.getProfile().then((profile) =>
-        remoteRepository.saveProfile(profile, auth.currentUser!.uid));
+        remoteRepository.saveProfile(
+            profile ?? const ProfileDataModel(ThemeTypes.system, []),
+            auth.currentUser!.uid));
   }
 
   @override
   Future<ProfileDataModel> getProfile() async {
     if (auth.currentUser != null) {
-      final profile = await remoteRepository.getProfile(auth.currentUser!.uid);
-      await localRepository.saveProfile(profile);
+      try {
+        final profile =
+            await remoteRepository.getProfile(auth.currentUser!.uid);
+        await localRepository.saveProfile(profile);
+      } catch (e) {
+        await remoteRepository.createUser(await localRepository.getProfile() ??
+            const ProfileDataModel(ThemeTypes.system, []));
+      }
     }
-    return await localRepository.getProfile();
+    return await localRepository.getProfile() ??
+        const ProfileDataModel(ThemeTypes.system, []);
   }
 
   @override

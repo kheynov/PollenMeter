@@ -8,12 +8,12 @@ class ProfileLocalDataStore {
 
   ProfileLocalDataStore({required this.sharedPreferences});
 
-  Future<ProfileDataModel> getProfile() async {
+  Future<ProfileDataModel?> getProfile() async {
     final String? profileJson = sharedPreferences.getString('profile');
     if (profileJson != null) {
       return ProfileDataModel.fromJson(json.decode(profileJson));
     } else {
-      throw Exception('No profile found');
+      return null;
     }
   }
 
