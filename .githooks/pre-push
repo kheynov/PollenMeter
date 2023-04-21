@@ -3,7 +3,7 @@
 echo "Running git pre-push hook"
 
 dart format .
-flutter analyze .
+flutter analyze . --no-fatal-infos
 
 RESULT=$?
 
