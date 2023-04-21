@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class FeedbackWidget extends StatefulWidget {
   const FeedbackWidget({
     Key? key,
@@ -27,7 +29,9 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(context.loc.describeWellBeing,
-              style: Theme.of(context).textTheme.displayMedium),
+              style: Theme.of(context)
+                  .extension<PollenMeterColors>()
+                  ?.displayMedium),
           const SizedBox(height: 20),
           TextField(
             cursorColor: Theme.of(context).colorScheme.outline,
@@ -35,12 +39,16 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
             keyboardType: TextInputType.multiline,
             minLines: 6,
             maxLines: null,
-            style: Theme.of(context).textTheme.labelMedium,
+            style:
+                Theme.of(context).extension<PollenMeterColors>()?.labelMedium,
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              hintStyle: Theme.of(context).textTheme.labelMedium,
-              floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
-              labelStyle: Theme.of(context).textTheme.labelMedium,
+              hintStyle:
+                  Theme.of(context).extension<PollenMeterColors>()?.labelMedium,
+              floatingLabelStyle:
+                  Theme.of(context).extension<PollenMeterColors>()?.labelMedium,
+              labelStyle:
+                  Theme.of(context).extension<PollenMeterColors>()?.labelMedium,
               enabledBorder: OutlineInputBorder(
                 gapPadding: 7,
                 borderSide: BorderSide(

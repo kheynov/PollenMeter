@@ -14,6 +14,7 @@ import 'package:pollen_meter/core/extensions/theme_colors_build_context.dart';
 import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
+import '../../pollen_meter_colors.dart';
 import 'dashboard_tile.dart';
 
 class DashboardPage extends ConsumerWidget {
@@ -62,7 +63,9 @@ class DashboardPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(DateFormat('MMMMd').format(DateTime.now()),
-                            style: Theme.of(context).textTheme.displayMedium),
+                            style: Theme.of(context)
+                                .extension<PollenMeterColors>()
+                                ?.displayMedium),
                         GestureDetector(
                           onTap: () {
                             if (instance.currentUser == null) {
@@ -81,7 +84,9 @@ class DashboardPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(context.loc.greetingsMessage,
-                            style: Theme.of(context).textTheme.titleMedium),
+                            style: Theme.of(context)
+                                .extension<PollenMeterColors>()
+                                ?.titleMedium),
                         GestureDetector(
                           onTap: () {
                             context.push('/statistics');
@@ -144,15 +149,15 @@ class DashboardPage extends ConsumerWidget {
                                         pollenUIModelBasic.value
                                             .toStringAsFixed(0),
                                         style: Theme.of(context)
-                                            .textTheme
-                                            .displayLarge,
+                                            .extension<PollenMeterColors>()
+                                            ?.displayLarge,
                                       ),
                                       Text(
                                         AppLocalizations.of(context)?.unit ??
                                             '',
                                         style: Theme.of(context)
-                                            .textTheme
-                                            .displaySmall,
+                                            .extension<PollenMeterColors>()
+                                            ?.displaySmall,
                                       ),
                                     ],
                                   ),
@@ -164,8 +169,8 @@ class DashboardPage extends ConsumerWidget {
                                         count: pollenUIModelBasic.value.toInt(),
                                       ),
                                       style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
+                                          .extension<PollenMeterColors>()
+                                          ?.bodySmall),
                                 ],
                               ),
                             ),

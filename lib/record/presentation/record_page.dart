@@ -7,6 +7,7 @@ import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/record/presentation/send_button.dart';
 import '../../core/domain/diary/enums/well_being_state.dart';
+import '../../pollen_meter_colors.dart';
 import 'emotion_picker.dart';
 import 'feedback.dart';
 
@@ -43,7 +44,9 @@ class RecordPage extends ConsumerWidget {
                           ),
                           const SizedBox(width: 10),
                           Text(DateFormat('MMMMd').format(DateTime.now()),
-                              style: Theme.of(context).textTheme.titleMedium),
+                              style: Theme.of(context)
+                                  .extension<PollenMeterColors>()
+                                  ?.titleMedium),
                         ],
                       ),
                     ),

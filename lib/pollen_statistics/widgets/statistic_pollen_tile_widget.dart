@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
+import '../../pollen_meter_colors.dart';
 
 class StatisticPollenTileWidget extends StatelessWidget {
   const StatisticPollenTileWidget({
@@ -44,7 +45,9 @@ class StatisticPollenTileWidget extends StatelessWidget {
             ],
           ),
         ), //Image.asset(pathImage),  //replace with Image.asset when we add assets, uses default IconData for now
-        title: Text(statisticModel.title),
+        title: Text(statisticModel.title,
+            style:
+                Theme.of(context).extension<PollenMeterColors>()?.statsTitle),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -53,11 +56,14 @@ class StatisticPollenTileWidget extends StatelessWidget {
             children: [
               TextSpan(
                 text: '${statisticModel.value.toStringAsFixed(0)} ',
-                style: Theme.of(context).textTheme.bodyLarge,
+                style:
+                    Theme.of(context).extension<PollenMeterColors>()?.bodyLarge,
               ),
               TextSpan(
                 text: context.loc.unit,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context)
+                    .extension<PollenMeterColors>()
+                    ?.titleLarge,
               ),
             ],
           ),

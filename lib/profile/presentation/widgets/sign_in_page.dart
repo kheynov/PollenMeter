@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,14 +22,8 @@ class LoginPage extends StatelessWidget {
             ],
           );
         } else {
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [Text('Authorized')],
-              ),
-            ),
-          );
+          context.go('/profile');
+          return const SizedBox.shrink();
         }
       },
     );

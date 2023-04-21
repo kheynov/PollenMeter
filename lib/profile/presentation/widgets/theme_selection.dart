@@ -3,6 +3,8 @@ import 'package:group_button/group_button.dart';
 import 'package:pollen_meter/core/domain/profile/model/profile_data_model.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 
+import '../../../pollen_meter_colors.dart';
+
 class ThemeSelectionWidget extends StatefulWidget {
   const ThemeSelectionWidget({
     Key? key,
@@ -55,7 +57,9 @@ class _ThemeSelectionWidgetState extends State<ThemeSelectionWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(context.loc.themeMessage,
-              style: Theme.of(context).textTheme.displayMedium),
+              style: Theme.of(context)
+                  .extension<PollenMeterColors>()
+                  ?.displayMedium),
           const SizedBox(height: 20),
           GroupButton(
             isRadio: true,
@@ -73,8 +77,11 @@ class _ThemeSelectionWidgetState extends State<ThemeSelectionWidget> {
               selectedShadow: [],
               unselectedShadow: [],
               unselectedColor: Theme.of(context).colorScheme.background,
-              selectedTextStyle: Theme.of(context).textTheme.labelSmall,
-              unselectedTextStyle: Theme.of(context).textTheme.headlineMedium,
+              selectedTextStyle:
+                  Theme.of(context).extension<PollenMeterColors>()?.labelSmall,
+              unselectedTextStyle: Theme.of(context)
+                  .extension<PollenMeterColors>()
+                  ?.headlineMedium,
             ),
 
             buttons: buttonNames,
@@ -84,7 +91,9 @@ class _ThemeSelectionWidgetState extends State<ThemeSelectionWidget> {
               return ListTile(
                 title: Text(
                   buttonNames[index],
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context)
+                      .extension<PollenMeterColors>()
+                      ?.titleSmall,
                 ),
                 trailing: isSelected
                     ? SizedBox(

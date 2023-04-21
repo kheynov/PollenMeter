@@ -11,6 +11,8 @@ import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';
 import 'package:group_button/group_button.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({Key? key}) : super(key: key);
 
@@ -89,7 +91,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                         DateFormat('MMMMd').format(
                           DateTime.now(),
                         ),
-                        style: Theme.of(context).textTheme.titleMedium),
+                        style: Theme.of(context)
+                            .extension<PollenMeterColors>()
+                            ?.titleMedium),
                   ],
                 ),
               ),
@@ -105,8 +109,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                 options: GroupButtonOptions(
                   borderRadius: BorderRadius.circular(15),
                   unselectedColor: Theme.of(context).colorScheme.secondary,
-                  unselectedTextStyle:
-                      Theme.of(context).primaryTextTheme.displayMedium,
+                  unselectedTextStyle: Theme.of(context)
+                      .extension<PollenMeterColors>()
+                      ?.primaryDisplayMedium,
                   selectedShadow: [],
                   unselectedShadow: [],
                 ),
