@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -109,6 +109,9 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     final profileLogic = ref.watch(profileLogicProvider);
     late ThemeMode themeMode;
     switch (profileLogic.theme) {

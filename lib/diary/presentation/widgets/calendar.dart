@@ -3,6 +3,8 @@ import 'package:pollen_meter/core/domain/diary/models/diary_model.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../pollen_meter_colors.dart';
+
 class CalendarWidget extends StatefulWidget {
   const CalendarWidget({
     Key? key,
@@ -43,6 +45,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           border: Border.all(color: Theme.of(context).colorScheme.primary),
         ),
         todayTextStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+        markerDecoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Theme.of(context)
+              .extension<PollenMeterColors>()!
+              .labelMedium!
+              .color,
+        ),
       ),
       focusedDay: _focusedDay,
       calendarFormat: _calendarFormat,
