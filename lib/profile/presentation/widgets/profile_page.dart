@@ -8,6 +8,7 @@ import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
 import 'package:pollen_meter/profile/presentation/widgets/theme_selection.dart';
 import '../../../core/domain/profile/enums/allergen.dart';
 import '../../../core/domain/profile/model/profile_data_model.dart';
+import '../../../pollen_meter_colors.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -40,7 +41,9 @@ class ProfilePage extends ConsumerWidget {
                           ),
                           const SizedBox(width: 10),
                           Text(context.loc.profilePage,
-                              style: Theme.of(context).textTheme.titleMedium),
+                              style: Theme.of(context)
+                                  .extension<PollenMeterColors>()
+                                  ?.titleMedium),
                         ],
                       ),
                     ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class DashboardTileWidget extends StatelessWidget {
   const DashboardTileWidget({
     Key? key,
@@ -45,7 +47,9 @@ class DashboardTileWidget extends StatelessWidget {
                     text,
                     softWrap: true,
                     overflow: TextOverflow.fade,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context)
+                        .extension<PollenMeterColors>()
+                        ?.headlineSmall,
                   ),
                   const SizedBox(height: 4),
                   RichText(
@@ -53,11 +57,15 @@ class DashboardTileWidget extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '$value ',
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: Theme.of(context)
+                              .extension<PollenMeterColors>()
+                              ?.bodyLarge,
                         ),
                         TextSpan(
                           text: units,
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context)
+                              .extension<PollenMeterColors>()
+                              ?.titleLarge,
                         ),
                       ],
                     ),

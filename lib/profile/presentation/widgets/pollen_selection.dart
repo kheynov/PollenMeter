@@ -3,6 +3,8 @@ import 'package:group_button/group_button.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/profile/domain/model/pollen_tile_model.dart';
 
+import '../../../pollen_meter_colors.dart';
+
 class PollenSelectionWidget extends StatefulWidget {
   const PollenSelectionWidget({
     Key? key,
@@ -47,7 +49,9 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(context.loc.allergyMessage,
-              style: Theme.of(context).textTheme.displayMedium),
+              style: Theme.of(context)
+                  .extension<PollenMeterColors>()
+                  ?.displayMedium),
           const SizedBox(height: 20),
           GroupButton(
             isRadio: false,
@@ -64,8 +68,10 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
               selectedShadow: [],
               unselectedShadow: [],
               unselectedColor: Theme.of(context).colorScheme.background,
-              selectedTextStyle: Theme.of(context).textTheme.labelSmall,
-              unselectedTextStyle: Theme.of(context).textTheme.titleSmall,
+              selectedTextStyle:
+                  Theme.of(context).extension<PollenMeterColors>()?.labelSmall,
+              unselectedTextStyle:
+                  Theme.of(context).extension<PollenMeterColors>()?.titleSmall,
             ),
             buttons: widget.listPollens
                 .map((e) => context.fromAllergen(e.allergen))

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class HighPollenLevelAlert extends StatelessWidget {
   final String msg;
   final String emoticon;
@@ -20,11 +22,15 @@ class HighPollenLevelAlert extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(emoticon, style: Theme.of(context).textTheme.titleSmall),
+            Text(emoticon,
+                style: Theme.of(context)
+                    .extension<PollenMeterColors>()
+                    ?.titleSmall),
             const SizedBox(height: 10),
             Text(
               msg,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style:
+                  Theme.of(context).extension<PollenMeterColors>()?.bodyLarge,
               textAlign: TextAlign.left,
               softWrap: true,
             ),

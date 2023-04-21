@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../pollen_meter_colors.dart';
+
 class SendButtonWidget extends StatelessWidget {
   const SendButtonWidget({
     Key? key,
@@ -19,7 +21,10 @@ class SendButtonWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(text, style: Theme.of(context).primaryTextTheme.displayLarge),
+          Text(text,
+              style: Theme.of(context)
+                  .extension<PollenMeterColors>()
+                  ?.primaryDisplayLarge),
         ],
       ),
     );

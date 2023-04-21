@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 
+import '../pollen_meter_colors.dart';
+
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key, required this.tabController});
   final TabController tabController;
@@ -53,8 +55,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   Text(
                     context.loc.dashboardPage,
                     style: (selectedIndex == 0)
-                        ? Theme.of(context).textTheme.labelLarge
-                        : Theme.of(context).textTheme.labelMedium,
+                        ? Theme.of(context)
+                            .extension<PollenMeterColors>()
+                            ?.labelLarge
+                        : Theme.of(context)
+                            .extension<PollenMeterColors>()
+                            ?.labelMedium,
                   ),
                 ],
               ),
@@ -82,7 +88,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 44,
                   width: 44,
                   child: Icon(Icons.add,
-                      color: Theme.of(context).textTheme.displayLarge!.color,
+                      color: Theme.of(context)
+                          .extension<PollenMeterColors>()
+                          ?.displayLarge!
+                          .color,
                       size: 30),
                 ),
                 onTap: () {
@@ -105,8 +114,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   Text(
                     context.loc.diaryPage,
                     style: (selectedIndex == 1)
-                        ? Theme.of(context).textTheme.labelLarge
-                        : Theme.of(context).textTheme.labelMedium,
+                        ? Theme.of(context)
+                            .extension<PollenMeterColors>()
+                            ?.labelLarge
+                        : Theme.of(context)
+                            .extension<PollenMeterColors>()
+                            ?.labelMedium,
                   ),
                 ],
               ),

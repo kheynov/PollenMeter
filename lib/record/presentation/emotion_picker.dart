@@ -39,13 +39,17 @@ class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(context.loc.feels,
-              style: Theme.of(context).textTheme.displayMedium),
+              style: Theme.of(context)
+                  .extension<PollenMeterColors>()
+                  ?.displayMedium),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: WellBeingState.values
                 .map((e) => Text(e.emoji,
-                    style: Theme.of(context).textTheme.titleSmall))
+                    style: Theme.of(context)
+                        .extension<PollenMeterColors>()
+                        ?.titleSmall))
                 .toList(),
           ),
           Slider(
