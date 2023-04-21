@@ -73,7 +73,7 @@ class RecordPage extends ConsumerWidget {
                         padding: const EdgeInsets.only(
                             left: 24, right: 24, bottom: 16),
                         child: SendButtonWidget(
-                          text: context.loc.hazel,
+                          text: context.loc.record,
                         ),
                       ),
                       onPressed: () {
