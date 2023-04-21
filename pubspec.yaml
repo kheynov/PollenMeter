@@ -40,6 +40,8 @@ dependencies:
   intl: ^0.17.0
   intl_translation: ^0.18.0
   table_calendar: ^3.0.7
+  flutter_launcher_icons: ^0.11.0
+  flutter_scale_tap: ^1.0.5
 
 dev_dependencies:
   flutter_test:

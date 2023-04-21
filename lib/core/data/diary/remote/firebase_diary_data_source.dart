@@ -39,21 +39,25 @@ class FirebaseDiaryDataStore implements DiaryDataStore {
   @override
   Future<List<DiaryModel>> getDiaries() async {
     assert(checkUserAuthorized());
-    return await collection
-        .where('uid', isEqualTo: firebaseAuth.currentUser!.uid)
-        .get()
-        .then((snapshot) => snapshot.docs.map((e) => e.data().data).toList());
+    try {
+      return await collection
+          .where('uid', isEqualTo: firebaseAuth.currentUser!.uid)
+          .get()
+          .then((snapshot) => snapshot.docs.map((e) => e.data().data).toList());
+    } catch (e) {
+      return Future.value(List<DiaryModel>.empty());
+    }
   }
 
   @override
   Future<void> saveDiary(DiaryModel diary) async {
     assert(checkUserAuthorized());
     try {
-      final doc = await collection
+      /*final doc = await collection
           .where('uid', isEqualTo: firebaseAuth.currentUser!.uid)
           .get()
-          .then((value) => value.docs[0]);
-      collection.doc(doc.id).delete();
+          .then((value) => value.docs[0]);*/
+      //collection.doc(doc.id).delete();
     } catch (e) {
       Logger.log('Умные мысли');
     }

@@ -54,5 +54,12 @@
     "twoWeeks": "2 weeks",
     "week": "Week",
     "feelings": "Feelings",
-    "commentary": "Commentary"
+    "commentary": "Commentary",
+    "feels": "How are you today?",
+    "month": "Month",
+    "twoWeeks": "2 weeks",
+    "week": "Week",
+    "comment": "Comment",
+    "describeWellBeing": "Describe your well-being:",
+    "record": "Record"
 }

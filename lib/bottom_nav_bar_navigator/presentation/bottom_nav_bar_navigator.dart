@@ -17,7 +17,7 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -29,6 +29,7 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: TabBarView(
         controller: tabController,
         children: const [

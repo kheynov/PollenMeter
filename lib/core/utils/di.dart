@@ -15,6 +15,7 @@ import 'package:pollen_meter/dashboard/domain/location_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/ambee_api/repository/pollen_repository_api_impl.dart';
+
 import 'logger.dart';
 
 class ServiceLocator {
@@ -82,4 +83,7 @@ class ServiceLocator {
       _locator<LocationRepository>();
 
   static ProfileService get profileService => _locator<ProfileService>();
+
+  static SharedPreferences get sharedPreferences =>
+      _locator<SharedPreferences>();
 }
