@@ -187,58 +187,63 @@ class DashboardPage extends ConsumerWidget {
                         child: CircularProgressIndicator(),
                       ),
                     ),
-                    SizedBox(
-                      height: 125,
-                      child: ListView.separated(
-                        itemCount: pollenUIModelsWithPrefs.length,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) =>
-                            pollenUILogic.when(
-                          data: (data) {
-                            return pollenUIModelsWithPrefs
-                                .map(
-                                  (e) => AspectRatio(
-                                    aspectRatio: 119 / 113,
-                                    child: DashboardTileWidget(
-                                      image: Container(
-                                        height: 28,
-                                        width: 28,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: e.color,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: e.color.withOpacity(0.5),
-                                              spreadRadius: 1,
-                                              blurRadius: 5,
-                                              offset: const Offset(0, 1),
+                    pollenUIModelsWithPrefs.isNotEmpty
+                        ? SizedBox(
+                            height: 125,
+                            child: ListView.separated(
+                              itemCount: pollenUIModelsWithPrefs.length,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  pollenUILogic.when(
+                                data: (data) {
+                                  return pollenUIModelsWithPrefs
+                                      .map(
+                                        (e) => AspectRatio(
+                                          aspectRatio: 119 / 113,
+                                          child: DashboardTileWidget(
+                                            image: Container(
+                                              height: 28,
+                                              width: 28,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: e.color,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: e.color
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 5,
+                                                    offset: const Offset(0, 1),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ],
+                                            text: e.title,
+                                            onTap: (e) {},
+                                            value: e.value.toStringAsFixed(0),
+                                            units: context.loc.unit,
+                                          ),
                                         ),
-                                      ),
-                                      text: e.title,
-                                      onTap: (e) {},
-                                      value: e.value.toStringAsFixed(0),
-                                      units: context.loc.unit,
-                                    ),
-                                  ),
-                                )
-                                .toList()[index];
-                          },
-                          error: (error, stackTrace) {
-                            return Text(
-                              error.toString(),
-                            );
-                          },
-                          loading: () {
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(width: 10),
-                      ),
-                    ),
+                                      )
+                                      .toList()[index];
+                                },
+                                error: (error, stackTrace) {
+                                  return Text(
+                                    error.toString(),
+                                  );
+                                },
+                                loading: () {
+                                  return const SizedBox.shrink();
+                                },
+                              ),
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      const SizedBox(width: 10),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
                     const SizedBox(height: 40),
                     pollenUILogic.when(
                       data: (data) {

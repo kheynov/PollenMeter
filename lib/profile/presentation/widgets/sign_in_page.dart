@@ -22,7 +22,9 @@ class LoginPage extends StatelessWidget {
             ],
           );
         } else {
-          context.go('/profile');
+          Future(() {
+            context.go('/profile');
+          });
           return const SizedBox.shrink();
         }
       },
