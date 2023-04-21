@@ -22,7 +22,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-
   @override
   Widget build(BuildContext context) {
     return TableCalendar(

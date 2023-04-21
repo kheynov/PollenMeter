@@ -52,5 +52,7 @@
     "systemTheme": "System",
     "month": "Month",
     "twoWeeks": "2 weeks",
-    "week": "Week"
+    "week": "Week",
+    "feelings": "Feelings",
+    "commentary": "Commentary"
 }

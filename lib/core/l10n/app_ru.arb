@@ -52,5 +52,7 @@
   "systemTheme": "Системная",
   "month": "Месяц",
   "twoWeeks": "2 недели",
-  "week": "Неделя"
+  "week": "Неделя",
+  "feelings": "Самочувствие",
+  "commentary": "Комментарий"
 }

@@ -58,10 +58,11 @@ class ServiceLocator {
         _locator<ProfileLocalDataStore>(),
         _locator<FirebaseProfileDataStore>()));
 
-    _locator.registerLazySingleton<FirebaseDiaryDataStore>(() => FirebaseDiaryDataStore());
+    _locator.registerLazySingleton<FirebaseDiaryDataStore>(
+        () => FirebaseDiaryDataStore());
 
-    _locator.registerLazySingleton<LocalDiaryDataStore>(() =>
-        LocalDiaryDataStore(_locator<SharedPreferences>()));
+    _locator.registerLazySingleton<LocalDiaryDataStore>(
+        () => LocalDiaryDataStore(_locator<SharedPreferences>()));
 
     await GetIt.instance.allReady();
     Logger.log('Dependencies initialized!');

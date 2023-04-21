@@ -13,11 +13,13 @@ class Manager {
   Manager(this.stateHolder, this.ref);
 
   void init() async {
-    List<DiaryModel> listDiaryModel = await ref.watch(diaryServiceProvider).getDiaries();
+    List<DiaryModel> listDiaryModel =
+        await ref.watch(diaryServiceProvider).getDiaries();
     Map<String, List<DiaryModel>> mapDiaryModel = groupBy(
       listDiaryModel,
       (dairy) {
-        final dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(dairy.timestamp));
+        final dateTime =
+            DateTime.fromMillisecondsSinceEpoch(int.parse(dairy.timestamp));
         print(dateTime);
         return DateFormat('yMd').format(dateTime);
       },
@@ -25,13 +27,12 @@ class Manager {
     print('---------');
   }
 
-  void updateState(DiaryModel diaryModel){
+  void updateState(DiaryModel diaryModel) {
     stateHolder.updateState(diaryModel);
     ref.read(diaryServiceProvider).saveDiary(diaryModel);
   }
 
-  List<DiaryModel> getListDiaryModel(DateTime dateTime){
+  List<DiaryModel> getListDiaryModel(DateTime dateTime) {
     return stateHolder.getListDiaryModel(dateTime);
   }
-
 }
