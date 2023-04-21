@@ -81,7 +81,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                       onTap: () {
                         context.pop();
                       },
-                      child: const Icon(Icons.arrow_back),
+                      child: Icon(Icons.arrow_back,
+                          color: Theme.of(context).colorScheme.outline),
                     ),
                     const SizedBox(width: 10),
                     Text(
@@ -104,6 +105,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                 options: GroupButtonOptions(
                   borderRadius: BorderRadius.circular(15),
                   unselectedColor: Theme.of(context).colorScheme.secondary,
+                  unselectedTextStyle:
+                      Theme.of(context).primaryTextTheme.displayMedium,
                   selectedShadow: [],
                   unselectedShadow: [],
                 ),

@@ -71,7 +71,8 @@ class DashboardPage extends ConsumerWidget {
                               context.push('/profile');
                             }
                           },
-                          child: const Icon(Icons.person_outline),
+                          child: Icon(Icons.person_outline,
+                              color: Theme.of(context).colorScheme.outline),
                         ),
                       ],
                     ),
@@ -85,7 +86,8 @@ class DashboardPage extends ConsumerWidget {
                           onTap: () {
                             context.push('/statistics');
                           },
-                          child: const Icon(Icons.info_outline),
+                          child: Icon(Icons.info_outline,
+                              color: Theme.of(context).colorScheme.outline),
                         ),
                       ],
                     ),
