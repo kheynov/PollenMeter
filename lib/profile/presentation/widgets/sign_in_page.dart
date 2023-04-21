@@ -15,15 +15,16 @@ class LoginPage extends StatelessWidget {
           return const SignInScreen(
             providerConfigs: [
               EmailProviderConfiguration(),
-              GoogleProviderConfiguration(
-                clientId:
-                    '374533370010-15698fjfa6tssse8gumdincoi8uam5lq.apps.googleusercontent.com',
-              ),
+              // GoogleProviderConfiguration(
+              //   clientId:
+              //       '374533370010-15698fjfa6tssse8gumdincoi8uam5lq.apps.googleusercontent.com',
+              // ),
             ],
           );
         } else {
           Future(() {
-            context.go('/profile');
+            context.go('/dashboard');
+            context.push('/profile');
           });
           return const SizedBox.shrink();
         }
