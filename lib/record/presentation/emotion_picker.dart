@@ -43,7 +43,10 @@ class _EmotionPickerWidgetState extends State<EmotionPickerWidget> {
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: WellBeingState.values.map((e) => Text(e.emoji)).toList(),
+            children: WellBeingState.values
+                .map((e) => Text(e.emoji,
+                    style: Theme.of(context).textTheme.titleSmall))
+                .toList(),
           ),
           Slider(
             value: _curPosition,

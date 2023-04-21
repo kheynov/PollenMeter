@@ -38,7 +38,8 @@ class RecordPage extends ConsumerWidget {
                             onTap: () {
                               context.pop();
                             },
-                            child: const Icon(Icons.arrow_back),
+                            child: Icon(Icons.arrow_back,
+                                color: Theme.of(context).colorScheme.outline),
                           ),
                           const SizedBox(width: 10),
                           Text(DateFormat('MMMMd').format(DateTime.now()),

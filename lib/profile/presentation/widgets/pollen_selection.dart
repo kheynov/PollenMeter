@@ -65,7 +65,7 @@ class _PollenSelectionWidgetState extends State<PollenSelectionWidget> {
               unselectedShadow: [],
               unselectedColor: Theme.of(context).colorScheme.background,
               selectedTextStyle: Theme.of(context).textTheme.labelSmall,
-              unselectedTextStyle: Theme.of(context).textTheme.headlineMedium,
+              unselectedTextStyle: Theme.of(context).textTheme.titleSmall,
             ),
             buttons: widget.listPollens
                 .map((e) => context.fromAllergen(e.allergen))
