@@ -84,7 +84,7 @@ class _ThemeSelectionWidgetState extends State<ThemeSelectionWidget> {
               return ListTile(
                 title: Text(
                   buttonNames[index],
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 trailing: isSelected
                     ? SizedBox(
@@ -142,7 +142,7 @@ class _ThemeSelectionWidgetState extends State<ThemeSelectionWidget> {
                                   width: 1,
                                 ),
                                 shape: BoxShape.circle,
-                                color: Theme.of(context).colorScheme.background,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                               height: 18,
                             ),
