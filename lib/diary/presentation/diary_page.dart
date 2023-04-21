@@ -29,8 +29,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
   @override
   Widget build(BuildContext context) {
     final manager = ref.watch(managerProvider);
-    manager.updateState(DiaryModel('', WellBeingState.good,
-        DateTime.now().millisecondsSinceEpoch.toString()));
+    // manager.updateState(DiaryModel('', WellBeingState.good,
+    //     DateTime.now().millisecondsSinceEpoch.toString()));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -56,9 +56,11 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                 },
               ),
               const SizedBox(height: 16),
-              const Expanded(
+              Expanded(
                 child: SingleChildScrollView(
-                  child: DiaryEntriesWidget(),
+                  child: DiaryEntriesWidget(
+                    key: ValueKey(listSelectedDiary),
+                  ),
                 ),
               ),
             ],
