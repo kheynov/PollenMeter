@@ -49,7 +49,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                   listSelectedDiary = manager.getListDiaryModel(dateTime);
                   ref.read(listDiaryEntriesProvider).clear();
                   ref.read(listDiaryEntriesProvider).addAll(listSelectedDiary);
-                  print(listSelectedDiary);
+                  // print(listSelectedDiary);
                   setState(() {});
                 },
               ),
@@ -95,11 +95,11 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
   @override
   Widget build(BuildContext context) {
     List<DiaryModel> listDiaryModelNew = ref.watch(listDiaryEntriesProvider);
-    print(listDiaryModel != listDiaryModelNew);
+    // print(listDiaryModel != listDiaryModelNew);
     if (listDiaryModel != listDiaryModelNew) {
       listDiaryEntry = listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
       listDiaryModel = listDiaryModelNew;
-      print("---$listDiaryModel");
+      // print("---$listDiaryModel");
     }
     return ExpansionPanelList(
       animationDuration: const Duration(milliseconds: 500),
@@ -111,32 +111,35 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
           .map((entry) => ExpansionPanel(
                 canTapOnHeader: true,
                 headerBuilder: (BuildContext context, bool isExpanded) {
-                  print(isExpanded);
+                  // print(isExpanded);
 
                   final dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(entry.diaryModel.timestamp));
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(DateFormat('jms').format(dateTime)),
-                      Row(
-                        children: [
-                          Text(
-                            context.loc.feelings,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          Text(entry.diaryModel.state.emoji),
-                        ],
-                      ),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(DateFormat('jms').format(dateTime)),
+                        Row(
+                          children: [
+                            Text(
+                              "${context.loc.feelings}: ",
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            Text(entry.diaryModel.state.emoji),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
-                body: Text('111'),
-                // Column(
-                //   children: [
-                //     Text(context.loc.commentary),
-                //     Text(entry.diaryModel.message),
-                //   ],
-                // ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(context.loc.commentary),
+                    Text(entry.diaryModel.message),
+                  ],
+                ),
                 isExpanded: entry.isExpansion,
               ))
           .toList(),
