@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:pollen_meter/core/domain/diary/enums/well_being_state.dart';
 import 'package:pollen_meter/core/domain/diary/models/diary_model.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/diary/presentation/widgets/calendar.dart';
@@ -129,14 +128,11 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
   @override
   Widget build(BuildContext context) {
     List<DiaryModel> listDiaryModelNew = ref.watch(listDiaryNotifierProvider);
-    print(listDiaryModel != listDiaryModelNew);
     if (listDiaryModel != listDiaryModelNew) {
       listDiaryEntry =
           listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
       listDiaryModel = listDiaryModelNew;
-      print("---$listDiaryModelNew");
     }
-    print('4444$listDiaryModelNew');
     return ExpansionPanelList(
       animationDuration: const Duration(milliseconds: 500),
       expansionCallback: (int index, bool isExpansion) {

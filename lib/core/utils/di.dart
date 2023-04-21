@@ -8,7 +8,6 @@ import 'package:pollen_meter/core/data/profile/profile_service.dart';
 import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.dart';
 import 'package:pollen_meter/core/domain/ambee_api/repository/pollen_repository.dart';
 import 'package:pollen_meter/core/domain/ambee_api/use_cases/fetch_data_from_ambee_use_case.dart';
-import 'package:pollen_meter/core/domain/diary/repository/diary_repository.dart';
 import 'package:pollen_meter/core/domain/profile/repository/profile_data_repository.dart';
 import 'package:pollen_meter/dashboard/data/location_repository_impl.dart';
 import 'package:pollen_meter/dashboard/domain/location_repository.dart';
