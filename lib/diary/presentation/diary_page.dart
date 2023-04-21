@@ -29,7 +29,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
   @override
   Widget build(BuildContext context) {
     final manager = ref.watch(managerProvider);
-    manager.updateState(DiaryModel('', WellBeingState.good, DateTime.now().millisecondsSinceEpoch.toString()));
+    manager.updateState(DiaryModel('', WellBeingState.good,
+        DateTime.now().millisecondsSinceEpoch.toString()));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -38,7 +39,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
             children: [
               Text(
                 context.loc.diaryPage,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               CalendarWidget(
@@ -88,7 +90,8 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
   @override
   void initState() {
     listDiaryModel = ref.read(listDiaryEntriesProvider);
-    listDiaryEntry = listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
+    listDiaryEntry =
+        listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
     super.initState();
   }
 
@@ -97,7 +100,8 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
     List<DiaryModel> listDiaryModelNew = ref.watch(listDiaryEntriesProvider);
     // print(listDiaryModel != listDiaryModelNew);
     if (listDiaryModel != listDiaryModelNew) {
-      listDiaryEntry = listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
+      listDiaryEntry =
+          listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
       listDiaryModel = listDiaryModelNew;
       // print("---$listDiaryModel");
     }
@@ -113,7 +117,8 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
                 headerBuilder: (BuildContext context, bool isExpanded) {
                   // print(isExpanded);
 
-                  final dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(entry.diaryModel.timestamp));
+                  final dateTime = DateTime.fromMillisecondsSinceEpoch(
+                      int.parse(entry.diaryModel.timestamp));
                   return Padding(
                     padding: const EdgeInsets.all(8),
                     child: Column(

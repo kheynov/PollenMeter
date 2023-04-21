@@ -1,4 +1,4 @@
-import 'package:collection/collection.dart';
+import 'package:collection/collection.dart' show groupBy;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pollen_meter/core/domain/diary/models/diary_model.dart';
@@ -15,16 +15,16 @@ class Manager {
   void init() async {
     List<DiaryModel> listDiaryModel =
         await ref.watch(diaryServiceProvider).getDiaries();
-    Map<String, List<DiaryModel>> mapDiaryModel = groupBy(
+    groupBy(
       listDiaryModel,
       (dairy) {
         final dateTime =
             DateTime.fromMillisecondsSinceEpoch(int.parse(dairy.timestamp));
-        print(dateTime);
+        // print(dateTime);
         return DateFormat('yMd').format(dateTime);
       },
     );
-    print('---------');
+    // print('---------');
   }
 
   void updateState(DiaryModel diaryModel) {
