@@ -12,7 +12,7 @@ class FirebaseDiaryDataStore implements DiaryDataStore {
 
   late final CollectionReference<FirebaseDiaryDto> collection;
 
-  FirebaseDiaryDataStore(this.firestore, this.collection) {
+  FirebaseDiaryDataStore(this.firestore) {
     collection =
         firestore.collection('diaries').withConverter<FirebaseDiaryDto>(
               fromFirestore: (snapshot, _) =>
@@ -53,11 +53,11 @@ class FirebaseDiaryDataStore implements DiaryDataStore {
   Future<void> saveDiary(DiaryModel diary) async {
     assert(checkUserAuthorized());
     try {
-      final doc = await collection
+      /*final doc = await collection
           .where('uid', isEqualTo: firebaseAuth.currentUser!.uid)
           .get()
-          .then((value) => value.docs[0]);
-      collection.doc(doc.id).delete();
+          .then((value) => value.docs[0]);*/
+      //collection.doc(doc.id).delete();
     } catch (e) {
       Logger.log('Умные мысли');
     }

@@ -10,6 +10,7 @@ import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/dashboard/presentation/high_pollen_level_alert.dart';
 import 'package:pollen_meter/main.dart';
 import 'package:pollen_meter/core/extensions/theme_colors_build_context.dart';
+
 import '../../core/domain/profile/enums/risk_level.dart';
 import '../../core/utils/logger.dart';
 import '../../core_ui/pollen/models/pollen_ui_model.dart';

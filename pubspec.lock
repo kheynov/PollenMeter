@@ -492,6 +492,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.4"
+  flutter_scale_tap:
+    dependency: "direct main"
+    description:
+      name: flutter_scale_tap
+      sha256: "7d04ce50da7528387b9517cd0df45a18fcc05bc38a9bfdd383b65534aca81b1b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   flutter_svg:
     dependency: "direct main"
     description:

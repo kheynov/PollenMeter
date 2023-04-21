@@ -9,12 +9,14 @@ part of 'diary_model.dart';
 DiaryModel _$DiaryModelFromJson(Map<String, dynamic> json) => DiaryModel(
       json['message'] as String,
       $enumDecode(_$WellBeingStateEnumMap, json['state']),
+      json['timestamp'] as String,
     );
 
 Map<String, dynamic> _$DiaryModelToJson(DiaryModel instance) =>
     <String, dynamic>{
       'message': instance.message,
       'state': _$WellBeingStateEnumMap[instance.state]!,
+      'timestamp': instance.timestamp,
     };
 
 const _$WellBeingStateEnumMap = {

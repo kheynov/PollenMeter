@@ -11,7 +11,6 @@ enum ThemeTypes { dark, light, system }
 class ProfileDataModel {
   final ThemeTypes theme;
   final List<Allergen> allergens;
-
   const ProfileDataModel(this.theme, this.allergens);
 
   factory ProfileDataModel.fromJson(Map<String, dynamic> json) {
