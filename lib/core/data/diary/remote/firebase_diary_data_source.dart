@@ -8,11 +8,11 @@ import 'package:pollen_meter/core/utils/logger.dart';
 class FirebaseDiaryDataStore implements DiaryDataStore {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  final FirebaseFirestore firestore;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   late final CollectionReference<FirebaseDiaryDto> collection;
 
-  FirebaseDiaryDataStore(this.firestore) {
+  FirebaseDiaryDataStore() {
     collection =
         firestore.collection('diaries').withConverter<FirebaseDiaryDto>(
               fromFirestore: (snapshot, _) =>

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pollen_meter/core/data/ambee_api/ambee_api.dart';
+import 'package:pollen_meter/core/data/diary/local/local_diary_data_source.dart';
+import 'package:pollen_meter/core/data/diary/remote/firebase_diary_data_source.dart';
 import 'package:pollen_meter/core/data/profile/local/profile_local_data_source.dart';
 import 'package:pollen_meter/core/data/profile/profile_service.dart';
 import 'package:pollen_meter/core/data/profile/remote/firebase_profile_service.dart';
@@ -19,6 +21,8 @@ class ServiceLocator {
   const ServiceLocator._();
 
   static final GetIt _locator = GetIt.instance;
+
+  static GetIt get locator => _locator;
 
   static initApp() async {
     /// Register dependencies
@@ -53,6 +57,12 @@ class ServiceLocator {
     _locator.registerLazySingleton<ProfileService>(() => ProfileServiceImpl(
         _locator<ProfileLocalDataStore>(),
         _locator<FirebaseProfileDataStore>()));
+
+    _locator.registerLazySingleton<FirebaseDiaryDataStore>(
+        () => FirebaseDiaryDataStore());
+
+    _locator.registerLazySingleton<LocalDiaryDataStore>(
+        () => LocalDiaryDataStore(_locator<SharedPreferences>()));
 
     await GetIt.instance.allReady();
     Logger.log('Dependencies initialized!');

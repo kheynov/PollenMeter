@@ -77,9 +77,10 @@ class RecordPage extends ConsumerWidget {
                         ),
                       ),
                       onPressed: () {
-                        ref
-                            .watch(diaryProvider.notifier)
-                            .addDiary(feedback, wellBeingState);
+                        ref.watch(diaryProvider.notifier).addDiary(
+                            feedback,
+                            wellBeingState,
+                            DateTime.now().millisecondsSinceEpoch.toString());
                         context.pop();
                       },
                     ),

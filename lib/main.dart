@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +86,7 @@ final locationProvider = FutureProvider<Coordinates>((ref) async {
 final diaryServiceProvider = Provider(
   (ref) {
     return DiaryService(LocalDiaryDataStore(ServiceLocator.sharedPreferences),
-        FirebaseDiaryDataStore(FirebaseFirestore.instance));
+        FirebaseDiaryDataStore());
   },
 );
 
