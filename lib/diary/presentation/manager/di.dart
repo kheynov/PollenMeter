@@ -6,7 +6,7 @@ import 'package:pollen_meter/core/utils/di.dart';
 import 'package:pollen_meter/diary/presentation/manager/manager.dart';
 import 'package:pollen_meter/diary/presentation/manager/state_holder.dart';
 
-final diaryServiceProvider = Provider((ref) => DiaryService(
+final diaryServiceProvider2 = Provider((ref) => DiaryService(
       ServiceLocator.locator<LocalDiaryDataStore>.call(),
       ServiceLocator.locator<FirebaseDiaryDataStore>.call(),
     ));

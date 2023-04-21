@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pollen_meter/core/domain/diary/enums/well_being_state.dart';
 import 'package:pollen_meter/core/domain/diary/models/diary_model.dart';
 import 'package:pollen_meter/core/extensions/localized_build_context.dart';
 import 'package:pollen_meter/diary/presentation/widgets/calendar.dart';
-import 'package:pollen_meter/main.dart';
 
+import '../../core/data/diary/diary_service.dart';
+import '../../main.dart';
 import 'manager/di.dart';
 
+final listDiaryEntriesProvider = Provider((ref) => <DiaryModel>[]);
+final listDiaryNotifierProvider =
+    StateNotifierProvider<DiaryEntriesNotifier, List<DiaryModel>>((ref) {
+  return DiaryEntriesNotifier(
+      ref.watch(listDiaryEntriesProvider), ref.watch(diaryServiceProvider));
+});
+
+class DiaryEntriesNotifier extends StateNotifier<List<DiaryModel>> {
+  final DiaryService diaryService;
+  DiaryEntriesNotifier(cootlthing, this.diaryService)
+      : super(List<DiaryModel>.empty()) {
+    diaryService.getDiaries().then((value) => state = value);
+  }
+
+  void add(DiaryModel diaryModel) {
+    state = [...state, diaryModel];
+  }
+
+  void addAll(List<DiaryModel> diaryModels) {
+    state = [...state, ...diaryModels];
+  }
+
+  void clear() {
+    state = [];
+  }
+}
 
 class DiaryPage extends ConsumerStatefulWidget {
   const DiaryPage({Key? key}) : super(key: key);
@@ -38,7 +64,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-
               Text(
                 context.loc.diaryPage,
                 style:
@@ -51,15 +76,20 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                 },
                 onSelectedDay: (DateTime dateTime) {
                   listSelectedDiary = manager.getListDiaryModel(dateTime);
-                  listSelectedDiary.map((e) => ref.watch(diaryProvider.notifier).addDiary(e.message, e.state, e.timestamp));
-                  print(listSelectedDiary);
+                  ref.watch(listDiaryNotifierProvider.notifier).clear();
+                  ref
+                      .watch(listDiaryNotifierProvider.notifier)
+                      .addAll(listSelectedDiary);
+                  // print(listSelectedDiary);
                   setState(() {});
                 },
               ),
               const SizedBox(height: 16),
               Expanded(
                 child: SingleChildScrollView(
-                  child: DiaryEntriesWidget(key: UniqueKey()),
+                  child: DiaryEntriesWidget(
+                    key: ValueKey(listSelectedDiary),
+                  ),
                 ),
               ),
             ],
@@ -69,7 +99,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
     );
   }
 }
-
 
 class DiaryEntryTileModel {
   final DiaryModel diaryModel;
@@ -91,7 +120,7 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
 
   @override
   void initState() {
-    listDiaryModel = ref.read(diaryProvider);
+    listDiaryModel = ref.read(listDiaryNotifierProvider);
     listDiaryEntry =
         listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
     super.initState();
@@ -99,15 +128,15 @@ class _DiaryEntriesWidgetState extends ConsumerState<DiaryEntriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    List<DiaryModel> listDiaryModelNew = ref.read(diaryProvider);
-
-    // print(listDiaryModel != listDiaryModelNew);
+    List<DiaryModel> listDiaryModelNew = ref.watch(listDiaryNotifierProvider);
+    print(listDiaryModel != listDiaryModelNew);
     if (listDiaryModel != listDiaryModelNew) {
       listDiaryEntry =
           listDiaryModel.map((el) => DiaryEntryTileModel(el)).toList();
       listDiaryModel = listDiaryModelNew;
-      print("---$listDiaryModel");
+      print("---$listDiaryModelNew");
     }
+    print('4444$listDiaryModelNew');
     return ExpansionPanelList(
       animationDuration: const Duration(milliseconds: 500),
       expansionCallback: (int index, bool isExpansion) {

@@ -35,7 +35,6 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator>
         children: const [
           DashboardPage(),
           DiaryPage(),
-          MyHomePageTest2(),
         ],
       ),
       bottomNavigationBar: BottomNavBar(tabController: tabController),
